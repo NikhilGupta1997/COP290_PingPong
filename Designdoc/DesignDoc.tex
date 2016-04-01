@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color} 
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{subcaption}
+
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+%\usepackage{titling}
+\usepackage{graphicx}
+%\usepackage{titlepic}
+
+\lstset{
+	frame=tb, % draw a frame at the top and bottom of the code block
+   	tabsize=4, % tab space width
+   	showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{red}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{green} % string color
+}
+
+
+\title{\vspace*{\fill} \textbf{COP 290 Assignment 3}
+	  \\ {\Large \textbf{Ping Pong Game}}
+	  % \\  \vspace{3mm} \includegraphics{ddlogo.png}}
+}
+\author{
+	\vspace{5mm} \includegraphics[width=5cm]{logo.png} \\
+	 \textbf{Aditi}\\
+	2014CS10205 \vspace{2mm} \\
+	\textbf{Ayush Bhardwaj}\\ 
+	2014CS10091 \vspace{2mm} \\
+	\textbf{Nikhil Gupta}\\ 
+	2014CS50462 \vspace{2mm}
+}
+\date{\vspace{3mm} \textbf{April 2016} \vspace*{\fill}}
+
+\begin{document}
+	\maketitle
+
+	\newpage
+
+	\tableofcontents
+
+	\newpage
+
+	\section{Objectives}
+	Design a desktop app which is:
+
+	\section{Overall Design}
+		%The game which we will build is space invaders. It involves the player controlling a space ship and shooting down aliens. The aliens will fight back with bullets and missiles. The player has a limited number of lives and has to score the maximum in them.
+				\begin{enumerate}
+			\item The server side will be programmed in Web2py ~\cite{Web2py_Basics} 
+			\item Volley will be used to send requests and receive responses
+			\item Doxygen will be used to create HTML documentation of the entire code base.
+			\item The entire code will be split up in multiple files to ensure modularity in code. 
+		\end{enumerate}
+	\section{User Interface}
+	
+
+
+    	\subsection{Front End}
+
+
+
+	\section{Sub Components}
+			\subsection{Server Back End}
+				The back end has been divided into further sub components to facilitate the development process.
+					%\subsubsection
+					\subsubsection{Databases}
+					\begin{table}[H]
+\centering
+\caption{User Database Table}
+\label{my-label}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{S.No.} & \textbf{Fields} & \textbf{Type} & \textbf{Description}                                             \\ \hline
+1              & Name            & String        & Name of the person                                               \\ \hline
+2              & Unique Id       & String        & Entry Number for students or Employee Code for staff and faculty \\ \hline
+3              & User Type       & Int           & Information regarding user being a student or staff or faculty   \\ \hline
+4              & Contact Number  & String        & Phone Number                                                     \\ \hline
+5              & Hostel          & String        & Hostel if any                                                    \\ \hline
+6              & Other Details   & String        & Any other details                                                \\ \hline
+7              & Password	 	 & String        & Password in hashed form                                          \\ \hline
+8              & User Id                    & String        & Entry Number for students or Employee Code \\ \hline
+9              & Hostel Preferences         & String        & Bit string to represent interest in Hostel activities            \\ \hline
+10              & Institute Preferences & String        & Bit string to represent interest in Institute activities         \\ \hline
+11             & Extra Preferences          & String        & Bit String to represent interest in Other activities             \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[H]
+\centering
+\caption{Hostel Level Complaint}
+\label{my-label}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{S.No.} & \textbf{Fields}     & \textbf{Type} & \textbf{Description}                            \\ \hline
+1              & Complaint Id        & String        & Unique Id for Complaint                         \\ \hline
+2              & User Id             & String        & Unique User Id                    \\ \hline
+3              & Complaint Type      & Int           & Complaint category                              \\ \hline
+4              & Complaint Content   & String        & Content of complaint                            \\ \hline
+5              & Extra Info          & Image         & Upload a photo                                  \\ \hline
+6              & Admin Id            & String        & Id of person assigned                           \\ \hline
+7              & Time Stamp          & Time          & Time of filing the complaint                    \\ \hline
+8              & Resolved            & Boolean       & Resolved or Not                                 \\ \hline
+9              & Mark for resolution & Boolean       & Option for complaint addressee to seek approval \\ \hline
+10             & Comment             & String        & Any comments                                    \\ \hline
+11             & Previous Id         & Int           & Previous complaint id if any                    \\ \hline
+12             & Hostel              & Int           & Hostel Id                                       \\ \hline
+13			& Anonymous 		& Boolean &  Anonymous or not \\ \hline
+14              & Number of Up-votes      & Int           & Number of Up-votes                           \\ \hline
+15             & Number of Down-votes    & Int           & Number of Down-votes                         \\ \hline
+16              & Number of Neutrals     & Int           & Number of Neutral people                    \\ \hline
+17              & Number of Satisfied    & Int           & Number of people satisfied                  \\ \hline
+18              & Number of Dissatisfied & Int           & Number of people dissatisfied with solution \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+			\subsection{Network APIs}
+				The following API's will be provided:  ~\cite{Basic_Code}
+
+			\subsection{Further server tasks}
+				\begin{enumerate}
+					\item Crontab tasks will be used to schedule periodic events like database cleanup and sending complaints to higher authorities.
+					\item Crontab will also be used to generate push notifications for devices.
+				\end{enumerate}
+			
+
+	\section{Interaction amongst Sub Components}
+	
+	\section{Testing Of Components}
+		% \begin{enumerate}
+			\subsection{Server and APIs}
+				\begin{itemize}
+					\item Unit testing will be used to check if the server and end points are working correctly.
+					\item For each endpoint, stress testing will be done via python or bash scripts to verify that the APIs perform as expected in various situations.
+				\end{itemize}
+			\subsection{Overall Testing}
+				We will use the app on our phones once it is ready to identify and squash any remaining bugs in the app or the server. 	
+	\section{Extra Features}
+
+	\section{Future Endeavors} 
+
+	\section{Source Code}
+	The source code of the project is maintained in the following repository: \\
+	\url{https://github.com/aditi741997/COP290_PingPong.git}
+	\bibliographystyle{abbrv}
+	\medskip
+	\bibliography{references}
+\end{document} 

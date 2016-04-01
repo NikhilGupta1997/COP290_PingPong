@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Objectives}{3}{section.1}
+\contentsline {section}{\numberline {2}Overall Design}{3}{section.2}
+\contentsline {section}{\numberline {3}User Interface}{3}{section.3}
+\contentsline {subsection}{\numberline {3.1}Front End}{3}{subsection.3.1}
+\contentsline {section}{\numberline {4}Sub Components}{3}{section.4}
+\contentsline {subsection}{\numberline {4.1}Server Back End}{3}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Databases}{3}{subsubsection.4.1.1}
+\contentsline {subsection}{\numberline {4.2}Network APIs}{4}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Further server tasks}{4}{subsection.4.3}
+\contentsline {section}{\numberline {5}Interaction amongst Sub Components}{4}{section.5}
+\contentsline {section}{\numberline {6}Testing Of Components}{4}{section.6}
+\contentsline {subsection}{\numberline {6.1}Server and APIs}{4}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Overall Testing}{5}{subsection.6.2}
+\contentsline {section}{\numberline {7}Extra Features}{5}{section.7}
+\contentsline {section}{\numberline {8}Future Endeavors}{5}{section.8}
+\contentsline {section}{\numberline {9}Source Code}{5}{section.9}
