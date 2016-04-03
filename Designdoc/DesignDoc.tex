@@ -65,14 +65,13 @@
 	\section{User Interface}
 	
 
-
     	\subsection{Front End}
-
+    	% TODO: all kinds of random floating objects. NIKHIL do this.
 
 
 	\section{Sub Components}
-			\subsection{Server Back End}
-				The back end has been divided into further sub components to facilitate the development process.
+			\subsection{Physics}
+			Corner cases :  corners 
 					%\subsubsection
 					\subsubsection{Databases}
 					\begin{table}[H]
@@ -130,13 +129,24 @@
 \end{table}
 
 
-			\subsection{Network APIs}
-				The following API's will be provided:  ~\cite{Basic_Code}
+			\subsection{Computer Player Algorithm}
+			\par\noindent The computer player can have variable speed. But the range of speed varies on the basis of level of difficulty.
+			% make subsubsections for each event listed below!! TODO
 
-			\subsection{Further server tasks}
+			\begin{itemize}
+			\item Initially computer player tries to align its paddle center with the center of the ball.
+			\item When the ball is about to reach a wall, the computer player first calculates according to the assumption of a static paddle. And moves
+			\item After the collision has occurred, the computer again moves accordingly.
+			\item Another event will be choosing between ball catching versus catching power up objects. The decision will basically be based upon the distance of the power up object and the expected distance of the ball from the paddle after collision.
+
+			% TODO: multiple balls case.
+			\end{itemize}
+
+			\subsection{p2p Networking}
+			\par\noindent We would follow BLAH model of p2p networking. Each client sends the following information to its peers:
 				\begin{enumerate}
-					\item Crontab tasks will be used to schedule periodic events like database cleanup and sending complaints to higher authorities.
 					\item Crontab will also be used to generate push notifications for devices.
+					\item In case a particular client is disconnected from the network, a pop up would be displayed to the other players, and according to their decision, a computer player will be added or the game would continue with one less player.
 				\end{enumerate}
 			
 
@@ -144,14 +154,23 @@
 	
 	\section{Testing Of Components}
 		% \begin{enumerate}
-			\subsection{Server and APIs}
+			\subsection{Single peer testing}
 				\begin{itemize}
 					\item Unit testing will be used to check if the server and end points are working correctly.
 					\item For each endpoint, stress testing will be done via python or bash scripts to verify that the APIs perform as expected in various situations.
 				\end{itemize}
-			\subsection{Overall Testing}
-				We will use the app on our phones once it is ready to identify and squash any remaining bugs in the app or the server. 	
+			\subsection{Overall p2p Testing}
+				We will use the app on our desktops once it is ready to identify and squash any remaining bugs.
 	\section{Extra Features}
+	\begin{itemize}
+	\item Every player gets an option of choosing the orientation of the board visible to him, according to his comfort.
+	\item Special items would be floating around on the board, which on being captured, will provide the player with special powers
+	\item The special powers include : extra speed, more length of paddle, extra points, SPIN?, 
+	\item Multiple levels of the game by : ball speed, smaller paddle.
+	\item While considering collision, frictional drag will also be considered.
+	\item Corners of the board and the paddles will be circular.
+	\item More than one balls can be 
+	\end{itemize}
 
 	\section{Future Endeavors} 
 

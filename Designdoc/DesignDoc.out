@@ -3,14 +3,14 @@
 \BOOKMARK [1][-]{section.3}{User Interface}{}% 3
 \BOOKMARK [2][-]{subsection.3.1}{Front End}{section.3}% 4
 \BOOKMARK [1][-]{section.4}{Sub Components}{}% 5
-\BOOKMARK [2][-]{subsection.4.1}{Server Back End}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.1}{Physics}{section.4}% 6
 \BOOKMARK [3][-]{subsubsection.4.1.1}{Databases}{subsection.4.1}% 7
-\BOOKMARK [2][-]{subsection.4.2}{Network APIs}{section.4}% 8
-\BOOKMARK [2][-]{subsection.4.3}{Further server tasks}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.2}{Computer Player Algorithm}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.3}{p2p Networking}{section.4}% 9
 \BOOKMARK [1][-]{section.5}{Interaction amongst Sub Components}{}% 10
 \BOOKMARK [1][-]{section.6}{Testing Of Components}{}% 11
-\BOOKMARK [2][-]{subsection.6.1}{Server and APIs}{section.6}% 12
-\BOOKMARK [2][-]{subsection.6.2}{Overall Testing}{section.6}% 13
+\BOOKMARK [2][-]{subsection.6.1}{Single peer testing}{section.6}% 12
+\BOOKMARK [2][-]{subsection.6.2}{Overall p2p Testing}{section.6}% 13
 \BOOKMARK [1][-]{section.7}{Extra Features}{}% 14
 \BOOKMARK [1][-]{section.8}{Future Endeavors}{}% 15
 \BOOKMARK [1][-]{section.9}{Source Code}{}% 16
