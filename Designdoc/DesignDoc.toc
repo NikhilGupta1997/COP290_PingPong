@@ -10,7 +10,8 @@
 \contentsline {section}{\numberline {5}Interaction amongst Sub Components}{5}{section.5}
 \contentsline {section}{\numberline {6}Testing Of Components}{5}{section.6}
 \contentsline {subsection}{\numberline {6.1}Single peer testing}{5}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Overall p2p Testing}{5}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.2}Computer Player Testing}{5}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Overall p2p Testing}{5}{subsection.6.3}
 \contentsline {section}{\numberline {7}Extra Features}{5}{section.7}
-\contentsline {section}{\numberline {8}Future Endeavors}{5}{section.8}
-\contentsline {section}{\numberline {9}Source Code}{5}{section.9}
+\contentsline {section}{\numberline {8}Future Endeavors}{6}{section.8}
+\contentsline {section}{\numberline {9}Source Code}{6}{section.9}

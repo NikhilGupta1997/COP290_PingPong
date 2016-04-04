@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.1.18)  4 APR 2016 01:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.1.18)  4 APR 2016 12:32
 entering extended mode
 **./DesignDoc.tex
 (DesignDoc.tex
@@ -537,7 +537,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 47.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 47.
- <logo.png, id=67, 513.92pt x 513.92pt>
+ <logo.png, id=71, 513.92pt x 513.92pt>
 File: logo.png Graphic file (type png)
 
 <use logo.png>
@@ -577,19 +577,19 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 137.
- [4] (DesignDoc.bbl
+ [4] (DesignDoc.bbl [5]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 183.
- [5] [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 183.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 185.
+ [6]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 185.
  (DesignDoc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 183.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 183.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 185.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 185.
 Package rerunfilecheck Info: File `DesignDoc.out' has not changed.
-(rerunfilecheck)             Checksum: 693A8C66A69BC266628C0FE25199A5E0;941.
+(rerunfilecheck)             Checksum: 5756EBE5E4F1AE94EEE64038E73402D1;1015.
 
 
 LaTeX Warning: There were undefined references.
@@ -597,13 +597,13 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 183.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 185.
  ) 
 Here is how much of TeX's memory you used:
- 7726 strings out of 493634
- 115363 string characters out of 3143738
+ 7728 strings out of 493634
+ 115393 string characters out of 3143738
  212975 words of memory out of 3000000
- 11019 multiletter control sequences out of 15000+200000
+ 11020 multiletter control sequences out of 15000+200000
  8370 words of font info for 30 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  42i,10n,40p,277b,401s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -613,9 +613,9 @@ les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTe
 X 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 /public/amsfonts/cm/cmtt10.pfb>
-Output written on DesignDoc.pdf (6 pages, 164288 bytes).
+Output written on DesignDoc.pdf (6 pages, 165506 bytes).
 PDF statistics:
- 172 PDF objects out of 1000 (max. 8388607)
- 33 named destinations out of 1000 (max. 500000)
- 134 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 178 PDF objects out of 1000 (max. 8388607)
+ 34 named destinations out of 1000 (max. 500000)
+ 142 words of extra memory for PDF output out of 10000 (max. 10000000)
 

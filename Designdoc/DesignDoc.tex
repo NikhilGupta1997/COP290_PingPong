@@ -143,7 +143,7 @@
 			\end{itemize}
 
 			\subsection{p2p Networking}
-			\par\noindent We would follow BLAH model of p2p networking. Each client sends the following information to its peers:
+			\par\noindent We would use socket programming to implement p2p networking model. Each client has (n - 1) sockets, one for interaction with all the other n-1 players. Each client sends the following information to its peers:
 				\begin{enumerate}
 					\item Crontab will also be used to generate push notifications for devices.
 					\item In case a particular client is disconnected from the network, a pop up would be displayed to the other players, and according to their decision, a computer player will be added or the game would continue with one less player.
@@ -159,6 +159,8 @@
 					\item Unit testing will be used to check if the server and end points are working correctly.
 					\item For each endpoint, stress testing will be done via python or bash scripts to verify that the APIs perform as expected in various situations.
 				\end{itemize}
+
+			\subsection{Computer Player Testing}
 			\subsection{Overall p2p Testing}
 				We will use the app on our desktops once it is ready to identify and squash any remaining bugs.
 	\section{Extra Features}
