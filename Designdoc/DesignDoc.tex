@@ -74,40 +74,69 @@
 
 
 	\section{Sub Components}
+\subsection{Design Of The Ball} Ball class consist of all the information about the balls i.e. its velocity, position, radius and color.
+\lstset{
+    frame=tb, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{red}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{green} % string color
+}
+
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Ball}]
+class Ball
+{
+	private:
+		double radius;              //Radius of the ball
+		double center_x;             //X coordinate of the center of ball
+		double center_y;             //Y coordinate of the center of ball
+		double velocity_x;          //X component of the velocity of ball
+		double velocity_y;          //Y component of the velocity of ball
+		ArrayList<float> color;   //Color in RGB format of ball
+};
+
+\end{lstlisting}
+
+Functions will be made for accessing all the data parameters of the ball and updating them as desired. Functions for obtaining a random ball based on the desired range will also be created.
+
+\subsection{Design of Paddles} The Paddle class would contain all the information regarding one paddle.
+
+% TODO: Ayush
+\begin{lstlisting}[language=Java, caption={Class Parameters for Paddle}]
+class Paddle
+{
+	private:
+		double length;              //Length of paddle
+		ArrayList<float> color;   //Color in RGB format of paddle
+};
+
+\end{lstlisting}
+
+\subsection{Design Of The Board} The background screen would be implemented using a Board class. It would consist of all the information about the background i.e. its dimensions, color, number of balls present and a vector containing the information of the balls.
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Board}]
+class Board
+{
+	private:
+		float dimension_x;                  //x dimension of board
+		float dimension_y;                  //y dimension of board
+		int number_balls;                   //number of balls on board
+		ArrayList<Ball> vector_of_balls;  //vector of balls on board
+		int number_paddles;					// number of paddles, i.e. players
+		ArrayList<Paddle> vector_of_paddles; // vector of paddles on board
+};
+
+\end{lstlisting}
+
+Functions for accessing and updating the parameters of the board will be created. Apart from this, functions to add or remove particular balls will be provided.
+
 			\subsection{Physics}
 			Corner cases :  corners 
 					%\subsubsection
 					\subsubsection{Databases}
-
-
-\begin{table}[H]
-\centering
-\caption{Hostel Level Complaint}
-\label{my-label}
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{S.No.} & \textbf{Fields}     & \textbf{Type} & \textbf{Description}                            \\ \hline
-1              & Complaint Id        & String        & Unique Id for Complaint                         \\ \hline
-2              & User Id             & String        & Unique User Id                    \\ \hline
-3              & Complaint Type      & Int           & Complaint category                              \\ \hline
-4              & Complaint Content   & String        & Content of complaint                            \\ \hline
-5              & Extra Info          & Image         & Upload a photo                                  \\ \hline
-6              & Admin Id            & String        & Id of person assigned                           \\ \hline
-7              & Time Stamp          & Time          & Time of filing the complaint                    \\ \hline
-8              & Resolved            & Boolean       & Resolved or Not                                 \\ \hline
-9              & Mark for resolution & Boolean       & Option for complaint addressee to seek approval \\ \hline
-10             & Comment             & String        & Any comments                                    \\ \hline
-11             & Previous Id         & Int           & Previous complaint id if any                    \\ \hline
-12             & Hostel              & Int           & Hostel Id                                       \\ \hline
-13			& Anonymous 		& Boolean &  Anonymous or not \\ \hline
-14              & Number of Up-votes      & Int           & Number of Up-votes                           \\ \hline
-15             & Number of Down-votes    & Int           & Number of Down-votes                         \\ \hline
-16              & Number of Neutrals     & Int           & Number of Neutral people                    \\ \hline
-17              & Number of Satisfied    & Int           & Number of people satisfied                  \\ \hline
-18              & Number of Dissatisfied & Int           & Number of people dissatisfied with solution \\ \hline
-
-\end{tabular}
-\end{table}
 
 
 			\subsection{Computer Player Algorithm}
@@ -142,6 +171,7 @@
 				\end{itemize}
 
 			\subsection{Computer Player Testing}
+			We will play against the computer algorithm both on single PC as well as in a network of less than four players.
 			\subsection{Overall p2p Testing}
 				We will use the app on our desktops once it is ready to identify and squash any remaining bugs.
 	\section{Extra Features}
@@ -156,7 +186,7 @@
 	\item Players can play with more than one balls also. 
 	\end{itemize}
 
-	\section{Future Endeavors} 
+	\section{Future Endeavors}
 
 	\section{Source Code}
 	The source code of the project is maintained in the following repository: \\

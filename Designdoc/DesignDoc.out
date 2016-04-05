@@ -3,15 +3,18 @@
 \BOOKMARK [1][-]{section.3}{User Interface}{}% 3
 \BOOKMARK [2][-]{subsection.3.1}{Front End}{section.3}% 4
 \BOOKMARK [1][-]{section.4}{Sub Components}{}% 5
-\BOOKMARK [2][-]{subsection.4.1}{Physics}{section.4}% 6
-\BOOKMARK [3][-]{subsubsection.4.1.1}{Databases}{subsection.4.1}% 7
-\BOOKMARK [2][-]{subsection.4.2}{Computer Player Algorithm}{section.4}% 8
-\BOOKMARK [2][-]{subsection.4.3}{p2p Networking}{section.4}% 9
-\BOOKMARK [1][-]{section.5}{Interaction amongst Sub Components}{}% 10
-\BOOKMARK [1][-]{section.6}{Testing Of Components}{}% 11
-\BOOKMARK [2][-]{subsection.6.1}{Single peer testing}{section.6}% 12
-\BOOKMARK [2][-]{subsection.6.2}{Computer Player Testing}{section.6}% 13
-\BOOKMARK [2][-]{subsection.6.3}{Overall p2p Testing}{section.6}% 14
-\BOOKMARK [1][-]{section.7}{Extra Features}{}% 15
-\BOOKMARK [1][-]{section.8}{Future Endeavors}{}% 16
-\BOOKMARK [1][-]{section.9}{Source Code}{}% 17
+\BOOKMARK [2][-]{subsection.4.1}{Design Of The Ball}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.2}{Design of Paddles}{section.4}% 7
+\BOOKMARK [2][-]{subsection.4.3}{Design Of The Board}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.4}{Physics}{section.4}% 9
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Databases}{subsection.4.4}% 10
+\BOOKMARK [2][-]{subsection.4.5}{Computer Player Algorithm}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.6}{p2p Networking}{section.4}% 12
+\BOOKMARK [1][-]{section.5}{Interaction amongst Sub Components}{}% 13
+\BOOKMARK [1][-]{section.6}{Testing Of Components}{}% 14
+\BOOKMARK [2][-]{subsection.6.1}{Single peer testing}{section.6}% 15
+\BOOKMARK [2][-]{subsection.6.2}{Computer Player Testing}{section.6}% 16
+\BOOKMARK [2][-]{subsection.6.3}{Overall p2p Testing}{section.6}% 17
+\BOOKMARK [1][-]{section.7}{Extra Features}{}% 18
+\BOOKMARK [1][-]{section.8}{Future Endeavors}{}% 19
+\BOOKMARK [1][-]{section.9}{Source Code}{}% 20
