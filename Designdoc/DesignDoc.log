@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.1.18)  4 APR 2016 12:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.1.18)  5 APR 2016 14:48
 entering extended mode
 **./DesignDoc.tex
 (DesignDoc.tex
@@ -475,11 +475,7 @@ Package graphics Info: Driver file: pdftex.def on input line 94.
 \Gin@req@height=\dimen118
 \Gin@req@width=\dimen119
 )
-(DesignDoc.aux
-
-LaTeX Warning: Label `my-label' multiply defined.
-
-)
+(DesignDoc.aux)
 \openout1 = `DesignDoc.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
@@ -556,66 +552,50 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout4 = `DesignDoc.toc'.
 
  [2]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 57.
 
-LaTeX Warning: Citation `Web2py_Basics' on page 3 undefined on input line 60.
-
-
-Overfull \hbox (139.7784pt too wide) in paragraph at lines 81--97
- [][] 
- []
-
-
-Overfull \hbox (77.52832pt too wide) in paragraph at lines 106--129
- [][] 
- []
-
-[3]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 137.
-
- ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 137.
- [4] (DesignDoc.bbl [5]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 57.
+
+Overfull \hbox (77.52832pt too wide) in paragraph at lines 87--110
+ [][] 
+ []
+
+[3] [4] (DesignDoc.bbl [5]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 185.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 167.
  [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 185.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 167.
  (DesignDoc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 185.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 185.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 167.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 167.
 Package rerunfilecheck Info: File `DesignDoc.out' has not changed.
 (rerunfilecheck)             Checksum: 5756EBE5E4F1AE94EEE64038E73402D1;1015.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 185.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 167.
  ) 
 Here is how much of TeX's memory you used:
- 7728 strings out of 493634
- 115393 string characters out of 3143738
- 212975 words of memory out of 3000000
- 11020 multiletter control sequences out of 15000+200000
+ 7726 strings out of 493634
+ 115363 string characters out of 3143738
+ 208936 words of memory out of 3000000
+ 11019 multiletter control sequences out of 15000+200000
  8370 words of font info for 30 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 42i,10n,40p,277b,401s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,10n,40p,277b,399s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTe
 X 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 /public/amsfonts/cm/cmtt10.pfb>
-Output written on DesignDoc.pdf (6 pages, 165506 bytes).
+Output written on DesignDoc.pdf (6 pages, 163995 bytes).
 PDF statistics:
- 178 PDF objects out of 1000 (max. 8388607)
- 34 named destinations out of 1000 (max. 500000)
+ 177 PDF objects out of 1000 (max. 8388607)
+ 33 named destinations out of 1000 (max. 500000)
  142 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,5 +1,5 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: DesignDoc.aux
 The style file: abbrv.bst
+I found no \citation commands---while reading file DesignDoc.aux
 Database file #1: references.bib
-Warning--I didn't find a database entry for "Web2py_Basics"
-(There was 1 warning)
+(There was 1 error message)
