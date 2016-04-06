@@ -59,7 +59,7 @@
 	\end{itemize}
 
 	\section{Overall Design}
-		The game involves each player having a rectangular paddle, using which he has to prevent the balls from colliding with the walls of the walls. Each time the paddle misses a ball, the player loses one life. The player has a limited number of lives and has to score the maximum in them. According to the requirements of the assignment:
+		The game involves each player having a rectangular paddle, using which he has to prevent the balls from colliding with the walls of the walls. Each time the paddle misses a ball, the player loses one life. The player has a limited number of lives and has to score the maximum in them.The game would be controlled via a runnable function which is called again and again till the game ends.All the events of the game would be handled by this function. According to the requirements of the assignment:
 				\begin{enumerate}
 			\item The server side will be programmed in Java using sockets.
 			\item Volley will be used to send requests and receive responses.
@@ -143,12 +143,14 @@ class Board
 Functions for accessing and updating the parameters of the board will be created. Apart from this, functions to add or remove particular balls will be provided.
 
 			\subsection{Physics}
-			\par\noindent The basic law of physics will hold throughout the game.Physics we are going to use is as follows
+			\par\noindent The basic law of physics will hold throughout the game.We will be handling the following events:
 			\begin{itemize}
-			\item 
-			\item When the ball is about to reach a wall, the computer player first calculates according to the assumption of a static paddle. And moves
-			\item After the collision has occurred, the computer again moves accordingly.
-			\item Another event will be choosing between ball catching versus catching power up objects. The decision will basically be based upon the distance of the power up object and the expected distance of the ball from the paddle after collision.
+			\item \textbf{Motion of the Ball:} Instantaneous velocities of the ball would be maintained in X and Y directions.Next positions would be calculated simply by adding these to the current X and Y positions.
+			\item \textbf{Motion of the Paddle:} Movement of paddle can be controlled via Mouse or the Keyboard.In case of Mouse, current position of the mouse will control the movement of paddle.While in case of Keyboard, Arrow Keys will control the paddle movements.
+			\item \textbf{Collision of Ball and Paddle:} Collision occurs whenever the distance between the center of ball and paddle boundary is less than the ball's radius.Basic collision equation will be used. A suitable coefficient of restitution would be used.
+			\item \textbf{Collision of Ball and Boundary:} Basic collision equation will be used. A suitable coefficient of restitution would be used.
+			\item \textbf{Collision between balls:} Basic equations for head on collision would be used to calculate the next velocities of the balls.
+
 			\end{itemize}
 			
 
@@ -157,20 +159,18 @@ Functions for accessing and updating the parameters of the board will be created
 			% make subsubsections for each event listed below!! TODO
 
 			\begin{itemize}
-			\item Initially computer player tries to align its paddle center with the center of the ball.
+			\item Initially computer player tries to align its paddle center with the center of the closest ball moving towards the paddle.
 			\item When the ball is about to reach a wall, the computer player first calculates according to the assumption of a static paddle. And moves
 			\item After the collision has occurred, the computer again moves accordingly.
 			\item Another event will be choosing between ball catching versus catching power up objects. The decision will basically be based upon the distance of the power up object and the expected distance of the ball from the paddle after collision.
-
-			% TODO: multiple balls case.
 			\end{itemize}
 
 			\subsection{p2p Networking}
 			\par\noindent We would use socket programming to implement p2p networking model. Each client has (n - 1) sockets, one for interaction with all the other n-1 players. Each client sends the following information to its peers:
 			\begin{itemize}
-			\item Connected or Not: A true value is sent to other clients to show that the client is connected. 
-			\item Current data of paddle: Position of paddle is sent,  other clients adjust the position of the paddle on their board accordingly. 
-			\item Collision with paddle or not
+			\item \textbf{Current data of paddle:} Position of paddle is sent,  other clients adjust the position of the paddle on their board accordingly. 
+			\item \textbf{Collision with paddle:} Boolean value denoting collision along with the new position and velocity of ball would be sent.
+			\item \textbf{Collection of PowerUps} An integer mapped to a specific power up would be sent.Clieent will render the UI accordingly.
 			% ADD MORE, AYUSH TODO
 			\end{itemize}
 				\begin{enumerate}
