@@ -72,8 +72,11 @@
 
     	\subsection{Graphical User Interface}
     	% TODO: all kinds of random floating objects. ADITI does this
+    	% TODO: initial screen.
     	The user interface displays the board along with the balls and the paddles at any instant of time. Balls will be modelled as 2-dimensional circles.
     	\par\noindent The Swing library of Java language will be used to render the interface. At every instant of time, data from the object of class Board will be extracted, to get information about all the balls and the paddles to be displayed on screen. The colors for the balls are randomly chosen, but the radius for all of them is constant for one particular game. 
+    	\par\noindent There are various floating objects displayed on the screen, for special power ups and downs. They may be of following types:
+
 % The setup also contains ambient lighting to give a shine to the balls. This lighting could be done by more than one light source of different colors. Specular and diffuse component of the light sources will also be controlled.
 % \par\noindent The background of the window will be given a 2-dimensional texture by rendering a bitmap image file. This bitmap image file is rendered on a rectangle of size same as that of the window and displayed on the screen. A frame will also be made to mark the boundaries of the region in which the balls will be confined. The size of the window can be changed but the background will adjust itself accordingly. The window will exit on pressing the escape key. However, size of the balls will remain unchanged.
 
@@ -173,8 +176,13 @@ Functions for accessing and updating the parameters of the board will be created
 			
 
 	\section{Thread Interactions}
-	\par\noindent We would need multiple threads to handle different parts separately.
-	
+	\par\noindent We would need multiple threads to handle different components of the game separately. Following is the list of various threads to be used:
+	\begin{itemize}
+	\item \textbf{Update UI} : This thread continuously updates the positions of the balls and the paddles being displayed to the user, on the basis of the information received from the network.
+	\item \textbf{One Thread Per Socket} : There would be n-1 threads, each controlling communication with one of the other clients. Each thread is responsible for sending and receiving information about the states of the paddles.
+	\end{itemize}
+	\par\noindent The thread maintaining UI will call the update() function only after receiving the updated information from the other n-1 threads.
+
 	\section{Testing Of Components}
 		% \begin{enumerate}
 			\subsection{Single peer testing}
