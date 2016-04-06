@@ -143,7 +143,13 @@ class Board
 Functions for accessing and updating the parameters of the board will be created. Apart from this, functions to add or remove particular balls will be provided.
 
 			\subsection{Physics}
-			
+			\par\noindent The basic law of physics will hold throughout the game.Physics we are going to use is as follows
+			\begin{itemize}
+			\item 
+			\item When the ball is about to reach a wall, the computer player first calculates according to the assumption of a static paddle. And moves
+			\item After the collision has occurred, the computer again moves accordingly.
+			\item Another event will be choosing between ball catching versus catching power up objects. The decision will basically be based upon the distance of the power up object and the expected distance of the ball from the paddle after collision.
+			\end{itemize}
 			
 
 			\subsection{Computer Player Algorithm}
@@ -162,13 +168,15 @@ Functions for accessing and updating the parameters of the board will be created
 			\subsection{p2p Networking}
 			\par\noindent We would use socket programming to implement p2p networking model. Each client has (n - 1) sockets, one for interaction with all the other n-1 players. Each client sends the following information to its peers:
 			\begin{itemize}
-			\item Connected or not
-			\item Current data of paddle
+			\item Connected or Not: A true value is sent to other clients to show that the client is connected. 
+			\item Current data of paddle: Position of paddle is sent,  other clients adjust the position of the paddle on their board accordingly. 
 			\item Collision with paddle or not
 			% ADD MORE, AYUSH TODO
 			\end{itemize}
 				\begin{enumerate}
-					\item In case a particular client is disconnected from the network, a pop up would be displayed to the other players, and according to their decision, a computer player will be added or the game would continue with one less player.
+					\item In case a particular client is disconnected from the network, a pop up would be displayed to the other players, and according to their decision, a computer player will be added or the game would continue with the player removed .
+					\item Every client adjusts the paddle positions of other client, according to the data received.Next position of the ball is calculated individually by the clients and is consistent throughout the game.
+					\item  
 				\end{enumerate}
 			
 
