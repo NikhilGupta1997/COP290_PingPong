@@ -32,7 +32,7 @@
 	  % \\  \vspace{3mm} \includegraphics{ddlogo.png}}
 }
 \author{
-	\vspace{5mm} \includegraphics[width=5cm]{logo.png} \\
+	\vspace{5mm} \\
 	 \textbf{Aditi}\\
 	2014CS10205 \vspace{2mm} \\
 	\textbf{Ayush Bhardwaj}\\ 
@@ -71,7 +71,11 @@
 	
 
     	\subsection{Graphical User Interface}
-    	% TODO: all kinds of random floating objects. ADITI does this.
+    	% TODO: all kinds of random floating objects. ADITI does this
+    	The user interface displays the board along with the balls and the paddles at any instant of time. Balls will be modelled as 2-dimensional circles.
+    	\par\noindent The Swing library of Java language will be used to render the interface. At every instant of time, data from the object of class Board will be extracted, to get information about all the balls and the paddles to be displayed on screen. The colors for the balls are randomly chosen, but the radius for all of them is constant for one particular game. 
+% The setup also contains ambient lighting to give a shine to the balls. This lighting could be done by more than one light source of different colors. Specular and diffuse component of the light sources will also be controlled.
+% \par\noindent The background of the window will be given a 2-dimensional texture by rendering a bitmap image file. This bitmap image file is rendered on a rectangle of size same as that of the window and displayed on the screen. A frame will also be made to mark the boundaries of the region in which the balls will be confined. The size of the window can be changed but the background will adjust itself accordingly. The window will exit on pressing the escape key. However, size of the balls will remain unchanged.
 
 
 	\section{Sub Components}
@@ -103,15 +107,18 @@ class Ball
 
 Functions will be made for accessing all the data parameters of the ball and updating them as desired. Functions for obtaining a random ball based on the desired range will also be created.
 
-\subsection{Design of Paddles} The Paddle class would contain all the information regarding one paddle.
+\subsection{Design of Paddles} The Paddle class would contain all the information regarding one paddle. Basic functions will be there to retrieve all the data stored.
 
-% TODO: Ayush
 \begin{lstlisting}[language=Java, caption={Class Parameters for Paddle}]
 class Paddle
 {
 	private:
 		double length;              //Length of paddle
 		ArrayList<float> color;   //Color in RGB format of paddle
+		double paddle_x;			// x coordinate of paddle center
+		double paddle_y;			// y coordinate of paddle center
+		int times_ball_missed;		// no of times this paddle has missed ball
+		bool isAlive;				// denotes if player is still alive
 };
 
 \end{lstlisting}
@@ -128,6 +135,7 @@ class Board
 		ArrayList<Ball> vector_of_balls;  //vector of balls on board
 		int number_paddles;					// number of paddles, i.e. players
 		ArrayList<Paddle> vector_of_paddles; // vector of paddles on board
+		ArrayList<bool> dead_alive;			// array for whether player is alive/dead
 };
 
 \end{lstlisting}
@@ -135,10 +143,8 @@ class Board
 Functions for accessing and updating the parameters of the board will be created. Apart from this, functions to add or remove particular balls will be provided.
 
 			\subsection{Physics}
-			Corner cases :  Corners are replaced by 
-					%\subsubsection
-					\subsubsection{Databases}
-
+			
+			
 
 			\subsection{Computer Player Algorithm}
 			\par\noindent The computer player can have variable speed. But the range of speed varies on the basis of level of difficulty.
@@ -155,12 +161,19 @@ Functions for accessing and updating the parameters of the board will be created
 
 			\subsection{p2p Networking}
 			\par\noindent We would use socket programming to implement p2p networking model. Each client has (n - 1) sockets, one for interaction with all the other n-1 players. Each client sends the following information to its peers:
+			\begin{itemize}
+			\item Connected or not
+			\item Current data of paddle
+			\item Collision with paddle or not
+			% ADD MORE, AYUSH TODO
+			\end{itemize}
 				\begin{enumerate}
 					\item In case a particular client is disconnected from the network, a pop up would be displayed to the other players, and according to their decision, a computer player will be added or the game would continue with one less player.
 				\end{enumerate}
 			
 
-	\section{Interaction amongst Sub Components}
+	\section{Thread Interactions}
+	\par\noindent We would need multiple threads to handle different parts separately.
 	
 	\section{Testing Of Components}
 		% \begin{enumerate}
