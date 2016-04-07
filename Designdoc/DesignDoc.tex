@@ -163,13 +163,14 @@ Functions for accessing and updating the parameters of the board will be created
 			\section{Physics} 
 			\par\noindent The basic law of physics will hold throughout the game.We will be handling the following events:
 			\begin{itemize}
-			\item \textbf{Motion of the Ball:} Instantaneous velocities of the ball would be maintained in X and Y directions.Next positions would be calculated simply by adding these to the current X and Y positions.
-
+			\item \textbf{Motion of the Ball:} Instantaneous velocities of the ball would be maintained in X and Y directions.Next positions would be calculated simply by adding these to the current X and Y positions. 
 			\item \textbf{Motion of the Paddle:} Movement of paddle can be controlled via Mouse or the Keyboard. In case of Mouse, current position of the mouse will control the movement of paddle. While in case of Keyboard, Arrow Keys will control the paddle movements.
 			\item \textbf{Collision of Ball and Paddle:} Collision occurs whenever the distance between the center of ball and paddle boundary is less than the ball's radius.Basic collision equation will be used while also considering the speed of the paddle at the time of collision. A suitable coefficient of restitution would be used.
 			\item \textbf{Collision of Ball and Boundary:} The detection of this collision is also similar to the one listed above. Basic collision equation will be used. A suitable coefficient of restitution would be used.
 			\item \textbf{Collision between balls:} Basic equations for head on collision between two solid objects would be used to calculate the next velocities of both the balls.
 			\item \textbf{Corner Case:} As design of all boundaries(of paddles, board) are of triangular shape, Corner Cases reduce to a simple collision between the ball and straight boundaries. The boundary with which the client first detects the collision is considered for the calculation.
+			\item \textbf{Our Equations}
+			\begin{enumerate}
 			\end{itemize}
 			
 
