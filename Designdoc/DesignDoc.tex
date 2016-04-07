@@ -173,7 +173,7 @@ Functions for accessing and updating the parameters of the board will be created
 			\begin{itemize}
 			\item \textbf{Current data of paddle:} Position of paddle is sent,  other clients adjust the position of the paddle on their board accordingly. 
 			\item \textbf{Collision with paddle:} Boolean value denoting collision along with the new position and velocity of ball would be sent.
-			\item \textbf{Collection of PowerUps} An integer mapped to a specific power up would be sent.Clieent will render the UI accordingly.
+			\item \textbf{Collection of PowerUps} An integer mapped to a specific power up would be sent.Client will render the UI accordingly.
 			% ADD MORE, AYUSH TODO
 			\end{itemize}
 				\begin{enumerate}
@@ -186,8 +186,8 @@ Functions for accessing and updating the parameters of the board will be created
 	\section{Thread Interactions}
 	\par\noindent We would need multiple threads to handle different components of the game separately. Following is the list of various threads to be used:
 	\begin{itemize}
-	\item \textbf{Update UI} : This thread continuously updates the positions of the balls and the paddles being displayed to the user, on the basis of the information received from the network.
-	\item \textbf{One Thread Per Socket} : There would be n-1 threads, each controlling communication with one of the other clients. Each thread is responsible for sending and receiving information about the states of the paddles.
+	\item \textbf{Update UI} : This thread continuously updates the positions of the balls and the paddles being displayed to the user, on the basis of the information received from the network. This is done after every fixed interval of time.
+	\item \textbf{One Thread Per Socket} : There would be n-1 threads, each controlling communication with one of the other clients. Each thread is responsible for making the connection via sockets using unique ports and sending and receiving information about the states of the paddles over network.
 	\end{itemize}
 	\par\noindent The thread maintaining UI will call the update() function only after receiving the updated information from the other n-1 threads.
 
@@ -195,8 +195,8 @@ Functions for accessing and updating the parameters of the board will be created
 		% \begin{enumerate}
 			\subsection{Single peer testing}
 				\begin{itemize}
-					\item Unit testing will be used to check if the server and end points are working correctly.
-					\item For each endpoint, stress testing will be done via python or bash scripts to verify that the APIs perform as expected in various situations.
+					\item Unit testing will be used to check if the socket connections are transferring information correctly.
+					\item For each peer to peer socket, stress testing will be done via python or bash scripts to verify that the socket connections perform as expected in various situations.
 				\end{itemize}
 
 			\subsection{Computer Player Testing}
