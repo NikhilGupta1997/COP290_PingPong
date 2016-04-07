@@ -181,9 +181,19 @@ Functions for accessing and updating the parameters of the board will be created
 			\item \textbf{Collection of PowerUps} An integer mapped to a specific power up would be sent.Client will render the UI accordingly.
 			% ADD MORE, AYUSH TODO
 			\end{itemize}
+			\subsection{Event Flow}
+			The steps involved in flow of each network message from Peer 1 to Peer 2 are:
+			\begin{enumerate}
+			\item Peer 1 initiates the process of sending the message
+			\item Peer 1 tries to establish the connection with the peer
+			\item Peer 2 accepts the connection and starts the handler thread
+			\item Peer 1 sends the message
+			\item Peer 2 receives the message and send backs the acknowledgment back to peer 1 and closes the connection.   
+			\end{enumerate}
+			The flow is similar for any Sender and Receiver pair.
 			\subsection{Event Handling}
 				\begin{enumerate}
-					\item In case a particular client is disconnected from the network, a pop up would be displayed to the other players, and according to their decision, a computer player will be added or the game would continue with the player removed .
+					\item If a peer takes more than an specified time to answer, it is disconnected.In case a particular client is disconnected from the network, a pop up would be displayed to the other players, and according to their decision, a computer player will be added or the game would continue with the player removed .
 					\item Every client adjusts the paddle positions of other client, according to the data received.Next position of the ball is calculated individually by the clients and is consistent throughout the game.
 					\item  
 				\end{enumerate}
