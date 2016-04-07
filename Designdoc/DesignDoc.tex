@@ -79,7 +79,7 @@
     	The user interface displays the board along with the balls and the paddles at any instant of time. Balls will be modelled as 2-dimensional circles.
     	\par\noindent The Swing library~\cite{swing_java} of Java language will be used to render the interface. At every instant of time, data from the object of class Board will be extracted, to get information about all the balls and the paddles to be displayed on screen. The colors for the balls are randomly chosen, but the radius for all of them is constant for one particular game.Some of the features of UI are:
     	\begin{itemize}
-    	\item Rectangular Board will have rounded corners. Balls will be moving on it continuously. Paddles will move according to the player's moves.
+    	\item Rectangular Board will have triangular corners. Balls will be moving on it continuously. Paddles will move according to the player's moves.
     	\item Every user will see his own paddle on the bottom edge of the board.
     	\item Number of Lives remaining will be displayed for each player.
     	\item Power Ups(or Downs) will be random floating objects on the board. They will be randomly generated and move in random directions.
@@ -162,7 +162,7 @@ Functions for accessing and updating the parameters of the board will be created
 			\item \textbf{Collision of Ball and Paddle:} Collision occurs whenever the distance between the center of ball and paddle boundary is less than the ball's radius.Basic collision equation will be used. A suitable coefficient of restitution would be used.
 			\item \textbf{Collision of Ball and Boundary:} Basic collision equation will be used. A suitable coefficient of restitution would be used.
 			\item \textbf{Collision between balls:} Basic equations for head on collision would be used to calculate the next velocities of the balls.
-			\item \textbf{Corner Case:} As design of all boundary is of circular shape, Corner Cases reduce to a simple collision between the ball and boundaries. 
+			\item \textbf{Corner Case:} As design of all boundary are of triangular shape, Corner Cases reduce to a simple collision between the ball and boundaries.The boundary being the one with which the client first detects the collision. 
 			\end{itemize}
 			
 
@@ -172,7 +172,7 @@ Functions for accessing and updating the parameters of the board will be created
 
 			\begin{itemize}
 			\item Initially computer player tries to align its paddle center with the center of the closest ball moving towards it.
-			\item When the ball is about to reach a wall, the computer player first calculates according to the assumption of a static paddle. And moves
+			\item When the ball is about to reach a wall, the computer player first calculates according to the assumption of a static paddle and moves.
 			\item After the collision has occurred, the computer again moves accordingly.
 			\item Another event will be choosing between ball catching versus catching power up objects. The decision will basically be based upon the distance of the power up object and the expected distance of the ball from the paddle after collision.
 			\end{itemize}
@@ -180,6 +180,7 @@ Functions for accessing and updating the parameters of the board will be created
 			\section{p2p Networking}
 			\par\noindent We would use socket programming to implement p2p networking model. Each client has (n - 1) sockets, one for interaction with all the other n-1 players. Each client sends the following information to its peers:
 			\begin{itemize}
+			\item \textbf{Loss of Life:} Boolean value denoting whether the player has missed the ball and lost a life..
 			\item \textbf{Current data of paddle:} Position of paddle is sent,  other clients adjust the position of the paddle on their board accordingly. 
 			\item \textbf{Collision with paddle:} Boolean value denoting collision along with the new position and velocity of ball would be sent.
 			\item \textbf{Collection of PowerUps} An integer mapped to a specific power up would be sent.Client will render the UI accordingly.
@@ -196,11 +197,12 @@ Functions for accessing and updating the parameters of the board will be created
 			\end{enumerate}
 			The flow is similar for any Sender and Receiver pair.
 			\subsection{Event Handling}
-				\begin{enumerate}
-					\item If a peer takes more than an specified time to answer, it is disconnected.In case a particular client is disconnected from the network, a pop up would be displayed to the other players, and according to their decision, a computer player will be added or the game would continue with the player removed .
-					\item Every client adjusts the paddle positions of other client, according to the data received.Next position of the ball is calculated individually by the clients and is consistent throughout the game.
-					\item  
-				\end{enumerate}
+			\begin{enumerate}
+			\item \textbf{Missing the ball:} Player looses a life if the ball misses the paddle and touches the wall.It involves updating of the number of remaining lives of the player.
+			\item \textbf{Disconnection:}If a peer takes more than an specified time to answer, it is disconnected.In case a particular client is disconnected from the network, a pop up would be displayed to the other players, and according to their decision, a computer player will be added or the game would continue with the player removed .
+			\item \textbf{Updating Position:}Every client adjusts the paddle positions of other client, according to the data received.Next position of the ball is calculated individually by the clients and is consistent throughout the game.
+			\item \textbf{Collection of Power Up:}Communicated via the network message and a suitable method is called to update the UI.
+			\end{enumerate}
 			
 
 	\section{Thread Interactions}
@@ -231,7 +233,7 @@ Functions for accessing and updating the parameters of the board will be created
 	\item Some danger items would also be floating, which on being captured, would either slow down the paddle, or reduce its length or make the ball faster in the player's region.
 	\item The game would have multiple levels that would differ by increasing ball speed and decreasing paddle length.
 	\item While considering collision, frictional drag will also be considered.
-	\item Corners of the board and the paddles will be circular.
+	\item Corners of the board and the paddles will be triangular.
 	\item Players can play with more than one balls also.
 	\end{itemize}
 
