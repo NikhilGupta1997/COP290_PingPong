@@ -56,12 +56,13 @@
 	\begin{itemize}
 	\item Simulation of ping pong game
 	\item Allows multiple players to play at one time using p2p networking.
+	\item Every client controls its own game state on the basis of information transfer.
 	\end{itemize}
 
 	\section{Overall Design}
 		The game involves each player having a rectangular paddle, using which he has to prevent the balls from colliding with the walls of the walls. Each time the paddle misses a ball, the player loses one life. The player has a limited number of lives and has to score the maximum in them.The game would be controlled via a runnable function which is called again and again till the game ends.All the events of the game would be handled by this function. According to the requirements of the assignment:
 				\begin{enumerate}
-			\item The server side will be programmed in Java using sockets.
+			\item Each client side will be programmed in Java using sockets.
 			\item Volley will be used to send requests and receive responses.
 			\item Doxygen will be used to create HTML documentation of the entire code base.
 			\item The entire code will be split up in multiple files to ensure modularity in code.
@@ -184,7 +185,7 @@ Functions for accessing and updating the parameters of the board will be created
 			
 
 	\section{Thread Interactions}
-	\par\noindent We would need multiple threads to handle different components of the game separately. Following is the list of various threads to be used:
+	\par\noindent We would need multiple threads to handle different components of the game separately. There would be separate runnable() functions for the following list of threads to be used:
 	\begin{itemize}
 	\item \textbf{Update UI} : This thread continuously updates the positions of the balls and the paddles being displayed to the user, on the basis of the information received from the network. This is done after every fixed interval of time.
 	\item \textbf{One Thread Per Socket} : There would be n-1 threads, each controlling communication with one of the other clients. Each thread is responsible for making the connection via sockets using unique ports and sending and receiving information about the states of the paddles over network.
