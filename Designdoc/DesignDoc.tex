@@ -54,34 +54,38 @@
 	\section{Objectives}
 	Design a desktop app which is:
 	\begin{itemize}
-	\item Simulation of Multi player and Multilevel Ping Pong game
+	\item Simulation of Multi player and Multilevel Ping Pong game.
 	\item Allows multiple players to play at one time using p2p networking.
+	\item Every client controls its own game state on the basis of information transfer.
 	\end{itemize}
 
 	\section{Overall Design}
-		The game involves each player having a rectangular paddle, using which player has to prevent the balls from colliding with the walls of the walls. Each time the paddle misses a ball, the player loses one life. The player has a limited number of lives and has to survive till the end to win.The game would be controlled via a runnable function which is called again and again till the game ends.All the events of the game would be handled by this function. According to the requirements of the assignment:
+		The game involves each player having a rectangular paddle, using which he has to prevent the balls from colliding with the walls of the walls. Each time the paddle misses a ball, the player loses one life. The player has a limited number of lives and has to score the maximum in them.The game would be controlled via a runnable function which is called again and again till the game ends.All the events of the game would be handled by this function. According to the requirements of the assignment:
 				\begin{itemize}
-			\item The server side will be programmed in Java using sockets.
+			\item Each client side will be programmed in Java using sockets.
 			\item Volley will be used to send requests and receive responses.
 			\item Doxygen will be used to create HTML documentation of the entire code base.
 			\item The entire code will be split up in multiple files to ensure modularity in code.
 			\item Swing library will be used to display the Graphic User Interface.
 		\end{itemize}
-	\section{User Interface}
+	\section{Graphical User Interface}
 	
-
-    	\subsection{Graphical User Interface}
-    	% TODO: all kinds of random floating objects. ADITI does this
-    	The user interface displays the board along with the balls and the paddles at any instant of time. Balls will be modelled as 2-dimensional circles.
-    	\par\noindent The Swing library of Java language will be used to render the interface. At every instant of time, data from the object of class Board will be extracted, to get information about all the balls and the paddles to be displayed on screen. The colors for the balls are randomly chosen, but the radius for all of them is constant for one particular game.Some of the features of UI are:
-    	\begin{itemize}
-    	\item Rectangular Board will have rounded corners.Paddles and Balls will be moving on it.
-    	\item Number of Lives remaining will be displayed for each player.
-    	\item Power Ups will be random floating objects on the board. They will be randomly generated and move in random directions.
-    	\item There will be suitable functions to render the change in paddle on collection of a Power Up. 
-    	\end{itemize}
     	\subsection{Start Screen}
     	The Start Screen will handle the setting up of the game.It will offer options like Play Against Computer, Play with peers, Number of Players,No of balls,Level of Difficulty. After it a screen to establish connection with mates will appear.
+
+    	\subsection{Main UI}
+    	% TODO: all kinds of random floating objects. ADITI does this
+    	% TODO: initial screen.
+    	The user interface displays the board along with the balls and the paddles at any instant of time. Balls will be modelled as 2-dimensional circles.
+    	\par\noindent The Swing library~\cite{swing_java} of Java language will be used to render the interface. At every instant of time, data from the object of class Board will be extracted, to get information about all the balls and the paddles to be displayed on screen. The colors for the balls are randomly chosen, but the radius for all of them is constant for one particular game.Some of the features of UI are:
+    	\begin{itemize}
+    	\item Rectangular Board will have rounded corners. Balls will be moving on it continuously. Paddles will move according to the player's moves.
+    	\item Every user will see his own paddle on the bottom edge of the board.
+    	\item Number of Lives remaining will be displayed for each player.
+    	\item Power Ups(or Downs) will be random floating objects on the board. They will be randomly generated and move in random directions.
+    	\item There will be suitable functions to render the change in paddle on collection of a Power Up or Down.
+    	\item The user controls his paddle position by using the \textbf{keyboard} Left/Right keys or by using the \textbf{Left/Right buttons} on screen.
+    	\end{itemize}
 % The setup also contains ambient lighting to give a shine to the balls. This lighting could be done by more than one light source of different colors. Specular and diffuse component of the light sources will also be controlled.
 % \par\noindent The background of the window will be given a 2-dimensional texture by rendering a bitmap image file. This bitmap image file is rendered on a rectangle of size same as that of the window and displayed on the screen. A frame will also be made to mark the boundaries of the region in which the balls will be confined. The size of the window can be changed but the background will adjust itself accordingly. The window will exit on pressing the escape key. However, size of the balls will remain unchanged.
 
@@ -115,7 +119,7 @@ class Ball
 
 Functions will be made for accessing all the data parameters of the ball and updating them as desired. Functions for obtaining a random ball based on the desired range will also be created.
 
-\subsection{Design of Paddles} The Paddle class would contain all the information regarding one paddle. Basic functions will be there to retrieve all the data stored.
+\subsection{Design of Paddles} The Paddle class would contain all the information regarding one paddle. Basic functions will be there to retrieve all the data stored. All paddles would have the same color.
 
 \begin{lstlisting}[language=Java, caption={Class Parameters for Paddle}]
 class Paddle
@@ -200,14 +204,19 @@ Functions for accessing and updating the parameters of the board will be created
 			
 
 	\section{Thread Interactions}
-	\par\noindent We would need multiple threads to handle different parts separately.
-	
+	\par\noindent We would need multiple threads to handle different components of the game separately. There would be separate runnable() functions for the following list of threads to be used:
+	\begin{itemize}
+	\item \textbf{Update UI} : This thread continuously updates the positions of the balls and the paddles being displayed to the user, on the basis of the information received from the network. This is done after every fixed interval of time.
+	\item \textbf{One Thread Per Socket} : There would be n-1 threads, each controlling communication with one of the other clients. Each thread is responsible for making the connection via sockets using unique ports and sending and receiving information about the states of the paddles over network.
+	\end{itemize}
+	\par\noindent The thread maintaining UI will call the update() function only after receiving the updated information from the other n-1 threads.
+
 	\section{Testing Of Components}
 		% \begin{enumerate}
 			\subsection{Single peer testing}
 				\begin{itemize}
-					\item Unit testing will be used to check if the server and end points are working correctly.
-					\item For each endpoint, stress testing will be done via python or bash scripts to verify that the APIs perform as expected in various situations.
+					\item Unit testing will be used to check if the socket connections are transferring information correctly.
+					\item For each peer to peer socket, stress testing will be done via python or bash scripts to verify that the socket connections perform as expected in various situations.
 				\end{itemize}
 
 			\subsection{Computer Player Testing}
