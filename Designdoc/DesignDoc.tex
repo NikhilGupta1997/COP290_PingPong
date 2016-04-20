@@ -169,12 +169,14 @@ Functions for accessing and updating the parameters of the board will be created
 			\item \textbf{Collision of Ball and Boundary:} The detection of this collision is also similar to the one listed above. Basic collision equation will be used. A suitable coefficient of restitution would be used.
 			\item \textbf{Collision between balls:} Basic equations for head on collision between two solid objects would be used to calculate the next velocities of both the balls.
 			\item \textbf{Corner Case:} As design of all boundaries(of paddles, board) are of triangular shape, Corner Cases reduce to a simple collision between the ball and straight boundaries. The boundary with which the client first detects the collision is considered for the calculation.
-			\item \textbf{Our Equations}
-			\begin{enumerate}
-				\item V_{y2} = U_{x1}(\frac{\epsilon + 1}{2})cos\theta sin\theta + U_{y1}(\frac{\epsilon + 1}{2})sin^2\theta + U_{x2}((\frac{1 - \epsilon}{2})cos\theta sin\theta - sin\theta cos\theta) + U_{y2}((\frac{1 - \epsilon}{2})sin^2\theta + cos^2\theta)
-				\item V_{x2} = U_{x1}(\frac{\epsilon + 1}{2})cos^2\theta + U_{y1}(\frac{\epsilon + 1}{2})sin\theta cos\theta + U_{x2}((\frac{1 - \epsilon}{2})cos^2\theta + sin^2\theta) + U_{y2}((\frac{1 - \epsilon}{2})sin\theta cos\theta - cos\theta sin\theta)
-				\item V_{y1} = U_{x1}((\frac{1 - \epsilon}{2})cos\theta sin\theta - cos\theta sin\theta) + U_{y1}((\frac{1 - \epsilon}{2})sin^2\theta + cos^2\theta) + U_{x2}(\frac{\epsilon + 1}{2})cos\theta sin\theta + U_{y2}(\frac{1 - \epsilon}{2})sin^2\theta
-				\item V_{x1} = U_{x1}((\frac{1 - \epsilon}{2})cos^2\theta - sin^2\theta) + U_{y1}((\frac{1 - \epsilon}{2})cos\theta sin\theta - cos\theta sin\theta) + U_{x2}(\frac{\epsilon + 1}{2})cos^2\theta + U_{y2}(\frac{1 - \epsilon}{2})sin\theta cos\theta
+			% \item \textbf{Our Equations}
+			% \begin{enumerate}
+			% 	\item V\_{y2} = U\_{x1}(\frac{\epsilon + 1}{2})cos\theta sin\theta + U\_{y1}(\frac{\epsilon + 1}{2})sin\^2\theta + U\_{x2}((\frac{1 - \epsilon}{2})cos\theta sin\theta - sin\theta cos\theta) + U\_{y2}((\frac{1 - \epsilon}{2})sin\^2\theta + cos\^2\theta)
+			% 	\item V\_{x2} = U\_{x1}(\frac{\epsilon + 1}{2})cos^2\theta + U\_{y1}(\frac{\epsilon + 1}{2})sin\theta cos\theta + U\_{x2}((\frac{1 - \epsilon}{2})cos^2\theta + sin^2\theta) + U\_{y2}((\frac{1 - \epsilon}{2})sin\theta cos\theta - cos\theta sin\theta)
+			% 	\item V\_{y1} = U\_{x1}((\frac{1 - \epsilon}{2})cos\theta sin\theta - cos\theta sin\theta) + U\_{y1}((\frac{1 - \epsilon}{2})sin^2\theta + cos^2\theta) + U\_{x2}(\frac{\epsilon + 1}{2})cos\theta sin\theta + U\_{y2}(\frac{1 - \epsilon}{2})sin^2\theta
+			% 	\item V\_{x1} = U\_{x1}((\frac{1 - \epsilon}{2})cos^2\theta - sin^2\theta) + U\_{y1}((\frac{1 - \epsilon}{2})cos\theta sin\theta - cos\theta sin\theta) + U\_{x2}(\frac{\epsilon + 1}{2})cos^2\theta + U\_{y2}(\frac{1 - \epsilon}{2})sin\theta cos\theta
+
+			% 	\end{enumerate}
 
 			\end{itemize}
 			
