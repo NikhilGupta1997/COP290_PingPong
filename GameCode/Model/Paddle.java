@@ -11,13 +11,14 @@ public class Paddle
 	private int times_ball_missed;
 	private boolean isAlive;
 
-	public Paddle(ArrayList<Float> color)
+	public Paddle(double plen, double cx, double cy, int miss, boolean life)
 	{
-		times_ball_missed = 0;
-		isAlive = true;
-		P_length = 10; // standard initial length
-		// paddle_x = 
-		p_color = color;
+		p_color = new ArrayList<Float>();
+		P_length = plen;
+		paddle_x = cx;
+		paddle_y = cy;
+		times_ball_missed = miss;
+		isAlive = life;
 	}
 
 	public double getPaddleX()

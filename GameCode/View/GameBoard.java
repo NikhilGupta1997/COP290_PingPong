@@ -3,6 +3,8 @@ package View;
 import javax.swing.*;
 import Model.*;
 import java.util.*;
+import java.awt.event.*;
+
 
 public class GameBoard extends JFrame
 {
@@ -31,6 +33,16 @@ public class GameBoard extends JFrame
 	public void reDraw(ArrayList<Ball> balls, ArrayList<Paddle> paddles)
 	{
 		GamePanel.updateBoard(balls, paddles);
+	}
+
+	public int getPaddleX()
+	{
+		return GamePanel.getNewX();
+	}
+
+	public int getPaddleY()
+	{
+		return GamePanel.getNewY();
 	}
 
 }

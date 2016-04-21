@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import Model.*;
 import java.util.*;
+import java.awt.event.*;
+
 
 public class MainPanel extends JPanel
 {
@@ -13,6 +15,8 @@ public class MainPanel extends JPanel
 	* It has a Timer object to render the UI according to backend data after a fixed amt of time **/
 	private static final int Default_Height = 100;
 	private static final int Default_Width = 100;
+	private static int PaddleX;
+	private static int PaddleY;
 
 
 	public MainPanel()
@@ -22,6 +26,17 @@ public class MainPanel extends JPanel
 		this.setPreferredSize(new Dimension(Default_Width, Default_Height));
 		this.setVisible(true);
 		this.setBackground(Color.LIGHT_GRAY);
+		this.addMouseMotionListener(new CustomMouseMotionListener());
+	}
+
+	public int getNewX()
+	{
+		return PaddleX;
+	}
+
+	public int getNewY()
+	{
+		return PaddleY;
 	}
 
 
@@ -55,6 +70,7 @@ public class MainPanel extends JPanel
 		}
 		for (int i = 0; i < no_paddles; i++)
 		{
+			// ith at bottom. ROTATE karo
 			Paddle ith = paddles.get(i);
 			double P_length = ith.getPaddleLength();
 			double paddle_x = ith.getPaddleX();
@@ -65,8 +81,16 @@ public class MainPanel extends JPanel
 			
 	}
 
-	// public void reDraw()
-	// {
-	// 	// this.rePaint();
-	// }
+	public static class CustomMouseMotionListener implements MouseMotionListener {
+		public void mouseDragged(MouseEvent e) {
+        System.out.println("Mouse Dragged: ("+e.getX()+", "+e.getY() +")");
+        PaddleX = e.getX();
+        PaddleY = e.getY();
+      }
+
+      public void mouseMoved(MouseEvent e) {
+         // statusLabel.setText("Mouse Moved: ("+e.getX()+", "+e.getY() +")");
+      }    
+   }
+
 }

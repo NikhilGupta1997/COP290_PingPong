@@ -43,4 +43,27 @@ public class Board
 		vector_balls.remove(i);
 	}
 
+	public void addPaddle(Paddle p)
+	{
+		vector_paddles.add(p);
+		dead_Alive.add(true);
+	}
+
+	public void removePaddle(int i)
+	{
+		vector_paddles.remove(i);
+	}
+
+	public void movePaddle(int i, double new_px,double new_py,double new_len,int times_missed, boolean life)
+	{
+		Paddle p = new Paddle(new_len, new_px, new_py, times_missed, life);
+		vector_paddles.set(i,p);
+	}
+
+	public void moveBall(int i,double vx, double vy, double cx, double cy, double r)
+	{
+		Ball b = new Ball(vx, vy, cx, cy, r);
+		vector_balls.set(i, b);
+	}
+
 }
