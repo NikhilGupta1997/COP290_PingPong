@@ -1,3 +1,5 @@
+package Physics;
+
 public class velocity
 {
 	public double vx1;

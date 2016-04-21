@@ -1,3 +1,5 @@
+package Physics;
+
 //import package Physics;
 public class physics {
 	public vel_b2b Colision_b2b(double ux1,double uy1,double ux2,double uy2,double angle)
