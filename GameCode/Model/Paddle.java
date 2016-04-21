@@ -1,18 +1,21 @@
+package Model;
+
+import java.util.*;
 
 public class Paddle
 {
 	private double P_length;
 	private double paddle_x;
-	private double paddle_x;
-	private ArrayList<float> p_color;
+	private double paddle_y;
+	private ArrayList<Float> p_color;
 	private int times_ball_missed;
 	private boolean isAlive;
 
-	public Paddle(ArrayList<float> color)
+	public Paddle(ArrayList<Float> color)
 	{
 		times_ball_missed = 0;
 		isAlive = true;
-		length = 10; // standard initial length
+		P_length = 10; // standard initial length
 		// paddle_x = 
 		p_color = color;
 	}
@@ -42,7 +45,7 @@ public class Paddle
 		return P_length;
 	}
 
-	public ArrayList<float> getPaddleColor()
+	public ArrayList<Float> getPaddleColor()
 	{
 		return p_color;
 	}

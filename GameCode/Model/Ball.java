@@ -1,3 +1,6 @@
+package Model;
+
+import java.util.*;
 
 public class Ball
 {
@@ -6,13 +9,16 @@ public class Ball
 	private double center_y;
 	private double vel_x;
 	private double vel_y;
-	private ArrayList<float> bcolor;
+	private ArrayList<Float> bcolor;
 
-	public Ball(double vx, double vy, ArrayList<float> color)
+	public Ball(double vx, double vy, double cx, double cy, double r)
 	{
 		vel_x = vx;
 		vel_y = vy;
-		bcolor = color;
+		// bcolor = color;
+		center_x = cx;
+		center_y = cy;
+		radius = r;
 	}
 
 	public double getVelX()
@@ -35,7 +41,7 @@ public class Ball
 		return center_y;
 	}
 
-	public ArrayList<float> getBallColor()
+	public ArrayList<Float> getBallColor()
 	{
 		return bcolor;
 	}
@@ -66,7 +72,7 @@ public class Ball
 		center_y = cy;
 	}
 
-	public ArrayList<float> setBallColor(ArrayList<float> new_color)
+	public void setBallColor(ArrayList<Float> new_color)
 	{
 		bcolor = new_color;
 	}
