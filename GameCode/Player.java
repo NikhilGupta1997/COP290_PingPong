@@ -14,7 +14,7 @@ public class Player
 	private static GameBoard Board_UI;
 	private static int timerDelay;
 	private static Timer gameTimer;
-	private static int Padlle_No;
+	private static int Paddle_No;
 	private static int M;
 
 	public Player()
@@ -51,38 +51,17 @@ public class Player
 			ArrayList<Ball> updatedBalls = Board_backend.getBalls();
 			ArrayList<Paddle> updatedPaddles = Board_backend.getPaddles();
 			Board_UI.reDraw(updatedBalls, updatedPaddles);
-			M += 1;
-			if (M > 1)
-			{
-				// add a new ball
-				Board_backend.removeBall(0);
-				Ball b1 = new Ball(0.0, 0.0, 50.0, 250 + 3.0*M, 25);
-				Board_backend.addBall(b1);
-			}
+			// M += 1;
+			// if (M > 1)
+			// {
+			// 	// add a new ball
+			// 	Board_backend.removeBall(0);
+			// 	Ball b1 = new Ball(0.0, 0.0, 50.0, 250 + 3.0*M, 25);
+			// 	Board_backend.addBall(b1);
+			// }
 			Board_backend.movePaddle(0,Board_UI.getPaddleX(),100, 100.0, 0, true);  
 		};
 	};
-
-	// class CustomMouseListener implements MouseListener{
- //      public void mouseClicked(MouseEvent e) {
- //         System.out.println("Mouse Clicked: ("+e.getX()+", "+e.getY() +")");
-
- //      }
-
- //      public void mousePressed(MouseEvent e)
- //      {
-
- //      }
-
- //      public void mouseReleased(MouseEvent e) {
- //      }
-
- //      public void mouseEntered(MouseEvent e) {
- //      }
-
- //      public void mouseExited(MouseEvent e) {
- //      }
- //   }
 
 
 }

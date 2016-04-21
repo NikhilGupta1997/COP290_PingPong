@@ -1,6 +1,8 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import Model.*;
 import java.util.*;
@@ -13,16 +15,18 @@ public class MainPanel extends JPanel
 	* on a JPanel using paintComponent() method.
 	* This is thw maijn game panel
 	* It has a Timer object to render the UI according to backend data after a fixed amt of time **/
-	private static final int Default_Height = 100;
-	private static final int Default_Width = 100;
+	private static final int Default_Height = 1000;
+	private static final int Default_Width = 1000;
 	private static int PaddleX;
 	private static int PaddleY;
 
 
 	public MainPanel()
 	{
+		/** Constructor **/
 		super();
-		setBorder(BorderFactory.createLineBorder(Color.black));
+		this.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(500, 500, 500, 500), new EtchedBorder()));
+		// setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setPreferredSize(new Dimension(Default_Width, Default_Height));
 		this.setVisible(true);
 		this.setBackground(Color.LIGHT_GRAY);
@@ -43,6 +47,7 @@ public class MainPanel extends JPanel
 // upper left x, y, width, height
 	public void paintComponent(Graphics g)
 	{
+		/** Renders the basic view of Game Panel **/
 		super.paintComponent(g);
 		g.setColor(Color.RED);
 		g.fillOval(450,450,100,100);
@@ -51,6 +56,16 @@ public class MainPanel extends JPanel
 		g.drawLine(450,500,550,500);
 		g.drawLine(500,450,500,550);
 		// basic design
+
+		g.setColor(Color.ORANGE);
+		Polygon p = new Polygon(new int[] {0,100,0}, new int[] {0,0,100},3);
+		g.fillPolygon(p);
+
+		Polygon p1 = new Polygon(new int[] {1000,900,1000}, new int []{0,0,100},3);
+		g.fillPolygon(p1);
+
+		Polygon p2 = new Polygon(new int[] {0,100,0}, new int [] {1000,1000,900},3);
+		g.fillPolygon(p2);
 	}
 
 	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles)
