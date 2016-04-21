@@ -56,4 +56,14 @@ public class GameBoard extends JFrame
 		return GamePanel.getNewY();
 	}
 
+	public int getPClickX()
+	{
+		return GamePanel.getClickX();
+	}
+
+	public int getPClickY()
+	{
+		return GamePanel.getClickY();
+	}
+
 }

@@ -19,6 +19,8 @@ public class MainPanel extends JPanel
 	private static final int Default_Width = 1000;
 	private static int PaddleX;
 	private static int PaddleY;
+	private static int PClickX;
+	private static int PClickY;
 
 
 	public MainPanel()
@@ -31,6 +33,7 @@ public class MainPanel extends JPanel
 		this.setVisible(true);
 		this.setBackground(Color.LIGHT_GRAY);
 		this.addMouseMotionListener(new CustomMouseMotionListener());
+		this.addMouseListener(new CustomMouseListener());
 	}
 
 	public int getNewX()
@@ -41,6 +44,16 @@ public class MainPanel extends JPanel
 	public int getNewY()
 	{
 		return PaddleY;
+	}
+
+	public int getClickX()
+	{
+		return PClickX;
+	}
+
+	public int getClickY()
+	{
+		return PClickY;
 	}
 
 
@@ -97,7 +110,8 @@ public class MainPanel extends JPanel
 	}
 
 	public static class CustomMouseMotionListener implements MouseMotionListener {
-		public void mouseDragged(MouseEvent e) {
+		public void mouseDragged(MouseEvent e)
+		{
         System.out.println("Mouse Dragged: ("+e.getX()+", "+e.getY() +")");
         PaddleX = e.getX();
         PaddleY = e.getY();
@@ -106,6 +120,28 @@ public class MainPanel extends JPanel
       public void mouseMoved(MouseEvent e) {
          // statusLabel.setText("Mouse Moved: ("+e.getX()+", "+e.getY() +")");
       }    
+   }
+
+	class CustomMouseListener implements MouseListener{
+      public void mouseClicked(MouseEvent e) {
+         System.out.println("Mouse Clicked: ("+e.getX()+", "+e.getY() +")");
+         PClickX = e.getX();
+         PClickY = e.getY();
+         PaddleX = e.getX();
+         PaddleY = e.getY();
+      }
+
+      public void mousePressed(MouseEvent e) {
+      }
+
+      public void mouseReleased(MouseEvent e) {
+      }
+
+      public void mouseEntered(MouseEvent e) {
+      }
+
+      public void mouseExited(MouseEvent e) {
+      }
    }
 
 }
