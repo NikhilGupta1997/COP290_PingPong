@@ -62,30 +62,30 @@ public class MainPanel extends JPanel
 	{
 		/** Renders the basic view of Game Panel **/
 		super.paintComponent(g);
-		g.setColor(Color.RED);
-
+		Color c= new Color(200, 50, 50, 1);
 		Graphics2D g2 = (Graphics2D) g;
-		float thickness = 40;
+		g.setColor(Color.argb(0.8, 200, 50, 50));
+		g.fillRect(0,0,590,590);
+		g.setColor(Color.ORANGE);
+		g.fillOval(240,240,120,120);
+		g.setColor(Color.RED);
+		g.fillOval(260,260,80,80);
+		float thickness = 20;
+		float thickness2 = 10;
 		Stroke oldStroke = g2.getStroke();
 		g2.setStroke(new BasicStroke((float)(thickness)));
 		g2.setColor(Color.BLACK);
-		g2.drawRect(0, 0, 600, 600);
+		g2.drawLine(0, 10, 580, 10);
+		g2.drawLine(10, 0, 10, 580);
+		g2.drawLine(0, 590, 580, 590);
+		g2.drawLine(590, 0, 590, 590);
+		g2.setStroke(new BasicStroke((float)(thickness2)));
+		g2.setColor(Color.BLUE);
+		g2.drawLine(265,300,335,300);
+		g2.drawLine(300,265,300,335);
+		
 		g2.setStroke(oldStroke);
-
-		g.drawLine(0,0,0,600);
-		g.drawLine(0,0,600,0);
-		g.drawLine(0,600,600,600);
-		g.drawLine(600,0,600,600);
-		g.drawLine(600,600,600,600);
-
-		g.setColor(Color.RED);
-		g.fillOval(250,250,100,100);
-
-		g.setColor(Color.BLUE);
-		g.drawLine(250,300,350,300);
-		g.drawLine(300,250,300,350);
-		// basic design
-
+		
 		g.setColor(Color.ORANGE);
 		Polygon p = new Polygon(new int[] {0,60,0}, new int[] {0,0,60},3);
 		g.fillPolygon(p);
