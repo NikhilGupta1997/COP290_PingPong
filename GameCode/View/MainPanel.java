@@ -63,22 +63,25 @@ public class MainPanel extends JPanel
 		/** Renders the basic view of Game Panel **/
 		super.paintComponent(g);
 		g.setColor(Color.RED);
-		g.fillOval(450,450,100,100);
+		g.fillOval(350,350,100,100);
 
 		g.setColor(Color.BLUE);
-		g.drawLine(450,500,550,500);
-		g.drawLine(500,450,500,550);
+		g.drawLine(350,400,450,400);
+		g.drawLine(400,350,400,450);
 		// basic design
 
 		g.setColor(Color.ORANGE);
 		Polygon p = new Polygon(new int[] {0,100,0}, new int[] {0,0,100},3);
 		g.fillPolygon(p);
 
-		Polygon p1 = new Polygon(new int[] {1000,900,1000}, new int []{0,0,100},3);
+		Polygon p1 = new Polygon(new int[] {800,700,800}, new int []{0,0,100},3);
 		g.fillPolygon(p1);
 
-		Polygon p2 = new Polygon(new int[] {0,100,0}, new int [] {1000,1000,900},3);
+		Polygon p2 = new Polygon(new int[] {0,100,0}, new int [] {800,800,700},3);
 		g.fillPolygon(p2);
+
+		Polygon p3 = new Polygon(new int[] {800,700,800}, new int [] {800,800,700},3);
+		g.fillPolygon(p3);
 	}
 
 	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles)
@@ -104,10 +107,33 @@ public class MainPanel extends JPanel
 			double paddle_x = ith.getPaddleX();
 			double paddle_y = ith.getPaddleY();
 			curr_g.setColor(Color.BLUE);
-			if(i == 0 || i == 2)
-				curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y - 20), (int) (P_length), 40);
-			else 
-				curr_g.fillRect((int)(paddle_x - 20), (int)( paddle_y - (P_length/2.0)), 40, (int) (P_length));
+			if(i == 0)
+				{curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y), (int) (P_length), 30);
+				Polygon p1 = new Polygon(new int[] {(int)(paddle_x-30 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {30,0,30},3);
+				curr_g.fillPolygon(p1);
+				Polygon p2 = new Polygon(new int[] {(int)(paddle_x+30 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {30,0,30},3);
+				curr_g.fillPolygon(p2);}
+			else if(i ==1)
+				{curr_g.fillRect((int)(paddle_x), (int)( paddle_y ), 30, (int) (P_length));
+				// Polygon p1 = new Polygon(new int[] {30,0,30}, new int[] {(int)(paddle_y-30 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
+				// curr_g.fillPolygon(p1);
+				// Polygon p2 = new Polygon(new int[] {30,0,30}, new int[] {(int)(paddle_y+30 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0))},3);
+				// curr_g.fillPolygon(p2);
+				}
+			else if(i ==2)
+				{curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-30), (int) (P_length), 30);
+				Polygon p1 = new Polygon(new int[] {(int)(paddle_x-30 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {770,800,770},3);
+				curr_g.fillPolygon(p1);
+				Polygon p2 = new Polygon(new int[] {(int)(paddle_x+30 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {770,800,770},3);
+				curr_g.fillPolygon(p2);
+				}
+			else if(i ==3)
+				{curr_g.fillRect((int)(paddle_x - 30), (int)( paddle_y ), 30, (int) (P_length));
+				// Polygon p1 = new Polygon(new int[] {(int)(paddle_x-30 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {30,0,30},3);
+				// curr_g.fillPolygon(p1);
+				// Polygon p2 = new Polygon(new int[] {(int)(paddle_x+30 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {30,0,30},3);
+				// curr_g.fillPolygon(p2);
+				}
 		}
 			
 	}

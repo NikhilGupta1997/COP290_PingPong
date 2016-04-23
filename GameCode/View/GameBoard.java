@@ -26,7 +26,7 @@ public class GameBoard extends JFrame
 		/** calls function to add the Game JPanel child **/
 		this.setVisible(true);
 		this.setBackground(Color.BLACK);
-		this.setResizable(false);
+		this.setResizable(true);
 		addGamePanel();
 		this.pack();
 	}

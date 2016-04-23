@@ -27,7 +27,7 @@ public class Player
 	{
 		// a Board object
 		Board_backend = new Board();
-		Ball b = new Ball(1.0, -3.0, 200.0, 250.0, 25);
+		Ball b = new Ball(4.0, -5.0, 200.0, 250.0, 25);
 		Board_backend.addBall(b);
 		Paddle p = new Paddle(100.0, 400.0, 0.0, 0,true);
 		Board_backend.addPaddle(p);
@@ -88,14 +88,16 @@ public class Player
 			// else
 			// {
 			double final_posn_x = new_paddlePos - ClickDiff;
-			if (final_posn_x < (myPaddle.getPaddleLength()/2.0) || final_posn_x > (1000.0 - (myPaddle.getPaddleLength()/2.0) ))
+			if (final_posn_x < (myPaddle.getPaddleLength()/2.0) || final_posn_x > (800.0 - (myPaddle.getPaddleLength()/2.0) ))
 			{
 				// YOU DONT MOVE THE PADDLE. END OF SCREEN(X)
 			}
 			else
 			{
 				Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, 0, true);
-				Board_backend.movePaddle(2,new_paddlePos - ClickDiff,800, 100.0, 0, true);
+				Board_backend.movePaddle(1,0,myBall.getCenterY(), 100.0, 0, true);
+				Board_backend.movePaddle(2,myBall.getCenterX(),800, 100.0, 0, true);
+				Board_backend.movePaddle(3,800,myBall.getCenterY(), 100.0, 0, true);
 			}		
 			// }
 			M += 1;
@@ -125,7 +127,7 @@ public class Player
 			double vel_cx = ith.getVelX();
 			double vel_cy = ith.getVelY();
 			// check B2MyPaddle
-			boolean b2paddle = PEngine.collision_paddle(center_x, center_y, myLen, 1000, radius, myX, myY,40,Paddle_No + 1);
+			boolean b2paddle = PEngine.collision_paddle(center_x, center_y, myLen, 800, radius, myX, myY,40,Paddle_No + 1);
 			if (b2paddle)
 			{
 				System.out.println("collision with myPaddle.");
@@ -134,26 +136,26 @@ public class Player
 			else
 			{
 				// detect B2Wall or b2Corner?
-				int b2wall = PEngine.collision_wall(center_x, center_y, radius,1000.0);
+				int b2wall = PEngine.collision_wall(center_x, center_y, radius,800.0);
 				if(b2wall > 0 && b2wall != lastBwall)
 				{
 					System.out.println("collision of this ball with wall " + b2wall + "\t" + lastBwall);
 					lastBwall = b2wall;
 					if(b2wall == 1)
-					Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);
+					{Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);}
 					else if(b2wall == 2)
-					Board_backend.moveBall(0,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);
+					{Board_backend.moveBall(0,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);}
 					else if(b2wall == 3)
-					Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);
+					{Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);}
 					else if(b2wall == 4)
-					Board_backend.moveBall(0,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);
+					{Board_backend.moveBall(0,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);}
 					
 				}
 				
 				else
 				{
 					double l = 0.0; // TODO : whats this?
-					int b2corner = PEngine.collision_corner(center_x, center_y, radius, 1000.0, l);
+					int b2corner = PEngine.collision_corner(center_x, center_y, radius, 800.0, l);
 					if (b2corner > 0)
 					{
 						System.out.println("colln with corner.");
