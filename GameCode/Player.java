@@ -22,6 +22,7 @@ public class Player
 	private static int LastClick = 0;
 	private static physics PEngine;
 	private static int lastBwall = 0;
+	private static int lastpaddle= 0;
 	private static int lastBcorner = 0;
 	//1 for above wall,2 for right wall and so on...... 
 	// 5 for top paddle and so on 
@@ -153,11 +154,12 @@ public class Player
 			double vel_cx = ith.getVelX();
 			double vel_cy = ith.getVelY();
 			// check B2MyPaddle
-			boolean b2paddle = PEngine.collision_paddle(center_x, center_y, myLen, 600, radius, myX, myY,20,Paddle_No + 1);
-			
-			//boolean b2paddle=false;
-			if (b2paddle && lastBwall%4!=1)
-			{ lastBwall=5;
+			boolean b2paddle = PEngine.collision_paddle(center_x, center_y, myLen+40, 600, radius, myX, myY,20,Paddle_No + 1);
+			boolean check_wall_paddle=(lastBwall+4 == Paddle_No + 5) ;
+			// b2paddle=false;
+			if (b2paddle && lastpaddle!=Paddle_No+5&& !check_wall_paddle)
+			{ lastpaddle=Paddle_No+ 5;
+				lastBwall=0;
 				System.out.println("collision with myPaddle.");
 				Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 			}
@@ -166,9 +168,9 @@ public class Player
 				// detect B2Wall or b2Corner?
 				//System.out.println("Radius is \n\n\n\n"+radius+"\n\n\n");
 				int b2wall = PEngine.collision_wall(center_x, center_y, radius,600.0);
-				boolean check_paddle_wall=(lastBwall==5 && b2wall==1) ;
+				boolean check_paddle_wall=(b2wall+4== lastpaddle) ;
 				if(b2wall > 0 && b2wall != lastBwall && !check_paddle_wall)
-				{ 
+				{   lastpaddle=0;
 					System.out.println("collision of this ball with wall " + b2wall + "\t" + b2wall);
 					lastBwall = b2wall;
 					if(b2wall == 1)
@@ -185,10 +187,15 @@ public class Player
 				else
 				{
 					double l = 0.0; // TODO : whats this?
-					int b2corner = PEngine.collision_corner(center_x, center_y, radius, 800.0, l);
+					int b2corner = PEngine.collision_corner(center_x, center_y, radius, 600.0, 50.0);
+					//b2corner=0
+					//System.out.println(l);
 					if (b2corner > 0)
-					{
-						System.out.println("colln with corner.");
+					{ lastBcorner=b2corner;
+
+						
+
+						System.out.println("colln with corner.-- "+ b2corner);
 					}
 					else
 					{

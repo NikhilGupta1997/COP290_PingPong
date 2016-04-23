@@ -48,13 +48,23 @@ public class physics
 	}
 
 	public int collision_corner(double posx,double posy,double radius,double x,double l ) //y is the dimension of the corner
-	{
+	{  	
+
 		int corner_no=0;
 		double sqrt2=Math.sqrt(2);
 		if((Math.abs(posx+posy-l)/sqrt2)<=radius) corner_no=1;
-		else if(Math.abs(posy-posx+x-l/sqrt2)<=radius)corner_no=2;
-		else if(Math.abs(posx+posy+l-2*x)/sqrt2<=radius) corner_no=3;
-		else if(Math.abs(posy-posx-x+l/sqrt2)<=radius) corner_no=4;
+		else if(Math.abs(posy+posx-2*x+l)/sqrt2<=radius)corner_no=3;
+		else if(Math.abs(posy-posx+x-l)/sqrt2<=radius) corner_no=2;
+		else if(Math.abs(posy-posx-x+l)/sqrt2<=radius) corner_no=4;
+		if(corner_no!=0)
+		{
+			System.out.println(posx+","+posy);
+
+		System.out.println("Corner 1--"+(Math.abs(posx+posy-l)/sqrt2));
+		System.out.println("Corner 3--"+(Math.abs(posy+posx-2*x-l)/sqrt2));
+		System.out.println("Corner 2--"+(Math.abs(posy-posx+x-l)/sqrt2));
+		System.out.println("Corner 4--"+(Math.abs(posy-posx-x+l)/sqrt2));
+		}
 		return corner_no;
 	}
 
