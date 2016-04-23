@@ -21,22 +21,21 @@ public class Player
 	private static double new_paddlePos;
 	private static int LastClick = 0;
 	private static physics PEngine;
+	private static int lastBwall = 0;
 
 	public Player()
 	{
 		// a Board object
 		Board_backend = new Board();
 		Ball b = new Ball(1.0, -3.0, 200.0, 250.0, 25);
-		Paddle p = new Paddle(100.0, 400.0, 100.0, 0,true);
-		// a GameBoard object
-		// add a player to board!
 		Board_backend.addBall(b);
+		Paddle p = new Paddle(100.0, 400.0, 0.0, 0,true);
 		Board_backend.addPaddle(p);
-		 p = new Paddle(100.0, 400.0, 200.0, 0,true);
+		 p = new Paddle(100.0, 0.0, 400.0, 0,true);
 		Board_backend.addPaddle(p);
-		 p = new Paddle(100.0, 400.0, 130.0, 0,true);
+		 p = new Paddle(100.0, 400.0, 800.0, 0,true);
 		Board_backend.addPaddle(p);
-		 p = new Paddle(100.0, 400.0, 300.0, 0,true);
+		 p = new Paddle(100.0, 800.0, 400.0, 0,true);
 		Board_backend.addPaddle(p);
 		Board_UI = new GameBoard();
 		timerDelay = 50;
@@ -95,7 +94,8 @@ public class Player
 			}
 			else
 			{
-				Board_backend.movePaddle(0,new_paddlePos - ClickDiff,100, 100.0, 0, true);
+				Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, 0, true);
+				Board_backend.movePaddle(2,new_paddlePos - ClickDiff,800, 100.0, 0, true);
 			}		
 			// }
 			M += 1;
@@ -115,6 +115,7 @@ public class Player
 		Ball myBall = Board_backend.getBalls().get(0);
 		double myY = myPaddle.getPaddleY();
 		double myLen = myPaddle.getPaddleLength();
+		
 		for (int i = 0; i < no_balls ; i ++)
 		{
 			Ball ith = curr_Balls.get(i);
@@ -134,10 +135,21 @@ public class Player
 			{
 				// detect B2Wall or b2Corner?
 				int b2wall = PEngine.collision_wall(center_x, center_y, radius,1000.0);
-				if (b2wall > 0)
+				if(b2wall > 0 && b2wall != lastBwall)
 				{
-					System.out.println("collision of this ball with wall i.");
+					System.out.println("collision of this ball with wall " + b2wall + "\t" + lastBwall);
+					lastBwall = b2wall;
+					if(b2wall == 1)
+					Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);
+					else if(b2wall == 2)
+					Board_backend.moveBall(0,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);
+					else if(b2wall == 3)
+					Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);
+					else if(b2wall == 4)
+					Board_backend.moveBall(0,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);
+					
 				}
+				
 				else
 				{
 					double l = 0.0; // TODO : whats this?

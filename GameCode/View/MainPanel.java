@@ -15,8 +15,8 @@ public class MainPanel extends JPanel
 	* on a JPanel using paintComponent() method.
 	* This is thw maijn game panel
 	* It has a Timer object to render the UI according to backend data after a fixed amt of time **/
-	private static final int Default_Height = 1000;
-	private static final int Default_Width = 1000;
+	private static final int Default_Height = 800;
+	private static final int Default_Width = 800;
 	private static int PaddleX;
 	private static int PaddleY;
 	private static int PClickX;
@@ -27,7 +27,7 @@ public class MainPanel extends JPanel
 	{
 		/** Constructor **/
 		super();
-		this.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(500, 500, 500, 500), new EtchedBorder()));
+		this.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(400, 400, 400, 400), new EtchedBorder()));
 		// setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setPreferredSize(new Dimension(Default_Width, Default_Height));
 		this.setVisible(true);
@@ -104,7 +104,10 @@ public class MainPanel extends JPanel
 			double paddle_x = ith.getPaddleX();
 			double paddle_y = ith.getPaddleY();
 			curr_g.setColor(Color.BLUE);
-			curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y - 20), (int) (P_length), 40);
+			if(i == 0 || i == 2)
+				curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y - 20), (int) (P_length), 40);
+			else 
+				curr_g.fillRect((int)(paddle_x - 20), (int)( paddle_y - (P_length/2.0)), 40, (int) (P_length));
 		}
 			
 	}
