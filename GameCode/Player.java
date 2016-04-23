@@ -26,12 +26,17 @@ public class Player
 	{
 		// a Board object
 		Board_backend = new Board();
-		Ball b = new Ball(2.0, 3.0, 200.0, 250.0, 25);
+		Ball b = new Ball(1.0, -3.0, 200.0, 250.0, 25);
 		Paddle p = new Paddle(100.0, 400.0, 100.0, 0,true);
-
 		// a GameBoard object
 		// add a player to board!
 		Board_backend.addBall(b);
+		Board_backend.addPaddle(p);
+		 p = new Paddle(100.0, 400.0, 200.0, 0,true);
+		Board_backend.addPaddle(p);
+		 p = new Paddle(100.0, 400.0, 130.0, 0,true);
+		Board_backend.addPaddle(p);
+		 p = new Paddle(100.0, 400.0, 300.0, 0,true);
 		Board_backend.addPaddle(p);
 		Board_UI = new GameBoard();
 		timerDelay = 50;
@@ -61,6 +66,10 @@ public class Player
 
 			Paddle myPaddle = Board_backend.getPaddles().get(0);
 			Double last_x = myPaddle.getPaddleX();
+			Ball myBall = Board_backend.getBalls().get(0);
+			Double lastY = myBall.getCenterY();
+			Double lastX = myBall.getCenterX();
+			// Double ball_y = myBall.getCenterY();
 			new_paddlePos = Board_UI.getPaddleX();
 			int click_pos = Board_UI.getPClickX();
 			if(LastClick != click_pos)
@@ -90,6 +99,8 @@ public class Player
 			}		
 			// }
 			M += 1;
+			// System.out.println("Ball Position : " + ball_y);
+			Board_backend.moveBall(0,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 25);
 		};
 	};
 
@@ -101,6 +112,7 @@ public class Player
 		int no_balls = curr_Balls.size();
 		Paddle myPaddle = Board_backend.getPaddles().get(Paddle_No);
 		double myX = myPaddle.getPaddleX();
+		Ball myBall = Board_backend.getBalls().get(0);
 		double myY = myPaddle.getPaddleY();
 		double myLen = myPaddle.getPaddleLength();
 		for (int i = 0; i < no_balls ; i ++)
@@ -116,6 +128,7 @@ public class Player
 			if (b2paddle)
 			{
 				System.out.println("collision with myPaddle.");
+				Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 25);
 			}
 			else
 			{
