@@ -63,6 +63,22 @@ public class MainPanel extends JPanel
 		/** Renders the basic view of Game Panel **/
 		super.paintComponent(g);
 		g.setColor(Color.RED);
+
+		Graphics2D g2 = (Graphics2D) g;
+		float thickness = 40;
+		Stroke oldStroke = g2.getStroke();
+		g2.setStroke(new BasicStroke((float)(thickness)));
+		g2.setColor(Color.BLACK);
+		g2.drawRect(0, 0, 600, 600);
+		g2.setStroke(oldStroke);
+
+		g.drawLine(0,0,0,600);
+		g.drawLine(0,0,600,0);
+		g.drawLine(0,600,600,600);
+		g.drawLine(600,0,600,600);
+		g.drawLine(600,600,600,600);
+
+		g.setColor(Color.RED);
 		g.fillOval(250,250,100,100);
 
 		g.setColor(Color.BLUE);
@@ -71,16 +87,16 @@ public class MainPanel extends JPanel
 		// basic design
 
 		g.setColor(Color.ORANGE);
-		Polygon p = new Polygon(new int[] {0,50,0}, new int[] {0,0,50},3);
+		Polygon p = new Polygon(new int[] {0,70,0}, new int[] {0,0,70},3);
 		g.fillPolygon(p);
 
-		Polygon p1 = new Polygon(new int[] {600,550,600}, new int []{0,0,50},3);
+		Polygon p1 = new Polygon(new int[] {600,530,600}, new int []{0,0,70},3);
 		g.fillPolygon(p1);
 
-		Polygon p2 = new Polygon(new int[] {0,50,0}, new int [] {600,600,550},3);
+		Polygon p2 = new Polygon(new int[] {0,70,0}, new int [] {600,600,530},3);
 		g.fillPolygon(p2);
 
-		Polygon p3 = new Polygon(new int[] {600,550,600}, new int [] {600,600,550},3);
+		Polygon p3 = new Polygon(new int[] {600,530,600}, new int [] {600,600,530},3);
 		g.fillPolygon(p3);
 	}
 
@@ -141,7 +157,7 @@ public class MainPanel extends JPanel
 	public static class CustomMouseMotionListener implements MouseMotionListener {
 		public void mouseDragged(MouseEvent e)
 		{
-        //System.out.println("Mouse Dragged: ("+e.getX()+", "+e.getY() +")");
+        System.out.println("Mouse Dragged: ("+e.getX()+", "+e.getY() +")");
         PaddleX = e.getX();
         PaddleY = e.getY();
       }

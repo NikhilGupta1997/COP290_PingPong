@@ -41,7 +41,7 @@ public class Player
 		 p = new Paddle(100.0, 600.0, 400.0, 0,true);
 		Board_backend.addPaddle(p);
 		Board_UI = new GameBoard();
-		timerDelay = 30;
+		timerDelay = 50;
 		gameTimer = new Timer(timerDelay, timerAction);
 		gameTimer.start();
 		M =0;
@@ -97,31 +97,31 @@ public class Player
 			}
 			else
 			{
-				if(new_paddlePos - ClickDiff > 500)
-				Board_backend.movePaddle(0,500,0, 100.0, 0, true);
-				else if(new_paddlePos - ClickDiff <100)
-				Board_backend.movePaddle(0,100,0, 100.0, 0, true);
+				if(new_paddlePos - ClickDiff > 480)
+				Board_backend.movePaddle(0,480,0, 100.0, 0, true);
+				else if(new_paddlePos - ClickDiff <120)
+				Board_backend.movePaddle(0,120,0, 100.0, 0, true);
 				else
 				Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, 0, true);
 
-				if(myBall.getCenterY() > 500)
-				Board_backend.movePaddle(1,0,500, 100.0, 0, true);
-				else if(myBall.getCenterY() <100)
-				Board_backend.movePaddle(1,0,100, 100.0, 0, true);
+				if(myBall.getCenterY() > 480)
+				Board_backend.movePaddle(1,0,480, 100.0, 0, true);
+				else if(myBall.getCenterY() <120)
+				Board_backend.movePaddle(1,0,120, 100.0, 0, true);
 				else
 				Board_backend.movePaddle(1,0,myBall.getCenterY(), 100.0, 0, true);
 
-				if(myBall.getCenterX() > 500)
-				Board_backend.movePaddle(2,500,600, 100.0, 0, true);
-				else if(myBall.getCenterX() <100)
-				Board_backend.movePaddle(2,100,600, 100.0, 0, true);
+				if(myBall.getCenterX() > 480)
+				Board_backend.movePaddle(2,480,600, 100.0, 0, true);
+				else if(myBall.getCenterX() <120)
+				Board_backend.movePaddle(2,120,600, 100.0, 0, true);
 				else
 				Board_backend.movePaddle(2,myBall.getCenterX(),600, 100.0, 0, true);
 
-				if(myBall.getCenterY() > 500)
-				Board_backend.movePaddle(3,600,500, 100.0, 0, true);
-				else if(myBall.getCenterY() <100)
-				Board_backend.movePaddle(3,600,100, 100.0, 0, true);
+				if(myBall.getCenterY() > 480)
+				Board_backend.movePaddle(3,600,480, 100.0, 0, true);
+				else if(myBall.getCenterY() <120)
+				Board_backend.movePaddle(3,600,120, 100.0, 0, true);
 				else
 				Board_backend.movePaddle(3,600,myBall.getCenterY(), 100.0, 0, true);
 			}		
