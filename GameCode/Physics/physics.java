@@ -37,10 +37,13 @@ public class physics
 
 	public int collision_wall(double posx,double posy,double radius,double x)     //x is the dimension of the square
 	{int wall_no=0;
+
 	if((posx+radius)>=x) wall_no=2;
-	else if((posy+radius)>=x) wall_no=3;
+	else if((posy+radius+22.0)>=x) wall_no=3;
 	else if((posx-radius)<=0.0) wall_no=4;
-	else if((posy-radius)<=0.0) wall_no=1;
+	else if((posy-radius+12.5)<=0.0) wall_no=1;
+	//if(wall_no!=0)
+	//	System.out.print(posx+","+posy+","+x+"\n");
 	return wall_no;
 	}
 
@@ -59,7 +62,7 @@ public class physics
 	{
 		if(paddle_no==1)
 		{
-			if(posx<=(padd_x+len/2) && posx>=(padd_x-len/2) && posy<=(h+radius)) return true; else return false;
+			if(posx<=(padd_x+len/2) && posx>=(padd_x-len/2) && posy<=(h+radius+0.0)) return true; else return false;
 		}
 		else if(paddle_no==2)
 		{

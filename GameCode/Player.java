@@ -22,12 +22,15 @@ public class Player
 	private static int LastClick = 0;
 	private static physics PEngine;
 	private static int lastBwall = 0;
+	private static int lastBcorner = 0;
+	//1 for above wall,2 for right wall and so on...... 
+	// 5 for top paddle and so on 
 
 	public Player()
 	{
 		// a Board object
 		Board_backend = new Board();
-		Ball b = new Ball(4.0, -5.0, 200.0, 250.0, 10);
+		Ball b = new Ball(3.5, -4.5, 200.0, 250.0, 10);
 		Board_backend.addBall(b);
 		Paddle p = new Paddle(100.0, 400.0, 0.0, 0,true);
 		Board_backend.addPaddle(p);
@@ -38,7 +41,7 @@ public class Player
 		 p = new Paddle(100.0, 600.0, 400.0, 0,true);
 		Board_backend.addPaddle(p);
 		Board_UI = new GameBoard();
-		timerDelay = 50;
+		timerDelay = 30;
 		gameTimer = new Timer(timerDelay, timerAction);
 		gameTimer.start();
 		M =0;
@@ -56,7 +59,7 @@ public class Player
 		@Override
 		public void actionPerformed(ActionEvent event)
 		{
-			System.out.println("Timer working!");
+		//	System.out.println("Timer working!");
 			// call Board_UI ka update function.
 			update_Phy();
 			ArrayList<Ball> updatedBalls = Board_backend.getBalls();
@@ -77,10 +80,10 @@ public class Player
 			}
 			// Double x = 
 			LastClick = click_pos;
-			System.out.println("Click Diff : " + ClickDiff);
-			System.out.println("Click posn : " + click_pos);
-			System.out.println("New posn : " + new_paddlePos);
-			// if ((Math.abs(new_paddlePos - last_x)) < (0.0001))
+			// System.out.println("Click Diff : " + ClickDiff);
+			// System.out.println("Click posn : " + click_pos);
+			// System.out.println("New posn : " + new_paddlePos);
+			// // if ((Math.abs(new_paddlePos - last_x)) < (0.0001))
 			// {
 
 			// 	Board_backend.movePaddle(0,last_x,100, 100.0, 0, true);
@@ -150,19 +153,23 @@ public class Player
 			double vel_cx = ith.getVelX();
 			double vel_cy = ith.getVelY();
 			// check B2MyPaddle
-			boolean b2paddle = PEngine.collision_paddle(center_x, center_y, myLen, 600, radius, myX, myY,40,Paddle_No + 1);
-			if (b2paddle)
-			{
+			boolean b2paddle = PEngine.collision_paddle(center_x, center_y, myLen, 600, radius, myX, myY,20,Paddle_No + 1);
+			
+			//boolean b2paddle=false;
+			if (b2paddle && lastBwall%4!=1)
+			{ lastBwall=5;
 				System.out.println("collision with myPaddle.");
 				Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 			}
 			else
 			{
 				// detect B2Wall or b2Corner?
+				//System.out.println("Radius is \n\n\n\n"+radius+"\n\n\n");
 				int b2wall = PEngine.collision_wall(center_x, center_y, radius,600.0);
-				if(b2wall > 0 && b2wall != lastBwall)
-				{
-					System.out.println("collision of this ball with wall " + b2wall + "\t" + lastBwall);
+				boolean check_paddle_wall=(lastBwall==5 && b2wall==1) ;
+				if(b2wall > 0 && b2wall != lastBwall && !check_paddle_wall)
+				{ 
+					System.out.println("collision of this ball with wall " + b2wall + "\t" + b2wall);
 					lastBwall = b2wall;
 					if(b2wall == 1)
 					{Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);}
@@ -205,7 +212,7 @@ public class Player
 						if (!any_colln)
 						{
 							// NO COLLISION.
-							System.out.println("No collision, ball moved fwd.");
+							//System.out.println("No collision, ball moved fwd.");
 							Board_backend.moveBall(i,vel_cx , vel_cy, center_x + vel_cx,center_y + vel_cy,radius);
 						}
 					}

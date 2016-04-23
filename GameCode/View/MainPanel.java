@@ -141,7 +141,7 @@ public class MainPanel extends JPanel
 	public static class CustomMouseMotionListener implements MouseMotionListener {
 		public void mouseDragged(MouseEvent e)
 		{
-        System.out.println("Mouse Dragged: ("+e.getX()+", "+e.getY() +")");
+        //System.out.println("Mouse Dragged: ("+e.getX()+", "+e.getY() +")");
         PaddleX = e.getX();
         PaddleY = e.getY();
       }
