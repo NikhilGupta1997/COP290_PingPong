@@ -14,8 +14,8 @@ public class Board
 
 	public Board()
 	{
-		dim_x = 800;
-		dim_y = 800;
+		dim_x = 600;
+		dim_y = 600;
 		no_balls = 0;
 		vector_balls = new ArrayList<Ball>();
 		no_paddles = 0;
