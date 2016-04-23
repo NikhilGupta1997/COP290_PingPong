@@ -98,31 +98,31 @@ public class Player
 			}
 			else
 			{
-				if(new_paddlePos - ClickDiff > 480)
-				Board_backend.movePaddle(0,480,0, 100.0, 0, true);
-				else if(new_paddlePos - ClickDiff <120)
-				Board_backend.movePaddle(0,120,0, 100.0, 0, true);
+				if(new_paddlePos - ClickDiff > 490)
+				Board_backend.movePaddle(0,490,0, 100.0, 0, true);
+				else if(new_paddlePos - ClickDiff <110)
+				Board_backend.movePaddle(0,110,0, 100.0, 0, true);
 				else
 				Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, 0, true);
 
-				if(myBall.getCenterY() > 480)
-				Board_backend.movePaddle(1,0,480, 100.0, 0, true);
-				else if(myBall.getCenterY() <120)
-				Board_backend.movePaddle(1,0,120, 100.0, 0, true);
+				if(myBall.getCenterY() > 490)
+				Board_backend.movePaddle(1,0,490, 100.0, 0, true);
+				else if(myBall.getCenterY() <110)
+				Board_backend.movePaddle(1,0,110, 100.0, 0, true);
 				else
 				Board_backend.movePaddle(1,0,myBall.getCenterY(), 100.0, 0, true);
 
-				if(myBall.getCenterX() > 480)
-				Board_backend.movePaddle(2,480,600, 100.0, 0, true);
-				else if(myBall.getCenterX() <120)
-				Board_backend.movePaddle(2,120,600, 100.0, 0, true);
+				if(myBall.getCenterX() > 490)
+				Board_backend.movePaddle(2,490,600, 100.0, 0, true);
+				else if(myBall.getCenterX() <110)
+				Board_backend.movePaddle(2,110,600, 100.0, 0, true);
 				else
 				Board_backend.movePaddle(2,myBall.getCenterX(),600, 100.0, 0, true);
 
-				if(myBall.getCenterY() > 480)
-				Board_backend.movePaddle(3,600,480, 100.0, 0, true);
-				else if(myBall.getCenterY() <120)
-				Board_backend.movePaddle(3,600,120, 100.0, 0, true);
+				if(myBall.getCenterY() > 490)
+				Board_backend.movePaddle(3,600,490, 100.0, 0, true);
+				else if(myBall.getCenterY() <110)
+				Board_backend.movePaddle(3,600,110, 100.0, 0, true);
 				else
 				Board_backend.movePaddle(3,600,myBall.getCenterY(), 100.0, 0, true);
 			}		
