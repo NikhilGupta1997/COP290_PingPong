@@ -66,7 +66,9 @@ public class Player
 			ArrayList<Ball> updatedBalls = Board_backend.getBalls();
 			ArrayList<Paddle> updatedPaddles = Board_backend.getPaddles();
 			Board_UI.reDraw(updatedBalls, updatedPaddles);
-
+			Paddle myPaddle2 = Board_backend.getPaddles().get(1);
+			Paddle myPaddle3 = Board_backend.getPaddles().get(2);
+			Paddle myPaddle4 = Board_backend.getPaddles().get(3);
 			Paddle myPaddle = Board_backend.getPaddles().get(0);
 			Double last_x = myPaddle.getPaddleX();
 			Ball myBall = Board_backend.getBalls().get(0);
@@ -99,32 +101,32 @@ public class Player
 			else
 			{
 				if(new_paddlePos - ClickDiff > 490)
-				Board_backend.movePaddle(0,490,0, 100.0, 0, true);
+				Board_backend.movePaddle(0,490,0, 100.0, myPaddle.getBallMissed(), true);
 				else if(new_paddlePos - ClickDiff <110)
-				Board_backend.movePaddle(0,110,0, 100.0, 0, true);
+				Board_backend.movePaddle(0,110,0, 100.0, myPaddle.getBallMissed(), true);
 				else
-				Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, 0, true);
+				Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, myPaddle.getBallMissed(), true);
 
 				if(myBall.getCenterY() > 490)
-				Board_backend.movePaddle(1,0,490, 100.0, 0, true);
+				Board_backend.movePaddle(1,0,490, 100.0, myPaddle2.getBallMissed(), true);
 				else if(myBall.getCenterY() <110)
-				Board_backend.movePaddle(1,0,110, 100.0, 0, true);
+				Board_backend.movePaddle(1,0,110, 100.0, myPaddle2.getBallMissed(), true);
 				else
-				Board_backend.movePaddle(1,0,myBall.getCenterY(), 100.0, 0, true);
+				Board_backend.movePaddle(1,0,myBall.getCenterY(), 100.0, myPaddle2.getBallMissed(), true);
 
 				if(myBall.getCenterX() > 490)
-				Board_backend.movePaddle(2,490,600, 100.0, 0, true);
+				Board_backend.movePaddle(2,490,600, 100.0, myPaddle3.getBallMissed(), true);
 				else if(myBall.getCenterX() <110)
-				Board_backend.movePaddle(2,110,600, 100.0, 0, true);
+				Board_backend.movePaddle(2,110,600, 100.0, myPaddle3.getBallMissed(), true);
 				else
-				Board_backend.movePaddle(2,myBall.getCenterX(),600, 100.0, 0, true);
+				Board_backend.movePaddle(2,myBall.getCenterX(),600, 100.0, myPaddle3.getBallMissed(), true);
 
 				if(myBall.getCenterY() > 490)
-				Board_backend.movePaddle(3,600,490, 100.0, 0, true);
+				Board_backend.movePaddle(3,600,490, 100.0, myPaddle4.getBallMissed(), true);
 				else if(myBall.getCenterY() <110)
-				Board_backend.movePaddle(3,600,110, 100.0, 0, true);
+				Board_backend.movePaddle(3,600,110, 100.0, myPaddle3.getBallMissed(), true);
 				else
-				Board_backend.movePaddle(3,600,myBall.getCenterY(), 100.0, 0, true);
+				Board_backend.movePaddle(3,600,myBall.getCenterY(), 100.0, myPaddle3.getBallMissed(), true);
 			}		
 			// }
 			M += 1;
@@ -138,6 +140,7 @@ public class Player
 		// TODO: check info from other clients first!
 		// check B2B, B2W, B2MyPaddle
 		ArrayList<Ball> curr_Balls = Board_backend.getBalls();
+		ArrayList<Paddle> curr_Paddles = Board_backend.getPaddles();
 		int no_balls = curr_Balls.size();
 		Paddle myPaddle = Board_backend.getPaddles().get(Paddle_No);
 		double myX = myPaddle.getPaddleX();
@@ -154,6 +157,10 @@ public class Player
 			double center_y = ith.getCenterY();
 			double vel_cx = ith.getVelX();
 			double vel_cy = ith.getVelY();
+			Paddle myPaddle1 = curr_Paddles.get(0);
+			Paddle myPaddle2 = curr_Paddles.get(1);
+			Paddle myPaddle3 = curr_Paddles.get(2);
+			Paddle myPaddle4 = curr_Paddles.get(3);
 
 			// check B2MyPaddle
 			boolean b2paddle = PEngine.collision_paddle(center_x, center_y, myLen+40, 600, radius, myX, myY,20,Paddle_No + 1);
@@ -177,15 +184,20 @@ public class Player
 					lastBwall = b2wall;
 					if(b2wall == 1)
 					{Board_backend.moveBall(0,k*myBall.getVelX(), -k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
-					//Board_backend.movePaddle(3,600,myBall.getCenterY(), 100.0, 0, true)
-
+					Board_backend.movePaddle(0,myPaddle1.getPaddleX(),myPaddle1.getPaddleY(), 100.0, myPaddle1.getBallMissed() + 1, true);
 					}
 					else if(b2wall == 2)
-					{Board_backend.moveBall(0,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);}
+					{Board_backend.moveBall(0,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+					Board_backend.movePaddle(1,myPaddle2.getPaddleX(),myPaddle2.getPaddleY(), 100.0, myPaddle2.getBallMissed() + 1, true);
+					}
 					else if(b2wall == 3)
-					{Board_backend.moveBall(0,k*myBall.getVelX(), -k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);}
+					{Board_backend.moveBall(0,k*myBall.getVelX(), -k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+					Board_backend.movePaddle(2,myPaddle3.getPaddleX(),myPaddle3.getPaddleY(), 100.0, myPaddle3.getBallMissed() + 1, true);
+					}
 					else if(b2wall == 4)
-					{Board_backend.moveBall(0,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);}
+					{Board_backend.moveBall(0,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+					Board_backend.movePaddle(3,myPaddle4.getPaddleX(),myPaddle4.getPaddleY(), 100.0, myPaddle4.getBallMissed() + 1, true);
+					}
 					
 				}
 				

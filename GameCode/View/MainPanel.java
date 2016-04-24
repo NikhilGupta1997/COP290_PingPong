@@ -144,6 +144,11 @@ public class MainPanel extends JPanel
 				curr_g.setColor(Color.RED);
 				for (int j = 1; j<= loves; j++)
 				curr_g.fillOval(50*j + 640,50,20,20);
+				if(loves <= 0)
+				{
+					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+					curr_g.drawString("GAME OVER", 700, 50);
+				}
 			}
 			else if(i ==1)
 				{curr_g.fillRect((int)(paddle_x), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
@@ -154,6 +159,11 @@ public class MainPanel extends JPanel
 				curr_g.setColor(Color.RED);
 				for (int j = 1; j<=loves; j++)
 				curr_g.fillOval(50*j + 640,200,20,20);
+				if(loves <= 0)
+				{
+					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+					curr_g.drawString("GAME OVER", 700, 200);
+				}
 				}
 			else if(i ==2)
 				{curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-20), (int) (P_length), 20);
@@ -164,6 +174,11 @@ public class MainPanel extends JPanel
 				curr_g.setColor(Color.RED);
 				for (int j = 1; j<= loves; j++)
 				curr_g.fillOval(50*j + 640,350,20,20);
+				if(loves <= 0)
+				{
+					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+					curr_g.drawString("GAME OVER", 700, 350);
+				}
 				}
 			else if(i ==3)
 				{curr_g.fillRect((int)(paddle_x - 20), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
@@ -174,6 +189,11 @@ public class MainPanel extends JPanel
 				curr_g.setColor(Color.RED);
 				for (int j = 1; j<=loves; j++)
 				curr_g.fillOval(50*j + 640,500,20,20);
+				if(loves <= 0)
+				{
+					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+					curr_g.drawString("GAME OVER", 700, 500);
+				}
 				}
 		}
 			
