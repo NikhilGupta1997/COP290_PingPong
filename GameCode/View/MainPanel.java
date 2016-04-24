@@ -64,8 +64,8 @@ public class MainPanel extends JPanel
 		super.paintComponent(g);
 		Color c= new Color(200, 50, 50, 1);
 		Graphics2D g2 = (Graphics2D) g;
-		g.setColor(Color.argb(0.8, 200, 50, 50));
-		g.fillRect(0,0,590,590);
+		//g.setColor(Color.argb(0.8, 200, 50, 50));
+		//g.fillRect(0,0,590,590);
 		g.setColor(Color.ORANGE);
 		g.fillOval(240,240,120,120);
 		g.setColor(Color.RED);
