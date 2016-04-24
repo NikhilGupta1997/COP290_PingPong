@@ -39,7 +39,7 @@ public class physics
 	{int wall_no=0;
 
 	if((posx+radius)>=x) wall_no=2;
-	else if((posy+radius+22.0)>=x) wall_no=3;
+	else if((posy+radius+24.0)>=x) wall_no=3;
 	else if((posx-radius)<=0.0) wall_no=4;
 	else if((posy-radius+12.5)<=0.0) wall_no=1;
 	//if(wall_no!=0)
@@ -72,7 +72,7 @@ public class physics
 	{
 		if(paddle_no==1)
 		{
-			if(posx<=(padd_x+len/2) && posx>=(padd_x-len/2) && posy<=(h+radius+0.0)) return true; else return false;
+			if(posx<=(padd_x+len/2) && posx>=(padd_x-len/2) && posy<=(h+radius-10.0)) return true; else return false;
 		}
 		else if(paddle_no==2)
 		{

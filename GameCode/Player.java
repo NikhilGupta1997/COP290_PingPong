@@ -31,7 +31,7 @@ public class Player
 	{
 		// a Board object
 		Board_backend = new Board();
-		Ball b = new Ball(3.5, -4.5, 200.0, 250.0, 10);
+		Ball b = new Ball(3.5*0.4, -4.5*.4, 200.0, 250.0, 10);
 		Board_backend.addBall(b);
 		Paddle p = new Paddle(100.0, 400.0, 0.0, 0,true);
 		Board_backend.addPaddle(p);
@@ -42,7 +42,7 @@ public class Player
 		 p = new Paddle(100.0, 600.0, 400.0, 0,true);
 		Board_backend.addPaddle(p);
 		Board_UI = new GameBoard();
-		timerDelay = 50;
+		timerDelay = 20;
 		gameTimer = new Timer(timerDelay, timerAction);
 		gameTimer.start();
 		M =0;
@@ -92,7 +92,7 @@ public class Player
 			// else
 			// {
 			double final_posn_x = new_paddlePos - ClickDiff;
-			if (final_posn_x < (myPaddle.getPaddleLength()/2.0) || final_posn_x > (800.0 - (myPaddle.getPaddleLength()/2.0) ))
+			if (final_posn_x < (myPaddle.getPaddleLength()/2.0) || final_posn_x > (600.0 - (myPaddle.getPaddleLength()/2.0) ))
 			{
 				// YOU DONT MOVE THE PADDLE. END OF SCREEN(X)
 			}
@@ -159,7 +159,7 @@ public class Player
 			// b2paddle=false;
 			if (b2paddle && lastpaddle!=Paddle_No+5&& !check_wall_paddle)
 			{ lastpaddle=Paddle_No+ 5;
-				lastBwall=0;
+				lastBwall=0; lastBcorner=0;
 				System.out.println("collision with myPaddle.");
 				Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 			}
@@ -170,7 +170,7 @@ public class Player
 				int b2wall = PEngine.collision_wall(center_x, center_y, radius,600.0);
 				boolean check_paddle_wall=(b2wall+4== lastpaddle) ;
 				if(b2wall > 0 && b2wall != lastBwall && !check_paddle_wall)
-				{   lastpaddle=0;
+				{   lastpaddle=0; lastBcorner=0;
 					System.out.println("collision of this ball with wall " + b2wall + "\t" + b2wall);
 					lastBwall = b2wall;
 					if(b2wall == 1)
@@ -187,14 +187,17 @@ public class Player
 				else
 				{
 					double l = 0.0; // TODO : whats this?
-					int b2corner = PEngine.collision_corner(center_x, center_y, radius, 600.0, 50.0);
+					int b2corner = PEngine.collision_corner(center_x, center_y, radius, 600.0, 60.0);
 					//b2corner=0
 					//System.out.println(l);
-					if (b2corner > 0)
+					if (b2corner > 0 && b2corner!=lastBcorner)
 					{ lastBcorner=b2corner;
-
-						
-
+					lastBwall=0;
+					lastpaddle=0;	
+					if(b2corner%2==1)
+						Board_backend.moveBall(i,-vel_cy , -vel_cx, center_x ,center_y ,radius);
+					else	
+						Board_backend.moveBall(i,vel_cy , vel_cx, center_x ,center_y ,radius);
 						System.out.println("colln with corner.-- "+ b2corner);
 					}
 					else
