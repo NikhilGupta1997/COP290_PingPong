@@ -62,41 +62,41 @@ public class MainPanel extends JPanel
 	{
 		/** Renders the basic view of Game Panel **/
 		super.paintComponent(g);
-		g.setColor(Color.RED);
-
+		Color c= new Color(200, 50, 50, 1);
 		Graphics2D g2 = (Graphics2D) g;
-		float thickness = 40;
+		g.setColor(Color.argb(0.8, 200, 50, 50));
+		g.fillRect(0,0,590,590);
+		g.setColor(Color.ORANGE);
+		g.fillOval(240,240,120,120);
+		g.setColor(Color.RED);
+		g.fillOval(260,260,80,80);
+		float thickness = 20;
+		float thickness2 = 10;
 		Stroke oldStroke = g2.getStroke();
 		g2.setStroke(new BasicStroke((float)(thickness)));
 		g2.setColor(Color.BLACK);
-		g2.drawRect(0, 0, 600, 600);
+		g2.drawLine(0, 10, 580, 10);
+		g2.drawLine(10, 0, 10, 580);
+		g2.drawLine(0, 590, 580, 590);
+		g2.drawLine(590, 0, 590, 590);
+		g2.setStroke(new BasicStroke((float)(thickness2)));
+		g2.setColor(Color.BLUE);
+		g2.drawLine(265,300,335,300);
+		g2.drawLine(300,265,300,335);
+		
 		g2.setStroke(oldStroke);
-
-		g.drawLine(0,0,0,600);
-		g.drawLine(0,0,600,0);
-		g.drawLine(0,600,600,600);
-		g.drawLine(600,0,600,600);
-		g.drawLine(600,600,600,600);
-
-		g.setColor(Color.RED);
-		g.fillOval(250,250,100,100);
-
-		g.setColor(Color.BLUE);
-		g.drawLine(250,300,350,300);
-		g.drawLine(300,250,300,350);
-		// basic design
-
+		
 		g.setColor(Color.ORANGE);
-		Polygon p = new Polygon(new int[] {0,70,0}, new int[] {0,0,70},3);
+		Polygon p = new Polygon(new int[] {0,60,0}, new int[] {0,0,60},3);
 		g.fillPolygon(p);
 
-		Polygon p1 = new Polygon(new int[] {600,530,600}, new int []{0,0,70},3);
+		Polygon p1 = new Polygon(new int[] {600,540,600}, new int []{0,0,60},3);
 		g.fillPolygon(p1);
 
-		Polygon p2 = new Polygon(new int[] {0,70,0}, new int [] {600,600,530},3);
+		Polygon p2 = new Polygon(new int[] {0,60,0}, new int [] {600,600,540},3);
 		g.fillPolygon(p2);
 
-		Polygon p3 = new Polygon(new int[] {600,530,600}, new int [] {600,600,530},3);
+		Polygon p3 = new Polygon(new int[] {600,540,600}, new int [] {600,600,540},3);
 		g.fillPolygon(p3);
 	}
 
@@ -122,19 +122,27 @@ public class MainPanel extends JPanel
 			double P_length = ith.getPaddleLength();
 			double paddle_x = ith.getPaddleX();
 			double paddle_y = ith.getPaddleY();
+			int loves = 5 - ith.getBallMissed();
 			curr_g.setColor(Color.BLUE);
 			if(i == 0)
 				{curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y), (int) (P_length), 20);
 				Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {20,0,20},3);
 				curr_g.fillPolygon(p1);
 				Polygon p2 = new Polygon(new int[] {(int)(paddle_x+20 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {20,0,20},3);
-				curr_g.fillPolygon(p2);}
+				curr_g.fillPolygon(p2);
+				curr_g.setColor(Color.RED);
+				for (int j = 1; j<= loves; j++)
+				curr_g.fillOval(50*j + 640,50,20,20);
+			}
 			else if(i ==1)
 				{curr_g.fillRect((int)(paddle_x), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
 				Polygon p1 = new Polygon(new int[] {20,0,20}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
 				curr_g.fillPolygon(p1);
 				Polygon p2 = new Polygon(new int[] {20,0,20}, new int[] {(int)(paddle_y+20 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0))},3);
 				curr_g.fillPolygon(p2);
+				curr_g.setColor(Color.RED);
+				for (int j = 1; j<=loves; j++)
+				curr_g.fillOval(50*j + 640,200,20,20);
 				}
 			else if(i ==2)
 				{curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-20), (int) (P_length), 20);
@@ -142,6 +150,9 @@ public class MainPanel extends JPanel
 				curr_g.fillPolygon(p1);
 				Polygon p2 = new Polygon(new int[] {(int)(paddle_x+20 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {580,600,580},3);
 				curr_g.fillPolygon(p2);
+				curr_g.setColor(Color.RED);
+				for (int j = 1; j<= loves; j++)
+				curr_g.fillOval(50*j + 640,350,20,20);
 				}
 			else if(i ==3)
 				{curr_g.fillRect((int)(paddle_x - 20), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
@@ -149,6 +160,9 @@ public class MainPanel extends JPanel
 				curr_g.fillPolygon(p1);
 				Polygon p2 = new Polygon(new int[] {580,600,580}, new int[] {(int)(paddle_y+20 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0))},3);
 				curr_g.fillPolygon(p2);
+				curr_g.setColor(Color.RED);
+				for (int j = 1; j<=loves; j++)
+				curr_g.fillOval(50*j + 640,500,20,20);
 				}
 		}
 			
