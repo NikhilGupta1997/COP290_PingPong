@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.*;
 import Physics.*;
+import java.net.*;
 
 public class Player
 {
@@ -24,8 +25,28 @@ public class Player
 	private static int lastBwall = 0;
 	private static int lastpaddle= 0;
 	private static int lastBcorner = 0;
+	private static int ball_missed = 0;	
+	private static int Collide_paddle = 0;// we need to make array when no of balls grow
 	//1 for above wall,2 for right wall and so on...... 
 	// 5 for top paddle and so on 
+		private static String sentence1;
+			private static byte[] sendData = new byte[1024];    
+			private static DatagramSocket clientSocket;//
+			private static InetAddress IPAddress;
+			private static DatagramPacket sendPacket;  
+			private static String destPort;
+			//clientSocket = new DatagramSocket();
+
+
+				   // wE NEED TO BIND IT TO ANOTHER MACHINE FROM HERE
+			private static int port1=80;
+			 private static DatagramSocket serverSocket;//
+				   private static byte[] receiveData = new byte[1024]; 
+				   private static DatagramPacket receivePacket;
+				   private static String sentence;
+				   private static String servPort;
+				   private static boolean packetStatus;
+				   
 
 	public Player()
 	{
@@ -56,13 +77,41 @@ public class Player
 	}
 
 	static ActionListener timerAction = new ActionListener()
-	{
+	{ 
+		
+				   
+
+
+
 		@Override
 		public void actionPerformed(ActionEvent event)
-		{
+		{ try {
 		//	System.out.println("Timer working!");
 			// call Board_UI ka update function.
-			update_Phy();
+
+						clientSocket=new DatagramSocket();serverSocket = new DatagramSocket(port1);
+								receivePacket = new DatagramPacket(receiveData, receiveData.length);            
+								serverSocket.receive(receivePacket);//
+
+							 //  System.out.println("The connected address is-");
+							   String temp = new String(receivePacket.getData());
+							   //System.out.println(receivePacket.getAddress().getHostAddress() + " : " + receivePacket.getPort() +" length is"+ temp.length());
+              	double yourpaddle_x,yourpaddle_y,ball_vel_cx,ball_vel_cy; 
+              	boolean collision_happened;
+
+                 String [] temp2 = 	temp.split(" ");
+                 String [] tokens=temp2[0].split(",");
+                 yourpaddle_x=Double.parseDouble(tokens[1]);
+                 yourpaddle_y=Double.parseDouble(tokens[2]);
+                 ball_vel_cx=Double.parseDouble(tokens[3]);
+                 ball_vel_cy=Double.parseDouble(tokens[4]);
+                 ball_missed =Integer.parseInt(tokens[5]);
+                 collision_happened=(Double.parseDouble(tokens[0])==1.0);
+                 			   System.out.println("The value received is "+ new String(receivePacket.getData()));
+
+
+
+			update_Phy();// parameters: Collision with paddle ,we need to ignore other collisions of the same wall
 			ArrayList<Ball> updatedBalls = Board_backend.getBalls();
 			ArrayList<Paddle> updatedPaddles = Board_backend.getPaddles();
 			Board_UI.reDraw(updatedBalls, updatedPaddles);
@@ -98,6 +147,9 @@ public class Player
 			{
 				// YOU DONT MOVE THE PADDLE. END OF SCREEN(X)
 			}
+
+
+
 			else
 			{
 				if(new_paddlePos - ClickDiff > 490)
@@ -114,12 +166,12 @@ public class Player
 				else
 				Board_backend.movePaddle(1,0,myBall.getCenterY(), 100.0, myPaddle2.getBallMissed(), true);
 
-				if(myBall.getCenterX() > 490)
-				Board_backend.movePaddle(2,490,600, 100.0, myPaddle3.getBallMissed(), true);
-				else if(myBall.getCenterX() <110)
-				Board_backend.movePaddle(2,110,600, 100.0, myPaddle3.getBallMissed(), true);
-				else
-				Board_backend.movePaddle(2,myBall.getCenterX(),600, 100.0, myPaddle3.getBallMissed(), true);
+				// if(myBall.getCenterX() > 490)
+				// Board_backend.movePaddle(2,490,600, 100.0, myPaddle3.getBallMissed(), true);
+				// else if(myBall.getCenterX() <110)
+				// Board_backend.movePaddle(2,110,600, 100.0, myPaddle3.getBallMissed(), true);
+				// else
+				Board_backend.movePaddle(2,600-yourpaddle_x,600, 100.0, ball_missed, true);
 
 				if(myBall.getCenterY() > 490)
 				Board_backend.movePaddle(3,600,490, 100.0, myPaddle4.getBallMissed(), true);
@@ -131,12 +183,28 @@ public class Player
 			// }
 			M += 1;
 			// System.out.println("Ball Position : " + ball_y);
-			Board_backend.moveBall(0,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);
+			if(!collision_happened) Board_backend.moveBall(0,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);
+			else Board_backend.moveBall(0,-ball_vel_cx, -ball_vel_cy, ball_vel_cx + lastX, ball_vel_cy + lastY, 10);
+			///Send changes
+			IPAddress = InetAddress.getByName("10.192.47.133");//// HAS TO BE THE ONE OF THE OTHER MACHINE
+			String resendPLZ = Collide_paddle+","+myPaddle.getPaddleX()+","+myPaddle.getPaddleY()+","+myBall.getVelX()+","+myBall.getVelY()+","+myPaddle.getBallMissed()+" ";
+			// We nedd to set it according to our variables 
+			sendData=new byte[1024];
+			sendData = resendPLZ.getBytes();
+			int port=90;// handle it
+			sendPacket = new DatagramPacket(sendData, resendPLZ.length(), IPAddress, port);
+			clientSocket.send(sendPacket);
+}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
 		};
 	};
 
 	public static void update_Phy()  
-	{
+	{    Collide_paddle=0;
+		ball_missed=0;
 		// TODO: check info from other clients first!
 		// check B2B, B2W, B2MyPaddle
 		ArrayList<Ball> curr_Balls = Board_backend.getBalls();
@@ -169,6 +237,8 @@ public class Player
 			if (b2paddle && lastpaddle!=Paddle_No+5&& !check_wall_paddle)
 			{ lastpaddle=Paddle_No+ 5;
 				lastBwall=0; lastBcorner=0;
+
+				Collide_paddle=1;
 				System.out.println("collision with myPaddle.");
 				Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 			}
