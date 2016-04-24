@@ -39,7 +39,7 @@ public class Player
 
 
 				   // wE NEED TO BIND IT TO ANOTHER MACHINE FROM HERE
-			private static int port1=80;
+			private static int port1=180;
 			 private static DatagramSocket serverSocket;//
 				   private static byte[] receiveData = new byte[1024]; 
 				   private static DatagramPacket receivePacket;
@@ -72,7 +72,12 @@ public class Player
 	}
 
 	public static void main(String[] args)
-	{
+	{try{serverSocket = new DatagramSocket(port1);
+		clientSocket=new DatagramSocket();
+		}catch(Exception e)
+		{e.printStackTrace();
+
+		}
 		Player p1 = new Player();
 	}
 
@@ -89,25 +94,6 @@ public class Player
 		//	System.out.println("Timer working!");
 			// call Board_UI ka update function.
 
-						clientSocket=new DatagramSocket();serverSocket = new DatagramSocket(port1);
-								receivePacket = new DatagramPacket(receiveData, receiveData.length);            
-								serverSocket.receive(receivePacket);//
-
-							 //  System.out.println("The connected address is-");
-							   String temp = new String(receivePacket.getData());
-							   //System.out.println(receivePacket.getAddress().getHostAddress() + " : " + receivePacket.getPort() +" length is"+ temp.length());
-              	double yourpaddle_x,yourpaddle_y,ball_vel_cx,ball_vel_cy; 
-              	boolean collision_happened;
-
-                 String [] temp2 = 	temp.split(" ");
-                 String [] tokens=temp2[0].split(",");
-                 yourpaddle_x=Double.parseDouble(tokens[1]);
-                 yourpaddle_y=Double.parseDouble(tokens[2]);
-                 ball_vel_cx=Double.parseDouble(tokens[3]);
-                 ball_vel_cy=Double.parseDouble(tokens[4]);
-                 ball_missed =Integer.parseInt(tokens[5]);
-                 collision_happened=(Double.parseDouble(tokens[0])==1.0);
-                 			   System.out.println("The value received is "+ new String(receivePacket.getData()));
 
 
 
@@ -126,6 +112,41 @@ public class Player
 			// Double ball_y = myBall.getCenterY();
 			new_paddlePos = Board_UI.getPaddleX();
 			int click_pos = Board_UI.getPClickX();
+
+
+
+
+			IPAddress = InetAddress.getByName("10.192.47.133");//// HAS TO BE THE ONE OF THE OTHER MACHINE
+			String resendPLZ = Collide_paddle+","+myPaddle.getPaddleX()+","+myPaddle.getPaddleY()+","+myBall.getVelX()+","+myBall.getVelY()+","+myPaddle.getBallMissed()+" ";
+			// We nedd to set it according to our variables 
+			sendData=new byte[1024];
+			sendData = resendPLZ.getBytes();
+			int port=190;// handle it
+			sendPacket = new DatagramPacket(sendData, resendPLZ.length(), IPAddress, port);
+			clientSocket.send(sendPacket);
+
+						
+						 System.out.println("The client socket in made");
+								receivePacket = new DatagramPacket(receiveData, receiveData.length);     
+								System.out.println("The packet is made");       
+								serverSocket.receive(receivePacket);//
+								System.out.println("The packet is received");  
+							 //  System.out.println("The connected address is-");
+							   String temp = new String(receivePacket.getData());
+							   //System.out.println(receivePacket.getAddress().getHostAddress() + " : " + receivePacket.getPort() +" length is"+ temp.length());
+              	double yourpaddle_x,yourpaddle_y,ball_vel_cx,ball_vel_cy; 
+              	boolean collision_happened;
+
+                 String [] temp2 = 	temp.split(" ");
+                 String [] tokens=temp2[0].split(",");
+                 yourpaddle_x=Double.parseDouble(tokens[1]);
+                 yourpaddle_y=Double.parseDouble(tokens[2]);
+                 ball_vel_cx=Double.parseDouble(tokens[3]);
+                 ball_vel_cy=Double.parseDouble(tokens[4]);
+                 ball_missed =Integer.parseInt(tokens[5]);
+                 collision_happened=(Double.parseDouble(tokens[0])==1.0);
+                 			   System.out.println("The value received is "+ new String(receivePacket.getData()));
+
 			if(LastClick != click_pos)
 			{
 				ClickDiff = ((Double)(click_pos - last_x)).intValue();
@@ -186,14 +207,7 @@ public class Player
 			if(!collision_happened) Board_backend.moveBall(0,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);
 			else Board_backend.moveBall(0,-ball_vel_cx, -ball_vel_cy, ball_vel_cx + lastX, ball_vel_cy + lastY, 10);
 			///Send changes
-			IPAddress = InetAddress.getByName("10.192.47.133");//// HAS TO BE THE ONE OF THE OTHER MACHINE
-			String resendPLZ = Collide_paddle+","+myPaddle.getPaddleX()+","+myPaddle.getPaddleY()+","+myBall.getVelX()+","+myBall.getVelY()+","+myPaddle.getBallMissed()+" ";
-			// We nedd to set it according to our variables 
-			sendData=new byte[1024];
-			sendData = resendPLZ.getBytes();
-			int port=90;// handle it
-			sendPacket = new DatagramPacket(sendData, resendPLZ.length(), IPAddress, port);
-			clientSocket.send(sendPacket);
+			
 }catch(Exception e)
 		{
 			e.printStackTrace();
