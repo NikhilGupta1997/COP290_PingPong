@@ -39,7 +39,7 @@ public class physics
 	{int wall_no=0;
 
 	if((posx+radius)>=x) wall_no=2;
-	else if((posy+radius+22.0)>=x) wall_no=3;
+	else if((posy+radius+24.0)>=x) wall_no=3;
 	else if((posx-radius)<=0.0) wall_no=4;
 	else if((posy-radius+12.5)<=0.0) wall_no=1;
 	//if(wall_no!=0)
@@ -56,15 +56,15 @@ public class physics
 		else if(Math.abs(posy+posx-2*x+l)/sqrt2<=radius)corner_no=3;
 		else if(Math.abs(posy-posx+x-l)/sqrt2<=radius) corner_no=2;
 		else if(Math.abs(posy-posx-x+l)/sqrt2<=radius) corner_no=4;
-		if(corner_no!=0)
-		{
-			System.out.println(posx+","+posy);
+		// if(corner_no!=0)
+		// {
+		// 	System.out.println(posx+","+posy);
 
-		System.out.println("Corner 1--"+(Math.abs(posx+posy-l)/sqrt2));
-		System.out.println("Corner 3--"+(Math.abs(posy+posx-2*x-l)/sqrt2));
-		System.out.println("Corner 2--"+(Math.abs(posy-posx+x-l)/sqrt2));
-		System.out.println("Corner 4--"+(Math.abs(posy-posx-x+l)/sqrt2));
-		}
+		// System.out.println("Corner 1--"+(Math.abs(posx+posy-l)/sqrt2));
+		// System.out.println("Corner 3--"+(Math.abs(posy+posx-2*x-l)/sqrt2));
+		// System.out.println("Corner 2--"+(Math.abs(posy-posx+x-l)/sqrt2));
+		// System.out.println("Corner 4--"+(Math.abs(posy-posx-x+l)/sqrt2));
+		// }
 		return corner_no;
 	}
 
@@ -72,7 +72,7 @@ public class physics
 	{
 		if(paddle_no==1)
 		{
-			if(posx<=(padd_x+len/2) && posx>=(padd_x-len/2) && posy<=(h+radius+0.0)) return true; else return false;
+			if(posx<=(padd_x+len/2) && posx>=(padd_x-len/2) && posy<=(h+radius-10.0)) return true; else return false;
 		}
 		else if(paddle_no==2)
 		{
