@@ -11,12 +11,15 @@ import java.net.*;
 
 public class Player
 {
-	/** This class acts as view model, linking model and view. **/
+	/** This class acts as view model, linking model and view. Array of Boards! **/
 	private static Board Board_backend;
+	private static Game MyGame;
 	private static GameBoard Board_UI;
 	private static int timerDelay;
 	private static Timer gameTimer;
 	private static int Paddle_No;
+	private static String PlayerName;
+	private static int GameLevel;
 	private static int player_no=0;	
 	private static int M;
 	private static int ClickDiff;
@@ -27,7 +30,7 @@ public class Player
 	private static int LastClick = 0;
 	private static int LastClick_Y = 0;
 	private static physics PEngine;
-	private static int lastBwall = 0;
+	private static int lastBwall = 0; // array for multiple balls
 	private static int lastpaddle= 0;
 	private static int lastBcorner = 0;
 	private static int ball_missed = 0;	
@@ -54,7 +57,7 @@ public class Player
 				   private static boolean packetStatus;
 				   
 
-	public Player()
+	public Player(String pname, int plevel)
 	{
 		// a Board object
 		Board_backend = new Board();
@@ -76,18 +79,22 @@ public class Player
 		gameTimer.start();
 		M =0;
 		PEngine = new physics();
-
-	}
-
-	public static void main(String[] args)
-	{try{serverSocket = new DatagramSocket(port1);
-		clientSocket=new DatagramSocket();
-		}catch(Exception e)
-		{e.printStackTrace();
-
+		PlayerName = pname;
+		GameLevel = plevel;
+		MyGame = new Game();
+		// need to put IPs, Ports in Game object.
+		try
+		{
+			serverSocket = new DatagramSocket(port1);
+			clientSocket=new DatagramSocket();
 		}
-		Player p1 = new Player();
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
 	}
+
 
 	static ActionListener timerAction = new ActionListener()
 	{ 

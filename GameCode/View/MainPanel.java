@@ -9,7 +9,6 @@ import java.util.*;
 import java.awt.event.*;
 
 
-
 public class MainPanel extends JPanel
 {
 	/** We use a JPanel because it is easy to draw 2D objects 
@@ -22,10 +21,7 @@ public class MainPanel extends JPanel
 	private static int PaddleY;
 	private static int PClickX;
 	private static int PClickY;
-	private static String Name1 = "Player1";
-	private static String Name2 = "Player2";
-	private static String Name3 = "Player3";
-	private static String Name4 = "Player4";
+
 
 	public MainPanel()
 	{
@@ -66,11 +62,10 @@ public class MainPanel extends JPanel
 	{
 		/** Renders the basic view of Game Panel **/
 		super.paintComponent(g);
-		Color customColor = new Color(222,184,135);
-		Color customColorBrown = new Color(100,50,0);
+		Color c= new Color(200, 50, 50, 1);
 		Graphics2D g2 = (Graphics2D) g;
-		g.setColor(customColor);
-		g.fillRect(0,0,590,590);
+		//g.setColor(Color.argb(0.8, 200, 50, 50));
+		//g.fillRect(0,0,590,590);
 		g.setColor(Color.ORANGE);
 		g.fillOval(240,240,120,120);
 		g.setColor(Color.RED);
@@ -79,19 +74,13 @@ public class MainPanel extends JPanel
 		float thickness2 = 10;
 		Stroke oldStroke = g2.getStroke();
 		g2.setStroke(new BasicStroke((float)(thickness)));
-		g2.setColor(customColorBrown);
+		g2.setColor(Color.BLACK);
 		g2.drawLine(0, 10, 580, 10);
 		g2.drawLine(10, 0, 10, 580);
 		g2.drawLine(0, 590, 580, 590);
 		g2.drawLine(590, 0, 590, 590);
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
-		g2.drawString(Name1, 750, 100);
-		g2.drawString(Name2, 750, 250);
-		g2.drawString(Name3, 750, 400);
-		g2.drawString(Name4, 750, 550);
 		g2.setStroke(new BasicStroke((float)(thickness2)));
 		g2.setColor(Color.BLUE);
-		// g2.fillOval(285, 285, 30, 30);
 		g2.drawLine(265,300,335,300);
 		g2.drawLine(300,265,300,335);
 		
@@ -144,11 +133,6 @@ public class MainPanel extends JPanel
 				curr_g.setColor(Color.RED);
 				for (int j = 1; j<= loves; j++)
 				curr_g.fillOval(50*j + 640,50,20,20);
-				if(loves <= 0)
-				{
-					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-					curr_g.drawString("GAME OVER", 700, 50);
-				}
 			}
 			else if(i ==1)
 				{curr_g.fillRect((int)(paddle_x), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
@@ -159,11 +143,6 @@ public class MainPanel extends JPanel
 				curr_g.setColor(Color.RED);
 				for (int j = 1; j<=loves; j++)
 				curr_g.fillOval(50*j + 640,200,20,20);
-				if(loves <= 0)
-				{
-					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-					curr_g.drawString("GAME OVER", 700, 200);
-				}
 				}
 			else if(i ==2)
 				{curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-20), (int) (P_length), 20);
@@ -174,11 +153,6 @@ public class MainPanel extends JPanel
 				curr_g.setColor(Color.RED);
 				for (int j = 1; j<= loves; j++)
 				curr_g.fillOval(50*j + 640,350,20,20);
-				if(loves <= 0)
-				{
-					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-					curr_g.drawString("GAME OVER", 700, 350);
-				}
 				}
 			else if(i ==3)
 				{curr_g.fillRect((int)(paddle_x - 20), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
@@ -189,11 +163,6 @@ public class MainPanel extends JPanel
 				curr_g.setColor(Color.RED);
 				for (int j = 1; j<=loves; j++)
 				curr_g.fillOval(50*j + 640,500,20,20);
-				if(loves <= 0)
-				{
-					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-					curr_g.drawString("GAME OVER", 700, 500);
-				}
 				}
 		}
 			
