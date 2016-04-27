@@ -98,7 +98,7 @@ public class Player
 		{
 			e.printStackTrace();
 		}
-
+		Board_UI = new GameBoard();
 		RecieveThreads = new ArrayList<ReceiverThread>();
 		ReceiverThread t1 = new ReceiverThread(190);
 		RecieveThreads.add(t1);
@@ -116,7 +116,6 @@ public class Player
 		{ try {
 		//	System.out.println("Timer working!");
 			// call Board_UI ka update function.
-			Conn_Timer.cancel();
 			player_no=1;
 			int player_d0=player_desc[0],player_d1=player_desc[1],player_d2=player_desc[2],player_d3=player_desc[3];
 			player_d0=3;player_d1=1;player_d2=3;player_d3=2;

@@ -3,10 +3,14 @@ package View;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
 import Model.*;
 import java.util.*;
 import java.awt.event.*;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 
 public class MainPanel extends JPanel
@@ -100,6 +104,7 @@ public class MainPanel extends JPanel
 		g.fillPolygon(p3);
 	}
 
+/** Takes input the updated lists of Balls, Paddles, Random Objects. **/
 	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles)
 	{
 		Graphics curr_g = this.getGraphics();

@@ -8,6 +8,7 @@ public class Board
 	private float dim_y;
 	private int no_balls;
 	private ArrayList<Ball> vector_balls;
+	private ArrayList<RandomObj> objects;
 	private int no_paddles;
 	private ArrayList<Paddle> vector_paddles;
 	private ArrayList<Boolean> dead_Alive;
@@ -33,6 +34,11 @@ public class Board
 		return vector_paddles;
 	}
 
+	public ArrayList<RandomObj> getObjects()
+	{
+		return objects;
+	}
+
 	public void addBall(Ball b)
 	{
 		vector_balls.add(b);
@@ -41,6 +47,7 @@ public class Board
 	public void removeBall(int i)
 	{
 		vector_balls.remove(i);
+		dead_Alive.remove(i);
 	}
 
 	public void addPaddle(Paddle p)
@@ -54,6 +61,16 @@ public class Board
 		vector_paddles.remove(i);
 	}
 
+	public void addObject(RandomObj r)
+	{
+		objects.add(r);
+	}
+
+	public void removeObj(int i)
+	{
+		objects.remove(i);
+	}
+
 	public void movePaddle(int i, double new_px,double new_py,double new_len,int times_missed, boolean life)
 	{
 		Paddle p = new Paddle(new_len, new_px, new_py, times_missed, life);
@@ -65,6 +82,13 @@ public class Board
 		Ball b = new Ball(vx, vy, cx, cy, r);
 		vector_balls.set(i, b);
 	}
+
+	public void moveObj(int i,double vx, double vy, double cx, double cy, boolean inc_len)
+	{
+		RandomObj r = new RandomObj(vx, vy, cx, cy, inc_len);
+		objects.set(i,r);
+	}
+
 	public Paddle getIthpaddle(int i)
 	{
 		return vector_paddles.get(i);
