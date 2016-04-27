@@ -64,7 +64,7 @@ public class Player
 			private static String servPort;
 			private static boolean packetStatus;
 				   
-
+/** Gets all other IPs, Ports, Names as inputs in constructor itself. **/
 	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports, ArrayList<String> other_names)
 	{
 		// a Board object

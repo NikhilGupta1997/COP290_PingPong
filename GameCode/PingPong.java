@@ -28,6 +28,7 @@ public class PingPong
 	private static ArrayList<Integer> Ports;
 	public PingPong()
 	{
+
 	}
 
 
@@ -426,7 +427,7 @@ public class PingPong
 					{
 						// prepare string to be sent.
 						InetAddress ip = InetAddress.getByName(IPs.get(i));
-						String sendThis = "All_Joined," + PName;
+						String sendThis = "All_Joined," + PName + ",";
 						byte[] sendData = new byte[1024];
 						sendData = sendThis.getBytes();
 						DatagramPacket sendPacket = new DatagramPacket(sendData,send_this.length(),ip , Ports.get(i));
