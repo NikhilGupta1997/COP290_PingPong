@@ -36,8 +36,12 @@ public class PingPong
    		m.getContentPane().add(main_bttn);
    		m.revalidate();
 
- 
-   		m.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+       	m.addWindowListener(new WindowAdapter() {
+         public void windowClosing(WindowEvent windowEvent){
+	        System.exit(0);
+         }        
+      });    
+
 
 // JPanel:
 		CreateGameScreen create = new CreateGameScreen(); // JPanel
@@ -99,7 +103,19 @@ public class PingPong
 		create_final.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				// CHECK THE 3 IP, PORTs ENTERED.
-				Player p1 = new Player(PName, Plevel);
+				ArrayList<JTextField> ips = create.GetIPs();
+				ArrayList<JSpinner> ports = create.GetPorts();
+
+				ArrayList<String> IPs = new ArrayList<String>();
+				ArrayList<Integer> Ports = new ArrayList<Integer>();
+
+				for (int i = 0; i < ips.size(); i ++)
+				{
+					IPs.add((ips.get(i)).getText());
+					Ports.add((int)(ports.get(i)).getValue());
+				}
+				System.out.println(IPs);
+				Player p1 = new Player(PName, Plevel, IPs, Ports);
 			}
 		});
 
@@ -118,6 +134,7 @@ public class PingPong
 
 				System.out.println("Components removed again");
 
+				addMainScreen();
 				m.getContentPane().add(main_bttn);
 				m.revalidate();
 				m.repaint();
@@ -134,6 +151,7 @@ public class PingPong
 				m.getContentPane().remove(join);
 				m.getContentPane().remove(jo_bttn);
 
+				addMainScreen();
 				m.getContentPane().add(main_bttn);
 				m.revalidate();
 				m.repaint();

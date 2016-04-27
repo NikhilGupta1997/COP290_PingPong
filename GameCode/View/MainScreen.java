@@ -21,20 +21,23 @@ public class MainScreen extends JFrame
 	{
 		/** Constructor. Sets visibility true. **/
 		super("PingPongMain");
+    this.setResizable(false);
 		startBoard();
 	}
 
 	public void startBoard()
 	{
 		/** calls function to add the Game JPanel child **/
-		this.setLayout(new GridLayout(3, 1, 0, 50));
+		this.setLayout(new GridLayout(3, 1, 0, 30));
 		this.setSize(800,800);
       	this.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
             System.exit(0);
          }        
-      	});    
+      	}); 
       headerLabel = new JLabel("Welcome to PingPong Game!", JLabel.CENTER);
+      headerLabel.setFont(new Font("Garamond", Font.BOLD, 30));
+      headerLabel.setForeground(Color.BLUE);  
 
       // statusLabel.setSize(350,100);
       controlPanel = new JPanel();
@@ -45,7 +48,9 @@ public class MainScreen extends JFrame
       addFields();
       // this.pack();
       // mainFrame.add(statusLabel);
-      this.setVisible(true);  
+      this.setVisible(true);
+      // this.getContentPane().setBackground(Color.BLUE);
+
   	}
 
   	public JLabel GetMain_Head()
@@ -63,8 +68,15 @@ public class MainScreen extends JFrame
 		// headerLabel.setText(""); 
 
 		JLabel namelabel= new JLabel("Your Name", JLabel.CENTER);
+    namelabel.setFont(new Font("Garamond", Font.BOLD, 26));
+    namelabel.setForeground(Color.decode("#05b8cc"));
+
+
 		JLabel levelLabel = new JLabel("Choose Game Level:", JLabel.CENTER);
-		userText = new JTextField(2);
+    levelLabel.setFont(new Font("Garamond", Font.BOLD, 26));
+    levelLabel.setForeground(Color.decode("#05b8cc")); 
+
+		userText = new JTextField(1);
 		SpinnerModel spinnerModel =
          new SpinnerNumberModel(1, //initial value
             1, //min
@@ -77,10 +89,21 @@ public class MainScreen extends JFrame
          }
       });
 
+      namelabel.setBorder(BorderFactory.createEmptyBorder(0,40,0,40));
       controlPanel.add(namelabel);
-      controlPanel.add(userText);
-      controlPanel.add(levelLabel);       
-      controlPanel.add(spinner);
+
+      JPanel userP = new JPanel();
+      userP.add(userText);
+      userP.setBorder(BorderFactory.createEmptyBorder(20,20,0,20));
+      controlPanel.add(userP);
+
+      levelLabel.setBorder(BorderFactory.createEmptyBorder(0,40,0,40));
+      controlPanel.add(levelLabel);
+
+      JPanel sp1 = new JPanel();
+      sp1.add(spinner);
+      sp1.setBorder(BorderFactory.createEmptyBorder(20,20,0,20));     
+      controlPanel.add(sp1);
       this.setVisible(true);
 	}
 

@@ -27,6 +27,11 @@ public class GameBoard extends JFrame
 		this.setVisible(true);
 		this.setBackground(Color.BLACK);
 		this.setResizable(true);
+		this.addWindowListener(new WindowAdapter() {
+         public void windowClosing(WindowEvent windowEvent){
+	        System.exit(0);
+         }        
+		});
 		addGamePanel();
 		this.pack();
 	}

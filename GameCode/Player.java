@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.awt.event.*;
 import Physics.*;
 import java.net.*;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class Player
 {
@@ -52,7 +56,7 @@ public class Player
 				   private static boolean packetStatus;
 				   
 
-	public Player(String pname, int plevel)
+	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports)
 	{
 		// a Board object
 		Board_backend = new Board();
