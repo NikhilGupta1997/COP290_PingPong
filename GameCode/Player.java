@@ -16,17 +16,23 @@ import javax.sound.sampled.Clip;
 public class Player
 {
 	/** This class acts as view model, linking model and view.
-	* No of receiver threads = no of other players playing with the current one. **/
+	* No of receiver threads = no of other players playing with the current one.
+	* Has a timer to wait for connections from other players. **/
 	private static ArrayList<ReceiverThread> RecieveThreads;
 	private static Board Board_backend;
 	private static Game MyGame;
 	private static GameBoard Board_UI;
 	private static int timerDelay;
 	private static Timer gameTimer;
+
+	// private static Timer Conn_Timer;
+	// private static boolean All_Players_Connected;
+	// private static boolean Game_Started;
+
 	private static int Paddle_No;
 	private static String PlayerName;
 	private static int GameLevel;
-	private static int player_no=0;	
+	private static int player_no=0;
 	private static int M;
 	private static int ClickDiff;
 	private static int ClickDiff_Y;
@@ -50,21 +56,16 @@ public class Player
 			private static InetAddress IPAddress;
 			private static DatagramPacket sendPacket;  
 			private static String destPort;
-			//clientSocket = new DatagramSocket();
 
-
-				   // wE NEED TO BIND IT TO ANOTHER MACHINE FROM HERE
+		   // wE NEED TO BIND IT TO ANOTHER MACHINE FROM HERE
 			private static int port1=190;
 
-			 // private static DatagramSocket serverSocket;//
-				//    private static byte[] receiveData = new byte[1024]; 
-				//    private static DatagramPacket receivePacket;
-				   private static String sentence;
-				   private static String servPort;
-				   private static boolean packetStatus;
+			private static String sentence;
+			private static String servPort;
+			private static boolean packetStatus;
 				   
 
-	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports)
+	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports, ArrayList<String> other_names)
 	{
 		// a Board object
 		Board_backend = new Board();
@@ -80,10 +81,9 @@ public class Player
 		Board_backend.addPaddle(p);
 		 p = new Paddle(100.0, 600.0, 400.0, 0,true);
 		Board_backend.addPaddle(p);
-		Board_UI = new GameBoard();
 		timerDelay = 50;
 		gameTimer = new Timer(timerDelay, timerAction);
-		gameTimer.start();
+
 		M =0;
 		PEngine = new physics();
 		PlayerName = pname;
@@ -100,8 +100,10 @@ public class Player
 		}
 
 		RecieveThreads = new ArrayList<ReceiverThread>();
-		RecieveThreads.add(new ReceiverThread(180));
-		(RecieveThreads.get(0)).start();
+		ReceiverThread t1 = new ReceiverThread(190);
+		RecieveThreads.add(t1);
+		t1.start();
+		gameTimer.start();		
 
 	}
 
@@ -114,7 +116,7 @@ public class Player
 		{ try {
 		//	System.out.println("Timer working!");
 			// call Board_UI ka update function.
-
+			Conn_Timer.cancel();
 			player_no=1;
 			int player_d0=player_desc[0],player_d1=player_desc[1],player_d2=player_desc[2],player_d3=player_desc[3];
 			player_d0=3;player_d1=1;player_d2=3;player_d3=2;

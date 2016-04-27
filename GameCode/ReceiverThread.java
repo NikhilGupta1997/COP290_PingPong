@@ -36,23 +36,29 @@ public class ReceiverThread extends Thread
 	public void run()
 	{
 		/**  This is called when thread.start is called. **/
-		try
+		while (true)
 		{
-			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-			serverSocket.receive(receivePacket);
-			Received_Str =  new  String(receivePacket.getData());
-			String [] temp2 = Received_Str.split(" ");
-			String [] tokens=temp2[0].split(",");
-			rec_paddleX=Double.parseDouble(tokens[1]);
-			rec_paddleY=Double.parseDouble(tokens[2]);
-			rec_ball_velX=Double.parseDouble(tokens[3]);
-			rec_ball_velY=Double.parseDouble(tokens[4]);
-			rec_balls_missed =Integer.parseInt(tokens[5]);
-			rec_collision_occur=(Double.parseDouble(tokens[0])==1.0);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
+			try
+			{
+				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+				serverSocket.receive(receivePacket);
+				Received_Str =  new String(receivePacket.getData());
+				System.out.println("Received : " + Received_Str);
+				String [] temp2 = Received_Str.split(" ");
+				String [] tokens=temp2[0].split(",");
+				rec_paddleX=Double.parseDouble(tokens[1]);
+				rec_paddleY=Double.parseDouble(tokens[2]);
+				rec_ball_velX=Double.parseDouble(tokens[3]);
+				rec_ball_velY=Double.parseDouble(tokens[4]);
+				rec_balls_missed =Integer.parseInt(tokens[5]);
+				rec_collision_occur=(Double.parseDouble(tokens[0])==1.0);
+				Thread.sleep(50);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}			
 		}
 	}
+
 }
