@@ -10,24 +10,27 @@ import Physics.*;
 
 public class Player
 {
-	/** This class acts as view model, linking model and view. **/
+	/** This class acts as view model, linking model and view. Array of Boards! **/
 	private static Board Board_backend;
+	private static Game MyGame;
 	private static GameBoard Board_UI;
 	private static int timerDelay;
 	private static Timer gameTimer;
 	private static int Paddle_No;
+	private static String PlayerName;
+	private static int GameLevel;
 	private static int M;
 	private static int ClickDiff;
 	private static double new_paddlePos;
 	private static int LastClick = 0;
 	private static physics PEngine;
-	private static int lastBwall = 0;
+	private static int lastBwall = 0; // array for multiple balls
 	private static int lastpaddle= 0;
 	private static int lastBcorner = 0;
 	//1 for above wall,2 for right wall and so on...... 
 	// 5 for top paddle and so on 
 
-	public Player()
+	public Player(String pname, int plevel)
 	{
 		// a Board object
 		Board_backend = new Board();
@@ -47,13 +50,13 @@ public class Player
 		gameTimer.start();
 		M =0;
 		PEngine = new physics();
+		PlayerName = pname;
+		GameLevel = plevel;
+		MyGame = new Game();
+		// need to put IPs, Ports in Game object.
 
 	}
 
-	public static void main(String[] args)
-	{
-		Player p1 = new Player();
-	}
 
 	static ActionListener timerAction = new ActionListener()
 	{
