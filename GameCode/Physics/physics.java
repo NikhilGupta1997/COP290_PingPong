@@ -69,7 +69,7 @@ public class physics
 	}
 
 	public boolean collision_paddle(double posx,double posy,double len,int X,double radius,double padd_x,double padd_y,double h,int paddle_no)
-	{
+	{  
 		if(paddle_no==1)
 		{
 			if(posx<=(padd_x+len/2) && posx>=(padd_x-len/2) && posy<=(h+radius-10.0)) return true; else return false;

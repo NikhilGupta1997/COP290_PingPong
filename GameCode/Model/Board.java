@@ -65,5 +65,9 @@ public class Board
 		Ball b = new Ball(vx, vy, cx, cy, r);
 		vector_balls.set(i, b);
 	}
+	public Paddle getIthpaddle(int i)
+	{
+		return vector_paddles.get(i);
+	}
 
 }

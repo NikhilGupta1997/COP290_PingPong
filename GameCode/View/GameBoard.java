@@ -52,7 +52,7 @@ public class GameBoard extends JFrame
 
 	public int getPaddleY()
 	{
-		/** Returns new X after user movement by mouse/keyboard **/
+		/** Returns new Y after user movement by mouse/keyboard **/
 		return GamePanel.getNewY();
 	}
 
