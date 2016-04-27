@@ -60,7 +60,7 @@ public class Player
 		Board_backend = new Board();
 		Ball b;
 		//if(player_no==0)
-		 b = new Ball(3.5*1, -4.5*1, 200.0, 250.0, 10);
+		 b = new Ball(3.5*1.4, -4.5*1.4, 200.0, 250.0, 10);
 		Board_backend.addBall(b);
 		Paddle p = new Paddle(100.0, 400.0, 0.0, 0,true);
 		Board_backend.addPaddle(p);
@@ -71,7 +71,7 @@ public class Player
 		 p = new Paddle(100.0, 600.0, 400.0, 0,true);
 		Board_backend.addPaddle(p);
 		Board_UI = new GameBoard();
-		timerDelay = 50;
+		timerDelay = 70;
 		gameTimer = new Timer(timerDelay, timerAction);
 		gameTimer.start();
 		M =0;
@@ -104,7 +104,7 @@ public class Player
 
 			player_no=0;
 			int player_d0=player_desc[0],player_d1=player_desc[1],player_d2=player_desc[2],player_d3=player_desc[3];
-			player_d0=3;player_d1=1;player_d2=3;player_d3=3;
+			player_d0=3;player_d1=3;player_d2=3;player_d3=1;
 			for(int ik=0;ik<4;ik++)
 			{
 				if(player_desc[ik]==1) 
@@ -236,7 +236,7 @@ public class Player
 
 
 				// For second player on left wall
-				if(new_paddlePos_Y - ClickDiff_Y > 490&& player_d1==1)
+				if(new_paddlePos_Y - ClickDiff_Y > 490 && player_d1==1)
 				{
 					Board_backend.movePaddle(1,0,490, 100.0, myPaddle.getBallMissed(), true);
 				}
@@ -295,7 +295,7 @@ public class Player
 					Board_backend.movePaddle(3,600,110, 100.0, myPaddle.getBallMissed(), true);		
 				}
 				else if(player_d3==1)
-				{
+				{ System.out.println("dsd");
 					Board_backend.movePaddle(3,600,new_paddlePos_Y - ClickDiff_Y, 100.0, myPaddle.getBallMissed(), true);
 				}
 				else if(myBall.getCenterY() > 490 && player_d3==3)
@@ -349,8 +349,8 @@ public class Player
 	{   Collide_paddle=0;
 		ball_missed=0;
 		Paddle_No=player_no;
-		Paddle_No=2;
-		System.out.println("My paddle no-"+Paddle_No);
+		Paddle_No=3;
+		//System.out.println("My paddle no-"+Paddle_No);
 		// TODO: check info from other clients first!
 		// check B2B, B2W, B2MyPaddle
 		ArrayList<Ball> curr_Balls = Board_backend.getBalls();
@@ -362,7 +362,7 @@ public class Player
 		double myY = myPaddle.getPaddleY();
 		double myLen = myPaddle.getPaddleLength();
 		//double pos_pad_x=myPaddle.
-		System.out.println("pos of my paddle--"+myX+","+myY);
+		//System.out.println("pos of my paddle--"+myX+","+myY);
 		for (int i = 0; i < no_balls ; i ++)
 		{
 			Ball ith = curr_Balls.get(i);
@@ -383,12 +383,20 @@ public class Player
 			boolean check_wall_paddle=(lastBwall+4 == Paddle_No + 5);
 			// b2paddle=false;
 			if (b2paddle && lastpaddle!=Paddle_No+5&& !check_wall_paddle)
-			{ lastpaddle=Paddle_No+ 5;
+			{   lastpaddle=Paddle_No+ 5;
 				lastBwall=0; lastBcorner=0;
 
 				Collide_paddle=1;
 				System.out.println("collision with myPaddle.");
+				if(Paddle_No==0)
 				Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				else if(Paddle_No==1)
+				Board_backend.moveBall(0,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				else if(Paddle_No==2)
+				Board_backend.moveBall(0,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				else 
+				Board_backend.moveBall(0,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+							
 			}
 			else
 			{   double k=1.01;
