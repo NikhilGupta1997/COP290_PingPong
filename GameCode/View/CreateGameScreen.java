@@ -46,6 +46,7 @@ public class CreateGameScreen extends JPanel
       headerLabel = new JLabel("Enter opponents' details :", JLabel.CENTER);
       headerLabel.setFont(new Font("Garamond", Font.BOLD, 30));
       headerLabel.setForeground(Color.BLUE);
+      headerLabel.setBorder(BorderFactory.createEmptyBorder(100,0,40,0));
 
       // statusLabel.setSize(350,100);
       p = new JPanel();
@@ -55,6 +56,8 @@ public class CreateGameScreen extends JPanel
       // p3.setLayout(new FlowLayout());
 
       this.add(headerLabel);
+
+
       addSpinner();
       this.add(p);
       // this.pack();
@@ -69,6 +72,19 @@ public class CreateGameScreen extends JPanel
       levelLabel.setFont(new Font("Garamond", Font.BOLD, 26));
       levelLabel.setForeground(Color.decode("#05b8cc")); 
 
+         JPanel labels = new JPanel();
+         labels.setLayout(new FlowLayout());
+         JLabel MyIP = new JLabel("IP Address      ");
+         JLabel MyPort = new JLabel("Port");
+         labels.add(MyIP);
+         MyIP.setFont(new Font("Garamond", Font.BOLD, 18));
+         MyIP.setForeground(Color.decode("#05b8cc")); 
+         MyIP.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+         labels.add(MyPort);
+         MyPort.setFont(new Font("Garamond", Font.BOLD, 18));
+         MyPort.setForeground(Color.decode("#05b8cc")); 
+         MyPort.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+
             SpinnerModel spinnerModel =
          new SpinnerNumberModel(0, //initial value
             0, //min
@@ -79,12 +95,26 @@ public class CreateGameScreen extends JPanel
          public void stateChanged(ChangeEvent e) {
             // CHANGE Number of IP-Port fields.
             int no_play = (int) ((JSpinner)e.getSource()).getValue();
+            labelCheck(no_play, labels);
             addFields(no_play);
          }
       });
       nop.add(levelLabel);
       nop.add(spinner);
       this.add(nop);
+      
+
+   }
+
+   public void labelCheck(int n, JPanel panel)
+   {
+      this.remove(panel);
+      if(n != 0)
+      {
+         this.add(panel);
+      }
+      this.revalidate();
+      this.repaint();
 
    }
 
@@ -95,9 +125,12 @@ public class CreateGameScreen extends JPanel
       IPs = new ArrayList<JTextField>();
       Ports = new ArrayList<JSpinner>();
 
-      p = new JPanel(new GridLayout(n,1,0,20));
+  
+
+      p = new JPanel(new GridLayout(n,1,0,6));
       for (int i = 0; i < n; i ++)
       {
+      
          JPanel ith = new JPanel();
          ith.setLayout(new FlowLayout());
          JTextField ith_T = new JTextField("IP address " + (i + 1));
@@ -114,7 +147,8 @@ public class CreateGameScreen extends JPanel
          }
       });
       Ports.add(spinner1);
-
+         // ith_T.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
+         spinner1.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
          ith.add(ith_T);
          ith.add(spinner1);
          p.add(ith);

@@ -27,7 +27,7 @@ public class MainPanel extends JPanel
 	{
 		/** Constructor **/
 		super();
-		this.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(300, 300, 300, 300), new EtchedBorder()));
+		this.setBorder(BorderFactory.createCompoundBorder(new MatteBorder(300, 300, 300, 300, Color.BLUE), new EtchedBorder()));
 		// setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setPreferredSize(new Dimension(Default_Width, Default_Height));
 		this.setVisible(true);
