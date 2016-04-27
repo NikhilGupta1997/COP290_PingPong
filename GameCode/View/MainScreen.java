@@ -30,11 +30,11 @@ public class MainScreen extends JFrame
 		/** calls function to add the Game JPanel child **/
 		this.setLayout(new GridLayout(3, 1, 0, 30));
 		this.setSize(800,800);
-      	this.addWindowListener(new WindowAdapter() {
-         public void windowClosing(WindowEvent windowEvent){
-            System.exit(0);
-         }        
-      	}); 
+    this.addWindowListener(new WindowAdapter() {
+       public void windowClosing(WindowEvent windowEvent){
+         System.exit(0);
+        }        
+     	}); 
       headerLabel = new JLabel("Welcome to PingPong Game!", JLabel.CENTER);
       headerLabel.setFont(new Font("Garamond", Font.BOLD, 30));
       headerLabel.setForeground(Color.BLUE);  

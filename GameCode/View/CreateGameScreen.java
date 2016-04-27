@@ -65,9 +65,9 @@ public class CreateGameScreen extends JPanel
    public void addSpinner()
    {
       JPanel nop = new JPanel(new FlowLayout());
-            JLabel levelLabel = new JLabel("Select number of players:", JLabel.CENTER);
-    levelLabel.setFont(new Font("Garamond", Font.BOLD, 26));
-    levelLabel.setForeground(Color.decode("#05b8cc")); 
+      JLabel levelLabel = new JLabel("Select number of players:", JLabel.CENTER);
+      levelLabel.setFont(new Font("Garamond", Font.BOLD, 26));
+      levelLabel.setForeground(Color.decode("#05b8cc")); 
 
             SpinnerModel spinnerModel =
          new SpinnerNumberModel(0, //initial value
