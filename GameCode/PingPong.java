@@ -289,7 +289,7 @@ public class PingPong
 					String [] temp2 = Received_Str.split(" ");
 					String [] tokens=temp2[0].split(",");
 					// All_Joined, apna_naam, IP1, port1, name1, IP2, Port2, name2
-					if (tokens[0].equals("All_Joined") && receivePacket.getAddress().equals(sendTo_IP) && receivePacket.getPort() == sendTo_Port)
+					if (tokens[0].equals("All_Joined") && receivePacket.getAddress().equals(sendTo_IP))
 					{
 						// being received from the Creator IP.
 						done = true;
@@ -370,7 +370,7 @@ public class PingPong
 					System.out.println("Received : " + Received_Str);
 					String [] temp2 = Received_Str.split(" ");
 					String [] tokens=temp2[0].split(",");
-					if (tokens[0].equals("Join") && receivePacket.getAddress().equals(otherIP) && receivePacket.getPort() == otherPort)
+					if (tokens[0].equals("Join") && receivePacket.getAddress().equals(otherIP))
 					{
 						if (i == 1)
 						{
