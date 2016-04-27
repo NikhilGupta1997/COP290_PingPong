@@ -28,8 +28,10 @@ public class MainScreen extends JFrame
 	public void startBoard()
 	{
 		/** calls function to add the Game JPanel child **/
+    
 		this.setLayout(new GridLayout(3, 1, 0, 30));
 		this.setSize(800,800);
+
     this.addWindowListener(new WindowAdapter() {
        public void windowClosing(WindowEvent windowEvent){
          System.exit(0);
@@ -68,6 +70,7 @@ public class MainScreen extends JFrame
 		// headerLabel.setText(""); 
 
 		JLabel namelabel= new JLabel("Your Name", JLabel.CENTER);
+    namelabel.setHorizontalAlignment(JLabel.CENTER);
     namelabel.setFont(new Font("Garamond", Font.BOLD, 26));
     namelabel.setForeground(Color.decode("#05b8cc"));
 
@@ -76,7 +79,8 @@ public class MainScreen extends JFrame
     levelLabel.setFont(new Font("Garamond", Font.BOLD, 26));
     levelLabel.setForeground(Color.decode("#05b8cc")); 
 
-		userText = new JTextField(1);
+		userText = new JTextField(10);
+    userText.setHorizontalAlignment(JTextField.CENTER);
 		SpinnerModel spinnerModel =
          new SpinnerNumberModel(1, //initial value
             1, //min
@@ -89,21 +93,28 @@ public class MainScreen extends JFrame
          }
       });
 
-      namelabel.setBorder(BorderFactory.createEmptyBorder(0,40,0,40));
-      controlPanel.add(namelabel);
+      JPanel main_name = new JPanel();
+      main_name.setLayout(new FlowLayout());
+      namelabel.setBorder(BorderFactory.createEmptyBorder(0,10,0,40));
+      main_name.add(namelabel);
 
       JPanel userP = new JPanel();
       userP.add(userText);
-      userP.setBorder(BorderFactory.createEmptyBorder(20,20,0,20));
-      controlPanel.add(userP);
+      userP.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.BLUE));
+      main_name.add(userP);
+      controlPanel.add(main_name);
 
-      levelLabel.setBorder(BorderFactory.createEmptyBorder(0,40,0,40));
-      controlPanel.add(levelLabel);
+      JPanel main_level = new JPanel();
+      main_level.setLayout(new FlowLayout());
+      levelLabel.setBorder(BorderFactory.createEmptyBorder(0,40,0,20));
+      main_level.add(levelLabel);
 
       JPanel sp1 = new JPanel();
       sp1.add(spinner);
-      sp1.setBorder(BorderFactory.createEmptyBorder(20,20,0,20));     
-      controlPanel.add(sp1);
+      sp1.setBorder(BorderFactory.createEmptyBorder(0,10,0,20));     
+      main_level.add(sp1);
+      controlPanel.add(main_level);
+      // controlPanel.setBackground(Color.RED);
       this.setVisible(true);
 	}
 
