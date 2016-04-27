@@ -38,9 +38,9 @@ public class physics
 	public int collision_wall(double posx,double posy,double radius,double x)     //x is the dimension of the square
 	{int wall_no=0;
 
-	if((posx+radius)>=x) wall_no=2;
+	if((posx+radius)>=x) wall_no=4;
 	else if((posy+radius+24.0)>=x) wall_no=3;
-	else if((posx-radius)<=0.0) wall_no=4;
+	else if((posx-radius)<=0.0) wall_no=2;
 	else if((posy-radius+12.5)<=0.0) wall_no=1;
 	//if(wall_no!=0)
 	//	System.out.print(posx+","+posy+","+x+"\n");
@@ -69,18 +69,18 @@ public class physics
 	}
 
 	public boolean collision_paddle(double posx,double posy,double len,int X,double radius,double padd_x,double padd_y,double h,int paddle_no)
-	{
+	{  // TODO: Synchronize the player no 
 		if(paddle_no==1)
 		{
 			if(posx<=(padd_x+len/2) && posx>=(padd_x-len/2) && posy<=(h+radius-10.0)) return true; else return false;
 		}
-		else if(paddle_no==2)
+		else if(paddle_no==4)
 		{
-			if(posy<=(padd_y+len/2) && posy>=(padd_y-len/2) && posx >= X-(h+radius)) return true; else return false ;
+			if(posy<=(padd_y+len/2) && posy>=(padd_y-len/2) && posx >= X-(h+radius+7.5)) return true; else return false ;
 		}
 		else if(paddle_no==3)
 		{
-			if(posx<=(padd_x+len/2) && posx>=(padd_x-len/2) && posy >= X-(h+radius)) return true; else return false;
+			if(posx<=(padd_x+len/2) && posx>=(padd_x-len/2) && posy >= X-(h+radius+22)) return true; else return false;
 		}
 	else
 	{
