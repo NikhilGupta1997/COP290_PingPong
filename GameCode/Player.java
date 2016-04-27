@@ -92,13 +92,16 @@ public class Player
 		// need to put IPs, Ports in Game object.
 		try
 		{
-			serverSocket = new DatagramSocket(port1);
 			clientSocket=new DatagramSocket();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
+
+		RecieveThreads = new ArrayList<ReceiverThread>();
+		RecieveThreads.add(new ReceiverThread(180));
+		(RecieveThreads.get(0)).start();
 
 	}
 
@@ -158,25 +161,30 @@ public class Player
 
 						
 						 System.out.println("The client socket in made");
-								receivePacket = new DatagramPacket(receiveData, receiveData.length);     
-								System.out.println("The packet is made");       
-								serverSocket.receive(receivePacket);//
-								System.out.println("The packet is received");  
-							 //  System.out.println("The connected address is-");
-							   String temp = new String(receivePacket.getData());
-							   //System.out.println(receivePacket.getAddress().getHostAddress() + " : " + receivePacket.getPort() +" length is"+ temp.length());
+								// receivePacket = new DatagramPacket(receiveData, receiveData.length);     
+								// System.out.println("The packet is made");       
+								// serverSocket.receive(receivePacket);//
+								// System.out.println("The packet is received");  
+							 // //  System.out.println("The connected address is-");
+							 //   String temp = new String(receivePacket.getData());
+							 //   //System.out.println(receivePacket.getAddress().getHostAddress() + " : " + receivePacket.getPort() +" length is"+ temp.length());
               	double yourpaddle_x,yourpaddle_y,ball_vel_cx,ball_vel_cy; 
              	boolean collision_happened;
 
-                 String [] temp2 = 	temp.split(" ");
-                 String [] tokens=temp2[0].split(",");
-                 yourpaddle_x=Double.parseDouble(tokens[1]);
-                 yourpaddle_y=Double.parseDouble(tokens[2]);
-                 ball_vel_cx=Double.parseDouble(tokens[3]);
-                 ball_vel_cy=Double.parseDouble(tokens[4]);
-                 ball_missed =Integer.parseInt(tokens[5]);
-                 collision_happened=(Double.parseDouble(tokens[0])==1.0);
-                 			   System.out.println("The value received is "+ new String(receivePacket.getData()));
+             	yourpaddle_x = RecieveThreads.get(0).rec_paddleX;
+             	yourpaddle_y = RecieveThreads.get(0).rec_paddleY;
+             	ball_vel_cx = RecieveThreads.get(0).rec_ball_velX;
+             	ball_vel_cy = RecieveThreads.get(0).rec_ball_velY;
+             	collision_happened = RecieveThreads.get(0).rec_collision_occur;
+                 // String [] temp2 = 	temp.split(" ");
+                 // String [] tokens=temp2[0].split(",");
+                 // yourpaddle_x=Double.parseDouble(tokens[1]);
+                 // yourpaddle_y=Double.parseDouble(tokens[2]);
+                 // ball_vel_cx=Double.parseDouble(tokens[3]);
+                 // ball_vel_cy=Double.parseDouble(tokens[4]);
+                 // ball_missed =Integer.parseInt(tokens[5]);
+                 // collision_happened=(Double.parseDouble(tokens[0])==1.0);
+                 // 			   System.out.println("The value received is "+ new String(receivePacket.getData()));
 
 			if(LastClick != click_pos)
 			{
