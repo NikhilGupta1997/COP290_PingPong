@@ -29,7 +29,7 @@ public class MainScreen extends JFrame
 	{
 		/** calls function to add the Game JPanel child **/
     
-		this.setLayout(new GridLayout(3, 1, 0, 30));
+		this.setLayout(new GridLayout(3, 1, 0, 0));
 		this.setSize(800,800);
 
     this.addWindowListener(new WindowAdapter() {

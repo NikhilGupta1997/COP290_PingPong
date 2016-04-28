@@ -116,6 +116,7 @@ public class PingPong
 				// CHECK THE 3 IP, PORTs ENTERED.
 				ArrayList<JTextField> ips = create.GetIPs();
 				ArrayList<JSpinner> ports = create.GetPorts();
+				// DISABLE THIS BUTTON!
 
 				IPs = new ArrayList<String>();
 				Ports = new ArrayList<Integer>();
@@ -256,7 +257,7 @@ public class PingPong
 			sendTo_Port = port;
 			try
 			{
-				serverSocket = new DatagramSocket(port);
+				serverSocket = new DatagramSocket(1900);
 				clientSocket = new DatagramSocket();
 			}
 			catch(Exception e)
@@ -279,7 +280,8 @@ public class PingPong
 					String send_this = "Join," + PName;
 					byte[] sendData = new byte[1024];
 					sendData = send_this.getBytes();
-					DatagramPacket sendPacket = new DatagramPacket(sendData,send_this.length(), IP_game, send_to_port);
+					DatagramPacket sendPacket = new DatagramPacket(sendData,send_this.length(), IP_game, 1800);
+					clientSocket.send(sendPacket);
 
 
 					DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
@@ -337,7 +339,6 @@ public class PingPong
 		private static byte[] receiveData = new byte[1024];
 		public static String Received_Str;
 
-		private static DatagramSocket clientSocket;
 
 		public CreateGameThread(int i, String otherIP, int otherPort)
 		{
@@ -348,8 +349,7 @@ public class PingPong
 			i = i;
 			try
 			{
-				serverSocket = new DatagramSocket(otherPort); // receive
-				clientSocket = new DatagramSocket(); // send
+				serverSocket = new DatagramSocket(1800); // receive
 
 			}
 			catch(Exception e)
@@ -406,9 +406,9 @@ public class PingPong
 	public static class StartGameThread extends Thread
 	{
 		private static boolean Game_Started = false;
+		private static DatagramSocket clientSocket;
 		public StartGameThread()
 		{
-
 		}
 
 		public void run()
@@ -442,7 +442,8 @@ public class PingPong
 							String sendThis = "All_Joined," + PName + ",";
 							byte[] sendData = new byte[1024];
 							sendData = sendThis.getBytes();
-							DatagramPacket sendPacket = new DatagramPacket(sendData,sendThis.length(),ip , Ports.get(i));
+							DatagramPacket sendPacket = new DatagramPacket(sendData,sendThis.length(),ip , 1900);
+							clientSocket.send(sendPacket);
 						}
 					}
 					catch(Exception e)
