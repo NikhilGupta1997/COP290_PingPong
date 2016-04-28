@@ -13,6 +13,12 @@ import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.io.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
+
 
 public class Player
 {
@@ -515,13 +521,125 @@ public class Player
 				Collide_paddle=1;
 				// System.out.println("collision with myPaddle.");
 				if((b2paddle-1)==0)
-				Board_backend.moveBall(i,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				{Board_backend.moveBall(i,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+					try
+			            {
+			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
+			              // .getAbsoluteFile()
+			              // System.out.println("after l1");
+			              Clip clip = AudioSystem.getClip();
+			              // System.out.println("after l2");
+			              clip.open(audio1);
+			              // System.out.println("after l3");
+			              clip.start();
+			              // System.out.println("after l4");
+			            }
+			            catch(UnsupportedAudioFileException e1)
+			            {
+			              System.err.println(e1.getMessage());
+			              System.out.println("e1");
+			            }
+			            catch(LineUnavailableException e2)
+			            {
+			              System.err.println(e2.getMessage());
+			              System.out.println("e2");
+			            }
+			            catch(IOException e3)
+			            {
+			              System.err.println(e3.getMessage());
+			              System.out.println("e3");
+			            }
+				}
 				else if((b2paddle-1)==1)
-				Board_backend.moveBall(i,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				{Board_backend.moveBall(i,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+					try
+			            {
+			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
+			              // .getAbsoluteFile()
+			              // System.out.println("after l1");
+			              Clip clip = AudioSystem.getClip();
+			              // System.out.println("after l2");
+			              clip.open(audio1);
+			              // System.out.println("after l3");
+			              clip.start();
+			              // System.out.println("after l4");
+			            }
+			            catch(UnsupportedAudioFileException e1)
+			            {
+			              System.err.println(e1.getMessage());
+			              System.out.println("e1");
+			            }
+			            catch(LineUnavailableException e2)
+			            {
+			              System.err.println(e2.getMessage());
+			              System.out.println("e2");
+			            }
+			            catch(IOException e3)
+			            {
+			              System.err.println(e3.getMessage());
+			              System.out.println("e3");
+			            }
+				}
 				else if((b2paddle-1)==2)
-				Board_backend.moveBall(i,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				{Board_backend.moveBall(i,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+					try
+			            {
+			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
+			              // .getAbsoluteFile()
+			              // System.out.println("after l1");
+			              Clip clip = AudioSystem.getClip();
+			              // System.out.println("after l2");
+			              clip.open(audio1);
+			              // System.out.println("after l3");
+			              clip.start();
+			              // System.out.println("after l4");
+			            }
+			            catch(UnsupportedAudioFileException e1)
+			            {
+			              System.err.println(e1.getMessage());
+			              System.out.println("e1");
+			            }
+			            catch(LineUnavailableException e2)
+			            {
+			              System.err.println(e2.getMessage());
+			              System.out.println("e2");
+			            }
+			            catch(IOException e3)
+			            {
+			              System.err.println(e3.getMessage());
+			              System.out.println("e3");
+			            }
+				}
 				else 
-				Board_backend.moveBall(i,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				{Board_backend.moveBall(i,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+					try
+			            {
+			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
+			              // .getAbsoluteFile()
+			              // System.out.println("after l1");
+			              Clip clip = AudioSystem.getClip();
+			              // System.out.println("after l2");
+			              clip.open(audio1);
+			              // System.out.println("after l3");
+			              clip.start();
+			              // System.out.println("after l4");
+			            }
+			            catch(UnsupportedAudioFileException e1)
+			            {
+			              System.err.println(e1.getMessage());
+			              System.out.println("e1");
+			            }
+			            catch(LineUnavailableException e2)
+			            {
+			              System.err.println(e2.getMessage());
+			              System.out.println("e2");
+			            }
+			            catch(IOException e3)
+			            {
+			              System.err.println(e3.getMessage());
+			              System.out.println("e3");
+			            }
+				}
 							
 			}
 			else
@@ -540,18 +658,126 @@ public class Player
 					if(b2wall == 1)
 					{Board_backend.moveBall(i,k*myBall.getVelX(), -k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					Board_backend.movePaddle(0,myPaddle1.getPaddleX(),myPaddle1.getPaddleY(), 100.0, myPaddle1.getBallMissed() + 1, true);
+					try
+			            {
+			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
+			              // .getAbsoluteFile()
+			              // System.out.println("after l1");
+			              Clip clip = AudioSystem.getClip();
+			              // System.out.println("after l2");
+			              clip.open(audio1);
+			              // System.out.println("after l3");
+			              clip.start();
+			              // System.out.println("after l4");
+			            }
+			            catch(UnsupportedAudioFileException e1)
+			            {
+			              System.err.println(e1.getMessage());
+			              System.out.println("e1");
+			            }
+			            catch(LineUnavailableException e2)
+			            {
+			              System.err.println(e2.getMessage());
+			              System.out.println("e2");
+			            }
+			            catch(IOException e3)
+			            {
+			              System.err.println(e3.getMessage());
+			              System.out.println("e3");
+			            }
 					}
 					else if(b2wall == 2)
 					{Board_backend.moveBall(i,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					Board_backend.movePaddle(1,myPaddle2.getPaddleX(),myPaddle2.getPaddleY(), 100.0, myPaddle2.getBallMissed() + 1, true);
+					try
+			            {
+			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
+			              // .getAbsoluteFile()
+			              // System.out.println("after l1");
+			              Clip clip = AudioSystem.getClip();
+			              // System.out.println("after l2");
+			              clip.open(audio1);
+			              // System.out.println("after l3");
+			              clip.start();
+			              // System.out.println("after l4");
+			            }
+			            catch(UnsupportedAudioFileException e1)
+			            {
+			              System.err.println(e1.getMessage());
+			              System.out.println("e1");
+			            }
+			            catch(LineUnavailableException e2)
+			            {
+			              System.err.println(e2.getMessage());
+			              System.out.println("e2");
+			            }
+			            catch(IOException e3)
+			            {
+			              System.err.println(e3.getMessage());
+			              System.out.println("e3");
+			            }
 					}
 					else if(b2wall == 3)
 					{Board_backend.moveBall(i,k*myBall.getVelX(), -k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					Board_backend.movePaddle(2,myPaddle3.getPaddleX(),myPaddle3.getPaddleY(), 100.0, myPaddle3.getBallMissed() + 1, true);
+					try
+			            {
+			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
+			              // .getAbsoluteFile()
+			              // System.out.println("after l1");
+			              Clip clip = AudioSystem.getClip();
+			              // System.out.println("after l2");
+			              clip.open(audio1);
+			              // System.out.println("after l3");
+			              clip.start();
+			              // System.out.println("after l4");
+			            }
+			            catch(UnsupportedAudioFileException e1)
+			            {
+			              System.err.println(e1.getMessage());
+			              System.out.println("e1");
+			            }
+			            catch(LineUnavailableException e2)
+			            {
+			              System.err.println(e2.getMessage());
+			              System.out.println("e2");
+			            }
+			            catch(IOException e3)
+			            {
+			              System.err.println(e3.getMessage());
+			              System.out.println("e3");
+			            }
 					}
 					else if(b2wall == 4)
 					{Board_backend.moveBall(i,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					Board_backend.movePaddle(3,myPaddle4.getPaddleX(),myPaddle4.getPaddleY(), 100.0, myPaddle4.getBallMissed() + 1, true);
+					try
+			            {
+			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
+			              // .getAbsoluteFile()
+			              // System.out.println("after l1");
+			              Clip clip = AudioSystem.getClip();
+			              // System.out.println("after l2");
+			              clip.open(audio1);
+			              // System.out.println("after l3");
+			              clip.start();
+			              // System.out.println("after l4");
+			            }
+			            catch(UnsupportedAudioFileException e1)
+			            {
+			              System.err.println(e1.getMessage());
+			              System.out.println("e1");
+			            }
+			            catch(LineUnavailableException e2)
+			            {
+			              System.err.println(e2.getMessage());
+			              System.out.println("e2");
+			            }
+			            catch(IOException e3)
+			            {
+			              System.err.println(e3.getMessage());
+			              System.out.println("e3");
+			            }
 					}
 					
 				}
@@ -574,9 +800,65 @@ public class Player
 					lastBwall[i]=0;
 					lastpaddle[i]=0;	
 					if(b2corner%2==1)
-						Board_backend.moveBall(i,-vel_cy , -vel_cx, center_x ,center_y ,radius);
+						{Board_backend.moveBall(i,-vel_cy , -vel_cx, center_x ,center_y ,radius);
+						try
+				            {
+				              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
+				              // .getAbsoluteFile()
+				              // System.out.println("after l1");
+				              Clip clip = AudioSystem.getClip();
+				              // System.out.println("after l2");
+				              clip.open(audio1);
+				              // System.out.println("after l3");
+				              clip.start();
+				              // System.out.println("after l4");
+				            }
+				            catch(UnsupportedAudioFileException e1)
+				            {
+				              System.err.println(e1.getMessage());
+				              System.out.println("e1");
+				            }
+				            catch(LineUnavailableException e2)
+				            {
+				              System.err.println(e2.getMessage());
+				              System.out.println("e2");
+				            }
+				            catch(IOException e3)
+				            {
+				              System.err.println(e3.getMessage());
+				              System.out.println("e3");
+				            }
+				        }
 					else	
-						Board_backend.moveBall(i,vel_cy , vel_cx, center_x ,center_y ,radius);
+						{Board_backend.moveBall(i,vel_cy , vel_cx, center_x ,center_y ,radius);
+							try
+				            {
+				              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
+				              // .getAbsoluteFile()
+				              // System.out.println("after l1");
+				              Clip clip = AudioSystem.getClip();
+				              // System.out.println("after l2");
+				              clip.open(audio1);
+				              // System.out.println("after l3");
+				              clip.start();
+				              // System.out.println("after l4");
+				            }
+				            catch(UnsupportedAudioFileException e1)
+				            {
+				              System.err.println(e1.getMessage());
+				              System.out.println("e1");
+				            }
+				            catch(LineUnavailableException e2)
+				            {
+				              System.err.println(e2.getMessage());
+				              System.out.println("e2");
+				            }
+				            catch(IOException e3)
+				            {
+				              System.err.println(e3.getMessage());
+				              System.out.println("e3");
+				            }
+			        	}
 						System.out.println("colln with corner.-- "+ b2corner+", ball="+ i);
 					}
 					else
