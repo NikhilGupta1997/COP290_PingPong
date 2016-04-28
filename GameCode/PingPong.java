@@ -502,6 +502,7 @@ public class PingPong
 					}
 					try
 					{
+						// I AM Player 0. IPs[0] is player 1 IPs[1] is Player 2 IPs[2] is Player 3.
 						for (int i = 0; i < no_p; i ++)
 						{
 							// prepare string to be sent.
