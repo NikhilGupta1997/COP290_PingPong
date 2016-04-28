@@ -182,6 +182,9 @@ public class PingPong
 				JoinGameThread jg1 = new JoinGameThread((int) join.spinner.getValue(),join.userIP.getText());
 				jg1.start();
 
+				JoinGameThread2 jg2 = new JoinGameThread2((int) join.spinner.getValue(),join.userIP.getText());
+				jg2.start();
+
 				// check if player can join the given IP's address.
 				// Receiver thread
 			}
@@ -257,7 +260,7 @@ public class PingPong
 			sendTo_Port = port;
 			try
 			{
-				serverSocket = new DatagramSocket(1900);
+				// serverSocket = new DatagramSocket(1900);
 				clientSocket = new DatagramSocket();
 			}
 			catch(Exception e)
@@ -276,14 +279,56 @@ public class PingPong
 				{
 					// SEND THEN RECEIVE.
 					InetAddress IP_game = InetAddress.getByName(sendTo_IP);
-					int send_to_port = sendTo_Port;
+					// int send_to_port = sendTo_Port;
 					String send_this = "Join," + PName;
 					byte[] sendData = new byte[1024];
 					sendData = send_this.getBytes();
 					DatagramPacket sendPacket = new DatagramPacket(sendData,send_this.length(), IP_game, 1800);
 					clientSocket.send(sendPacket);
 
+					done = true;
 
+
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}			
+			}
+		}
+
+	}
+
+	public static class JoinGameThread2 extends Thread
+	{
+		private static DatagramSocket serverSocket;//
+		private static byte[] receiveData = new byte[1024];
+		public static String Received_Str;
+		public static boolean done2;
+		private static String sendTo_IP;
+		private static int sendTo_Port;
+
+		public JoinGameThread2(int port, String IP)
+		{
+			done2 = false;
+			sendTo_IP = IP;
+			sendTo_Port = port;
+			try
+			{
+				serverSocket = new DatagramSocket(1900);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		public void run()
+		{
+			while (!done2)
+			{
+				try
+				{
 					DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 					serverSocket.receive(receivePacket);
 					Received_Str =  new String(receivePacket.getData());
@@ -294,7 +339,7 @@ public class PingPong
 					if (tokens[0].equals("All_Joined") && receivePacket.getAddress().equals(sendTo_IP))
 					{
 						// being received from the Creator IP.
-						done = true;
+						done2 = true;
 						ArrayList<String> joinIPs = new ArrayList<String>();
 						ArrayList<Integer> joinPorts = new ArrayList<Integer>();
 						ArrayList<String> joinNames = new ArrayList<String>();
@@ -317,11 +362,12 @@ public class PingPong
 // has other 3.
 						Player p_join = new Player(PName, Plevel,joinIPs, joinPorts, joinNames);
 					}
+
 				}
 				catch(Exception e)
 				{
-					e.printStackTrace();
-				}			
+
+				}
 			}
 		}
 
@@ -367,7 +413,9 @@ public class PingPong
 				try
 				{
 					DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+					System.out.println("Receive packet 1: ");
 					serverSocket.receive(receivePacket);
+					System.out.println("Received Packet 2: ");
 					Received_Str =  new String(receivePacket.getData());
 					System.out.println("Received : " + Received_Str);
 					String [] temp2 = Received_Str.split(" ");
