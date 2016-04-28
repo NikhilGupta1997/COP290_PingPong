@@ -160,7 +160,7 @@ public class Player
 	 	{
 	 		lastBwall[i]=0;lastpaddle[i]=0;lastBcorner[i]=0;
 	 	}
-		timerDelay = 200;
+		timerDelay = 150;
 		gameTimer = new Timer(timerDelay, timerAction);
 		gameTimer.start();
 		M =0;
@@ -202,7 +202,7 @@ public class Player
 			ArrayList<Ball> curr_Balls = Board_backend.getBalls();
 			int no_balls=curr_Balls.size();
 			int player_d0=player_desc[0],player_d1=player_desc[1],player_d2=player_desc[2],player_d3=player_desc[3];
-			
+			//System.out.println(player_d0+","+player_d1+","+player_d2+","+player_d3);
 			// player_desc is 1 for current player,2 for other and 3 for computer
 
 			update_Phy();// parameters: Collision with paddle ,we need to ignore other collisions of the same wall
@@ -243,6 +243,7 @@ public class Player
 			sendPacket = new DatagramPacket(sendData, resendPLZ.length(), IPAddress, port);
 			clientSocket.send(sendPacket);
 			}
+			//System.out.println(player_no);
 			// IPAddress = InetAddress.getByName("10.192.62.5");//// HAS TO BE THE ONE OF THE OTHER MACHINE
 			// String resendPLZ = Collide_paddle+","+myPaddle.getPaddleX()+","+myPaddle.getPaddleY()+","+myBall.getVelX()+","+myBall.getVelY()+","+myPaddle.getBallMissed()+" ";
 			// // We nedd to set it according to our variables 
@@ -365,7 +366,7 @@ public class Player
 			if(next_pos_3>490) next_pos_3=490;
 			else if(next_pos_3<110) next_pos_3=110; 
 			
-			double next_pos_4=myPaddle4.getPaddleX()+ next_vel_4;
+			double next_pos_4=myPaddle4.getPaddleY()+ next_vel_4;
 			if(next_pos_4>490) next_pos_4=490;
 			else if(next_pos_4<110) next_pos_4=110; 
 			
@@ -471,7 +472,9 @@ public class Player
 				else if(myBall.getCenterY() <110 && player_d3==3 &&false)
 					Board_backend.movePaddle(3,600,110, 100.0, myPaddle2.getBallMissed(), true);
 				else if( player_d3==3)
+					{// System.out.println("fdfs");
 					Board_backend.movePaddle(3,600,next_pos_4, 100.0, myPaddle2.getBallMissed(), true);
+				}
 				else
 				{
 					Board_backend.movePaddle(3,yourpaddle_x[3],yourpaddle_y[3], 100.0, myPaddle.getBallMissed(), true);
