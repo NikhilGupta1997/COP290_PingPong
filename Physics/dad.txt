@@ -1,0 +1,97 @@
+if(new_paddlePos - ClickDiff > 490 && player_no==0 && player_d0==1)
+				Board_backend.movePaddle(0,490,0, 100.0, myPaddle.getBallMissed(), true);
+				else if(new_paddlePos - ClickDiff <110 && player_no==0 &&player_d0==1)
+				Board_backend.movePaddle(0,110,0, 100.0, myPaddle.getBallMissed(), true);
+				else if( player_no==0&&player_d0==1)
+				Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, myPaddle.getBallMissed(), true);
+				else if(player_d0==3&&myBall.getCenterX() < 110)
+				{//Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, myPaddle.getBallMissed(), true);
+				// Here I will set my paddle accordingly depending on what i receive
+					Board_backend.movePaddle(0,110,0, 100.0, ball_missed, true);// when the other one is player 0;
+				}
+				else if (player_d0==3&&myBall.getCenterX() > 490) 
+				{Board_backend.movePaddle(0,490,0, 100.0, ball_missed, true);		
+				}
+				else if(player_d0==3)
+				{Board_backend.movePaddle(0,myBall.getCenterX(),0, 100.0, myPaddle.getBallMissed(), true);
+				}
+				else
+				{
+					//TODO: It receives from other player and updates its own board
+				}
+
+
+				// For second player on left wall
+				if(new_paddlePos_Y - ClickDiff_Y > 490&& player_d3==1)
+				{
+					Board_backend.movePaddle(3,0,490, 100.0, myPaddle.getBallMissed(), true);
+				}
+				else if(new_paddlePos_Y - ClickDiff_Y <110&& player_d3==1)
+				{
+					Board_backend.movePaddle(3,0,110, 100.0, myPaddle.getBallMissed(), true);		
+				}
+				else if(player_d3==1)
+				{
+					Board_backend.movePaddle(3,0,new_paddlePos_Y - ClickDiff_Y, 100.0, myPaddle.getBallMissed(), true);
+				}
+				else if(myBall.getCenterY() > 490 && player_d3==3)
+					Board_backend.movePaddle(3,0,490, 100.0, myPaddle2.getBallMissed(), true);
+				else if(myBall.getCenterY() <110 && player_d3==3 )
+					Board_backend.movePaddle(3,0,110, 100.0, myPaddle2.getBallMissed(), true);
+				else if( player_d3==3)
+					Board_backend.movePaddle(3,0,myBall.getCenterY(), 100.0, myPaddle2.getBallMissed(), true);
+				else
+				{
+					// Depends on what it receives from other players
+				}
+
+				// For third player on the bottom part
+				if(new_paddlePos - ClickDiff > 490 &&  player_d2==1)
+					Board_backend.movePaddle(2,490,600, 100.0, myPaddle.getBallMissed(), true);
+				else if(new_paddlePos - ClickDiff <110 && player_d2==1)
+					Board_backend.movePaddle(2,110,600, 100.0, myPaddle.getBallMissed(), true);
+				else if( player_d2==1)
+					Board_backend.movePaddle(2,new_paddlePos - ClickDiff,600, 100.0, myPaddle.getBallMissed(), true);
+				else if(player_d2==3&&myBall.getCenterX() < 110)
+				{//Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, myPaddle.getBallMissed(), true);
+				// Here I will set my paddle accordingly depending on what i receive
+					Board_backend.movePaddle(2,110,600, 100.0, ball_missed, true);// when the other one is player 0;
+				}
+				else if (player_d2==3&&myBall.getCenterX() > 490) 
+				{
+					Board_backend.movePaddle(2,490,600, 100.0, ball_missed, true);		
+				}
+				else if(player_d2==3)
+				{
+					Board_backend.movePaddle(2,myBall.getCenterX(),600, 100.0, myPaddle.getBallMissed(), true);
+				}
+				else
+				{
+					//TODO: It receives from other player and updates its own board
+				}
+
+				// for the fourth player
+				if(new_paddlePos_Y - ClickDiff_Y > 490&& player_d1==1)
+				{
+					Board_backend.movePaddle(1,600,490, 100.0, myPaddle.getBallMissed(), true);
+				}
+				else if(new_paddlePos_Y - ClickDiff_Y <110&& player_d1==1)
+				{
+					Board_backend.movePaddle(1,600,110, 100.0, myPaddle.getBallMissed(), true);		
+				}
+				else if(player_d1==1)
+				{
+					Board_backend.movePaddle(1,600,new_paddlePos_Y - ClickDiff_Y, 100.0, myPaddle.getBallMissed(), true);
+				}
+				else if(myBall.getCenterY() > 490 && player_d1==1)
+					Board_backend.movePaddle(1,600,490, 100.0, myPaddle2.getBallMissed(), true);
+				else if(myBall.getCenterY() <110 && player_d1==1 )
+					Board_backend.movePaddle(1,600,110, 100.0, myPaddle2.getBallMissed(), true);
+				else if( player_d1==1)
+					Board_backend.movePaddle(1,600,myBall.getCenterY(), 100.0, myPaddle2.getBallMissed(), true);
+				else
+				{
+					// Depends on what it receives from other players
+				}
+
+				
