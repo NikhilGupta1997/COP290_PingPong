@@ -26,6 +26,7 @@ public class PingPong
 	private static String name3;
 	private static ArrayList<String> IPs;
 	private static ArrayList<Integer> Ports;
+	private static boolean Join_Coonected = false;
 	public PingPong()
 	{
 
@@ -133,6 +134,7 @@ public class PingPong
 				{
 					if (no_players == 1)
 					{
+						System.out.println(IPs.get(0));
 						CreateGameThread cg1 = new CreateGameThread(1,IPs.get(0), Ports.get(0));
 						cg1.start();
 
@@ -241,9 +243,6 @@ public class PingPong
 	public static class JoinGameThread extends Thread
 	{
 		public boolean done;
-		private static DatagramSocket serverSocket;//
-		private static byte[] receiveData = new byte[1024];
-		public static String Received_Str;
 
 		private static DatagramSocket clientSocket;
 		private static String sendTo_IP;
@@ -287,8 +286,6 @@ public class PingPong
 					clientSocket.send(sendPacket);
 
 					done = true;
-
-
 				}
 				catch(Exception e)
 				{
@@ -301,7 +298,7 @@ public class PingPong
 
 	public static class JoinGameThread2 extends Thread
 	{
-		private static DatagramSocket serverSocket;//
+		private static DatagramSocket serverSocket;
 		private static byte[] receiveData = new byte[1024];
 		public static String Received_Str;
 		public static boolean done2;
@@ -380,7 +377,7 @@ public class PingPong
 		// list of clientSocket to send.
 		public boolean ith_Joined;
 		public boolean Game_Started;
-		private static String otherIP;
+		private static String entered_IP;
 		private static int otherPort;
 		private static int i;
 
@@ -389,13 +386,14 @@ public class PingPong
 		public static String Received_Str;
 
 
-		public CreateGameThread(int i, String otherIP, int otherPort)
+		public CreateGameThread(int ith, String otherIP, int otherPort)
 		{
 			// sets bool I, name I.
 			ith_Joined = false;
-			otherIP = otherIP;
+			entered_IP = otherIP;
+			System.out.println(entered_IP);
 			otherPort = otherPort;
-			i = i;
+			i = ith;
 			try
 			{
 				serverSocket = new DatagramSocket(1800); // receive
@@ -421,12 +419,21 @@ public class PingPong
 					System.out.println("Received : " + Received_Str);
 					String [] temp2 = Received_Str.split(" ");
 					String [] tokens=temp2[0].split(",");
-					if (tokens[0].equals("Join") && receivePacket.getAddress().equals(otherIP))
+					System.out.println(tokens[0] + " " + receivePacket.getAddress());
+					String getAdd = (receivePacket.getAddress()).toString();
+					System.out.println(getAdd + " : Converted string");
+					String s = "/" + entered_IP;
+					System.out.println(s);
+					if (tokens[0].equals("Join") && getAdd.equals(s))
 					{
+						System.out.println("Kewl " + i);
 						if (i == 1)
 						{
+							System.out.println("Received player 1 details");
 							bool1 = true;
 							name1 = tokens[1];
+							if (bool1 && bool2 && bool3)
+								System.out.println("All true now, in create game THREAD");
 						}
 						else if (i == 2)
 						{
@@ -460,14 +467,24 @@ public class PingPong
 		private static DatagramSocket clientSocket;
 		public StartGameThread()
 		{
+			try
+			{
+				clientSocket = new DatagramSocket();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 
 		public void run()
 		{
 			while (!Game_Started)
 			{
+				// System.out.println("Game not started");
 				if (bool1 && bool2 && bool3)
 				{
+					System.out.println("All Joined");
 					// send to all others : All_Joined TODO
 					Game_Started = true;
 					ArrayList<String> Names = new ArrayList<String>();
@@ -493,6 +510,8 @@ public class PingPong
 							String sendThis = "All_Joined," + PName + ",";
 							byte[] sendData = new byte[1024];
 							sendData = sendThis.getBytes();
+							System.out.println("Sending All Joined");
+
 							DatagramPacket sendPacket = new DatagramPacket(sendData,sendThis.length(),ip , 1901);
 							clientSocket.send(sendPacket);
 						}
