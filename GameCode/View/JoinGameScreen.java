@@ -44,7 +44,7 @@ public class JoinGameScreen extends JPanel
          JPanel theIP = new JPanel();
          theIP.setLayout(new FlowLayout());
          JLabel IPText = new JLabel("My IP Address is :      ");
-         JLabel Address = new JLabel(InetAddress.getByName("10.192.32.60").getHostAddress());
+         JLabel Address = new JLabel(InetAddress.getLocalHost().getHostAddress());
 
          IPText.setFont(new Font("Garamond", Font.BOLD, 18));
          IPText.setForeground(Color.decode("#05b8cc")); 

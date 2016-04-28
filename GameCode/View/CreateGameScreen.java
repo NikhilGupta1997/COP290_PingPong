@@ -56,7 +56,7 @@ public class CreateGameScreen extends JPanel
          theIP.setLayout(new FlowLayout());
          JLabel IPText = new JLabel("My IP Address is :      ");
          
-         IPAddress = InetAddress.getByName("10.192.32.60");
+         IPAddress = InetAddress.getLocalHost();
          JLabel Address = new JLabel(IPAddress.getHostAddress());
         
          // JLabel Address = new JLabel("MyAddress");
