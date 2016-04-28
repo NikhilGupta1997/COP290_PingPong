@@ -362,6 +362,7 @@ public class PingPong
 // has other 3.
 						System.out.println("Starting Player at Join");
 						// LEVEL MUST BE THAT OF CREATOR!
+						System.out.println("IPs at joiner : " + joinIPs);
 						Player p_join = new Player(PName, Integer.parseInt(tokens[tokens.length - 1]),joinIPs, joinPorts, joinNames,Integer.parseInt(tokens[tokens.length - 2]));
 					}
 

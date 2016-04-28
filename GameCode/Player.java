@@ -168,6 +168,7 @@ public class Player
 
 	static ActionListener timerAction = new ActionListener()
 	{ 
+		/** Describes the action performed by timer after every fixed amount of time. **/
 
 		@Override
 		public void actionPerformed(ActionEvent event)

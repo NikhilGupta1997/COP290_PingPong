@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Board
 {
+	/** Back end Board class that holds all the data. **/
 	private float dim_x;
 	private float dim_y;
 	private int no_balls;
