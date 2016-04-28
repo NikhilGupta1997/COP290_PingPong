@@ -111,6 +111,20 @@ public class MainPanel extends JPanel
 
 		Polygon p3 = new Polygon(new int[] {600,540,600}, new int [] {600,600,540},3);
 		g.fillPolygon(p3);
+
+		// Color newColor= new Color(200, 105, 0, 1);
+		// g.setColor(newColor);
+		// Polygon p = new Polygon(new int[] {10,50,10}, new int[] {10,10,50},3);
+		// g.fillPolygon(p);
+
+		// Polygon p1 = new Polygon(new int[] {590,550,590}, new int []{10,10,50},3);
+		// g.fillPolygon(p1);
+
+		// Polygon p2 = new Polygon(new int[] {10,50,10}, new int [] {590,590,550},3);
+		// g.fillPolygon(p2);
+
+		// Polygon p3 = new Polygon(new int[] {590,550,590}, new int [] {590,590,550},3);
+		// g.fillPolygon(p3);
 	}
 
 /** Takes input the updated lists of Balls, Paddles, Random Objects. **/

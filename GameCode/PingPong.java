@@ -315,7 +315,7 @@ public class PingPong
 			sendTo_Port = port;
 			try
 			{
-				serverSocket = new DatagramSocket(1900);
+				serverSocket = new DatagramSocket(1901);
 			}
 			catch(Exception e)
 			{
@@ -360,6 +360,7 @@ public class PingPong
 
 						// clientSocket.close();
 // has other 3.
+						System.out.println("Starting Player at Join");
 						Player p_join = new Player(PName, Plevel,joinIPs, joinPorts, joinNames);
 					}
 
@@ -492,7 +493,7 @@ public class PingPong
 							String sendThis = "All_Joined," + PName + ",";
 							byte[] sendData = new byte[1024];
 							sendData = sendThis.getBytes();
-							DatagramPacket sendPacket = new DatagramPacket(sendData,sendThis.length(),ip , 1900);
+							DatagramPacket sendPacket = new DatagramPacket(sendData,sendThis.length(),ip , 1901);
 							clientSocket.send(sendPacket);
 						}
 					}
