@@ -41,7 +41,7 @@ public class PingPong
 
    		JButton createGame = new JButton("Create New Game");
    		JButton joinGame = new JButton("Join Another Game");
-		JPanel main_bttn = new JPanel();
+		final JPanel main_bttn = new JPanel();
 		main_bttn.setLayout(new FlowLayout());
 		main_bttn.add(createGame);
 		main_bttn.add(joinGame);
@@ -56,19 +56,19 @@ public class PingPong
 
 
 // JPanel:
-		CreateGameScreen create = new CreateGameScreen(); // JPanel
+		final CreateGameScreen create = new CreateGameScreen(); // JPanel
 		JButton create_final = new JButton("Start Game!");
 		JButton backfromCr = new JButton("Back to Main Menu");
-		JPanel cr_bttn = new JPanel();
+		final JPanel cr_bttn = new JPanel();
 		cr_bttn.setLayout(new FlowLayout());
 		cr_bttn.add(create_final);
 		cr_bttn.add(backfromCr);
 
 // JPanel:
-		JoinGameScreen join = new JoinGameScreen();
+		final JoinGameScreen join = new JoinGameScreen();
 		JButton join_final = new JButton("Request to join!");
 		JButton backfromJo = new JButton("Back to Main Menu");
-		JPanel jo_bttn = new JPanel();
+		final JPanel jo_bttn = new JPanel();
 		jo_bttn.setLayout(new FlowLayout());
 		jo_bttn.add(join_final);
 		jo_bttn.add(backfromJo);

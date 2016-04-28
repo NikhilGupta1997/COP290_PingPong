@@ -18,11 +18,12 @@ public class ReceiverThread extends Thread
 	public static double rec_ball_velX;
 	public static double rec_ball_velY;
 	public static int rec_balls_missed;
-	public static boolean rec_collision_occur;
+	public static boolean [] rec_collision_occur;
 
-	public ReceiverThread(int port)
+	public ReceiverThread(int port,int level)
 	{
 		Port_connect = port;
+		rec_collision_occur=new boolean[level];
 		try
 		{
 			serverSocket = new DatagramSocket(port);
@@ -51,7 +52,7 @@ public class ReceiverThread extends Thread
 				rec_ball_velX=Double.parseDouble(tokens[3]);
 				rec_ball_velY=Double.parseDouble(tokens[4]);
 				rec_balls_missed =Integer.parseInt(tokens[5]);
-				rec_collision_occur=(Double.parseDouble(tokens[0])==1.0);
+				rec_collision_occur[0]=(Double.parseDouble(tokens[0])==1.0);
 				Thread.sleep(50);
 			}
 			catch(Exception e)

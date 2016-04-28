@@ -105,7 +105,7 @@ public class CreateGameScreen extends JPanel
       levelLabel.setForeground(Color.decode("#05b8cc")); 
       levelLabel.setBorder(BorderFactory.createEmptyBorder(0,0,0,30));
 
-         JPanel labels = new JPanel();
+         final JPanel labels = new JPanel();
          labels.setLayout(new FlowLayout());
          JLabel MyIP = new JLabel("IP Address      ");
          JLabel MyPort = new JLabel("Port");
