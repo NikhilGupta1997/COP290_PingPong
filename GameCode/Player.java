@@ -102,12 +102,16 @@ public class Player
 		// a Board object
 		Board_backend = new Board();
 		Ball b;
+		 b = new Ball(-4.5*1.4, 3.5*1.4, 250.0, 280.0, 10);
+		 b = new Ball(4.5*1.4, 3.5*2.4, 250.0, 280.0, 10);
 		int c=0;
 		//if(player_no==0)
-		 b = new Ball(-4.5*1.4, 3.5*1.4, 250.0, 280.0, 10);
-		Board_backend.addBall(b);c++;
-		 b = new Ball(4.5*1.4, 3.5*2.4, 250.0, 280.0, 10);
-		Board_backend.addBall(b);c++;
+		for (int i = 0; i < plevel ; i ++)
+		{
+			// Put code of random ball here.
+			Board_backend.addBall(b);
+			c++;		
+		}
 		Paddle p = new Paddle(100.0, 400.0, 0.0, 0,true);
 		Board_backend.addPaddle(p);
 		 p = new Paddle(100.0, 0.0, 400.0, 0,true);
@@ -161,6 +165,7 @@ public class Player
 			// call Board_UI ka update function.
 			ArrayList<Ball> curr_Balls = Board_backend.getBalls();
 			int no_balls=curr_Balls.size();
+			// TODO : player no = Paddle No.
 			player_no=3;
 			int player_d0=player_desc[0],player_d1=player_desc[1],player_d2=player_desc[2],player_d3=player_desc[3];
 			player_d0=3;player_d1=3;player_d2=3;player_d3=1;
@@ -177,7 +182,9 @@ public class Player
 			update_Phy();// parameters: Collision with paddle ,we need to ignore other collisions of the same wall
 			ArrayList<Ball> updatedBalls = Board_backend.getBalls();
 			ArrayList<Paddle> updatedPaddles = Board_backend.getPaddles();
-			Board_UI.reDraw(updatedBalls, updatedPaddles);
+			ArrayList<RandomObj> updatedObjects = Board_backend.getObjects();
+
+			Board_UI.reDraw(updatedBalls, updatedPaddles, updatedObjects);
 
 			Paddle myPaddle2 = Board_backend.getPaddles().get(1);
 			Paddle myPaddle3 = Board_backend.getPaddles().get(2);
@@ -186,6 +193,7 @@ public class Player
 			Paddle myPaddle = Board_backend.getPaddles().get(player_no);
 			
 			// TODO: Important to change the paddle no 
+			// TODO : Handle collisions of Random Objs.
 
 			Double last_x = myPaddle.getPaddleX();
 			Double last_y = myPaddle.getPaddleY();
@@ -465,6 +473,7 @@ public class Player
 	{   Collide_paddle=0;
 		Paddle_No=player_no;
 		Paddle_No=3;
+		// TODO ; Paddle Number!
 		//System.out.println("My paddle no-"+Paddle_No);
 		// TODO: check info from other clients first!
 		// check B2B, B2W, B2MyPaddle

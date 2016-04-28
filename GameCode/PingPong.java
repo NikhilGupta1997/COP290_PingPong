@@ -26,7 +26,7 @@ public class PingPong
 	private static String name3;
 	private static ArrayList<String> IPs;
 	private static ArrayList<Integer> Ports;
-	private static int Wait_for_Join_Start;
+	private static long Wait_for_Join_Start;
 	public PingPong()
 	{
 
@@ -359,7 +359,8 @@ public class PingPong
 						// clientSocket.clfplayeose();
 // has other 3.
 						System.out.println("Starting Player at Join");
-						Player p_join = new Player(PName, Plevel,joinIPs, joinPorts, joinNames,Integer.parseInt(tokens[tokens.length - 1]));
+						// LEVEL MUST BE THAT OF CREATOR!
+						Player p_join = new Player(PName, Integer.parseInt(tokens[tokens.length - 1]),joinIPs, joinPorts, joinNames,Integer.parseInt(tokens[tokens.length - 2]));
 					}
 
 				}
@@ -493,7 +494,14 @@ public class PingPong
 					Game_Started = true;
 					ArrayList<String> Names = new ArrayList<String>();
 					Names.add(PName);
-					IPs.add(0, InetAddress.getLocalHost().getHostAddress());
+					try
+					{
+						IPs.add(0, InetAddress.getLocalHost().getHostAddress());
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+					}
 					Ports.add(0, 1001);
 
 					int no_p = IPs.size();
@@ -527,6 +535,7 @@ public class PingPong
 							InetAddress ip = InetAddress.getByName(IPs.get(i));
 							byte[] sendData = new byte[1024];
 							sendThis += (i);
+							sendThis += "," + Plevel;
 							sendData = sendThis.getBytes();
 							System.out.println("Sending All Joined\n" + sendThis);
 

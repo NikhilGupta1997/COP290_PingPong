@@ -128,7 +128,7 @@ public class MainPanel extends JPanel
 	}
 
 /** Takes input the updated lists of Balls, Paddles, Random Objects. **/
-	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles)
+	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles, ArrayList<RandomObj> objs)
 	{
 		Graphics curr_g = this.getGraphics();
 		paintComponent(curr_g);
@@ -212,6 +212,22 @@ public class MainPanel extends JPanel
  					curr_g.drawString("GAME OVER", 700, 500);
  				}
 				}
+		}
+
+		for (int j = 0; j < objs.size(); j ++)
+		{
+			RandomObj ith = objs.get(j);
+			double center_x = ith.getCenterX();
+			double center_y = ith.getCenterY();
+			boolean effect = ith.getEffect();
+			if (effect)
+			{
+				// Increase length. Good image
+			}
+			else
+			{
+				// Bad image
+			}
 		}
 			
 	}

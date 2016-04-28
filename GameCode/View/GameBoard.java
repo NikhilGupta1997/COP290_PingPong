@@ -42,11 +42,11 @@ public class GameBoard extends JFrame
 		this.add(GamePanel);
 	}
 
-	public void reDraw(ArrayList<Ball> balls, ArrayList<Paddle> paddles)
+	public void reDraw(ArrayList<Ball> balls, ArrayList<Paddle> paddles, ArrayList<RandomObj> objects)
 	{
 		/** Calls the update function of MainPanel class to render the
 		* whole board with new arrays of balls and paddles **/
-		GamePanel.updateBoard(balls, paddles);
+		GamePanel.updateBoard(balls, paddles, objects);
 	}
 
 	public int getPaddleX()
