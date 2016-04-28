@@ -160,7 +160,7 @@ public class Player
 	 	{
 	 		lastBwall[i]=0;lastpaddle[i]=0;lastBcorner[i]=0;
 	 	}
-		timerDelay = 50;
+		timerDelay = 200;
 		gameTimer = new Timer(timerDelay, timerAction);
 		gameTimer.start();
 		M =0;
@@ -273,8 +273,8 @@ public class Player
              		if(i==player_no) continue;
              	yourpaddle_x[i] = RecieveThreads.get(i).rec_paddleX;
              	yourpaddle_y[i] = RecieveThreads.get(i).rec_paddleY;
-             	ball_vel_cx[i] = RecieveThreads.get(i).rec_ball_velX;
-             	ball_vel_cy[i] = RecieveThreads.get(i).rec_ball_velY;
+             	ball_vel_cx[i] = RecieveThreads.get(i).rec_ball_velX[0]; // pick ith TODO
+             	ball_vel_cy[i] = RecieveThreads.get(i).rec_ball_velY[0]; // pick ith ball.
              	collision_happened= RecieveThreads.get(i).rec_collision_occur;
                 
              	}
