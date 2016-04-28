@@ -1,0 +1,15 @@
+\begin{thebibliography}{1}
+
+\bibitem{socket_java}
+Socket programming in java.
+\newblock http://www.tutorialspoint.com/java/java\_networking.htm.
+
+\bibitem{swing_java}
+Swing library for ui in java.
+\newblock http://docs.oracle.com/javase/tutorial/uiswing/painting/index.html.
+
+\bibitem{thread_java}
+Threads in java.
+\newblock http://math.hws.edu/javanotes/c12/s3.html.
+
+\end{thebibliography}
