@@ -33,6 +33,11 @@ public class ReceiverThread extends Thread
 	{
 		Port_connect = port;
 		rec_collision_occur=new boolean[level];
+		rec_ball_velX = new double[level];
+		rec_ball_velY = new double[level];
+		balls_cx = new double[level];
+		balls_cy = new double[level];
+
 		try
 		{
 			serverSocket = new DatagramSocket(port);
@@ -63,14 +68,41 @@ public class ReceiverThread extends Thread
 					String [] tokens=temp2[0].split(",");
 
 					String colln_arr = tokens[0];
+					String [] colln_occur = colln_arr.split("#");
+					for (int i = 0; i < colln_occur.length() ; i ++)
+					{
+						rec_collision_occur[i] = (Integer.parseInt(colln_occur[i]) == 1);
+					}
 
 					rec_paddleX=Double.parseDouble(tokens[1]);
 					rec_paddleY=Double.parseDouble(tokens[2]);
 
 					String balls_vx=tokens[3];
+					String vx_Arr = balls_vx.split("#");
+					for (int i= 0; i < vx_Arr.length(); i ++)
+					{
+						rec_ball_velX[i] = Double.parseDouble(vx_Arr[i]);
+					}
 					String balls_vy=tokens[4];
+					String vy_Arr = balls_vy.split("#");
+					for (int i= 0; i < vy_Arr.length(); i ++)
+					{
+						rec_ball_velY[i] = Double.parseDouble(vy_Arr[i]);						
+					}
+
 					String balls_cx = tokens[5];
+					String cx_Arr = balls_cx.split("#");
+					for (int i= 0; i < cx_Arr.length(); i ++)
+					{
+						balls_cx[i] = Double.parseDouble(cx_Arr[i]);						
+					}
+
 					String balls_cy = tokens[6];
+					String cy_Arr = balls_cy.split("#");
+					for (int i= 0; i < cy_Arr.length(); i ++)
+					{
+						balls_cy[i] = Double.parseDouble(cy_Arr[i]);			
+					}
 
 					random_Add = (Integer.parseInt(tokens[7]) == 1);
 					if (random_Add)
