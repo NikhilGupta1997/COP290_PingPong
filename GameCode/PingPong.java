@@ -72,7 +72,6 @@ public class PingPong
 		jo_bttn.setLayout(new FlowLayout());
 		jo_bttn.add(join_final);
 		jo_bttn.add(backfromJo);
-   		// TODO: keep IP1,IP2, IP3, p1, p2, p3
 
    		createGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -130,6 +129,9 @@ public class PingPong
 					Ports.add((int)(ports.get(i)).getValue());
 				}
 				System.out.println(IPs);
+				Wait_for_Join_Start = System.currentTimeMillis();
+				System.out.println(Wait_for_Join_Start + " Time");
+
 				if (no_players > 0)
 				{
 					if (no_players == 1)
@@ -448,7 +450,6 @@ public class PingPong
 							name3 = tokens[1];
 						}
 						ith_Joined = true;
-						Wait_for_Join_Start = System.currentTimeMillis();
 					}
 				}
 				catch(Exception e)
@@ -486,69 +487,159 @@ public class PingPong
 			{
 				// System.out.println("Game not started");
 				// update wait_for_join.
-				// if ((System.currentTimeMillis() - Wait_for_Join_Start) > )
-				if (bool1 && bool2 && bool3)
+				System.out.println(System.currentTimeMillis());
+				if ((System.currentTimeMillis() - Wait_for_Join_Start) > 5000)
 				{
-					System.out.println("All Joined");
-					// send to all others : All_Joined TODO
+					System.out.println("Time exceeded. Starting game.");
+					int no_pl = IPs.size();
+					ArrayList<String> PNames = new ArrayList<String>();
+					ArrayList<String> finalIPs = new ArrayList<String>();
+					ArrayList<Integer> finalPorts = new ArrayList<Integer>();
+					PNames.add(PName);
+					try
+					{
+						finalIPs.add(0, InetAddress.getLocalHost().getHostAddress());
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+					}
+					finalPorts.add(0, 1001);
+					if (no_pl == 0)
+					{
+						Player p1 = new Player(PName, Plevel, finalIPs, finalPorts, PNames,0);
+					}
+					else if (no_pl >= 1)
+					{
+						if (bool1)
+						{
+							PNames.add(name1);
+							finalIPs.add(IPs.get(0));
+							finalPorts.add(Ports.get(0));
+						}
+					}
+					else if (no_pl >= 2)
+					{
+						if (bool2)
+						{
+							PNames.add(name2);
+							finalIPs.add(IPs.get(1));
+							finalPorts.add(Ports.get(1));
+						}
+					}
+					else // 3 more players.
+					{
+						if (bool3)
+						{
+							PNames.add(name3);
+							finalIPs.add(IPs.get(2));
+							finalPorts.add(Ports.get(2));
+						}
+					}
+
+					// send to those active.
+						try
+						{
+							String sendThis2 = "All_Joined,";
+							// I AM Player 0. IPs[0] is player 1 IPs[1] is Player 2 IPs[2] is Player 3.
+							for (int i = 0; i < finalPorts.size() ; i ++)
+							{
+								sendThis2 += finalIPs.get(i) + ",";
+								sendThis2 += finalPorts.get(i) + ",";
+								sendThis2 += PNames.get(i) + ",";
+							}
+
+
+							for (int i = 1; i < finalPorts.size() ; i ++)
+							{
+								// prepare string to be sent.
+								InetAddress ip = InetAddress.getByName(finalIPs.get(i));
+								byte[] sendData = new byte[1024];
+								String sData = sendThis2;
+								sData += (i);
+								sData += "," + Plevel;
+								sendData = sData.getBytes();
+								System.out.println("Sending All Joined\n" + sData);
+
+								DatagramPacket sendPacket = new DatagramPacket(sendData,sData.length(),ip , 1901);
+								clientSocket.send(sendPacket);
+							}
+						}
+						catch(Exception e)
+						{
+							e.printStackTrace();
+						}					
+
+					Player p = new Player(PName, Plevel, finalIPs, finalPorts, PNames,0);
+
 					Game_Started = true;
-					ArrayList<String> Names = new ArrayList<String>();
-					Names.add(PName);
-					try
-					{
-						IPs.add(0, InetAddress.getLocalHost().getHostAddress());
-					}
-					catch(Exception e)
-					{
-						e.printStackTrace();
-					}
-					Ports.add(0, 1001);
+				}
+				else
+				{
 
-					int no_p = IPs.size();
-					if (no_p >= 1)
+					if (bool1 && bool2 && bool3)
 					{
-						Names.add(name1);
-					}
-					if (no_p >= 2)
-					{
-						Names.add(name2);
-					}
-					if (no_p == 3)
-					{
-						Names.add(name3);
-					}
-					try
-					{
-						String sendThis = "All_Joined,";
-						// I AM Player 0. IPs[0] is player 1 IPs[1] is Player 2 IPs[2] is Player 3.
-						for (int i = 0; i < no_p ; i ++)
+						System.out.println("All Joined");
+						Game_Started = true;
+						ArrayList<String> Names = new ArrayList<String>();
+						Names.add(PName);
+						try
 						{
-							sendThis += IPs.get(i) + ",";
-							sendThis += Ports.get(i) + ",";
-							sendThis += Names.get(i) + ",";
+							IPs.add(0, InetAddress.getLocalHost().getHostAddress());
 						}
-
-
-						for (int i = 1; i < no_p; i ++)
+						catch(Exception e)
 						{
-							// prepare string to be sent.
-							InetAddress ip = InetAddress.getByName(IPs.get(i));
-							byte[] sendData = new byte[1024];
-							sendThis += (i);
-							sendThis += "," + Plevel;
-							sendData = sendThis.getBytes();
-							System.out.println("Sending All Joined\n" + sendThis);
-
-							DatagramPacket sendPacket = new DatagramPacket(sendData,sendThis.length(),ip , 1901);
-							clientSocket.send(sendPacket);
+							e.printStackTrace();
 						}
+						Ports.add(0, 1001);
+
+						int no_p = IPs.size();
+						if (no_p >= 2)
+						{
+							Names.add(name1);
+						}
+						if (no_p >= 3)
+						{
+							Names.add(name2);
+						}
+						if (no_p == 4) // as own IP also included, at 0th posn.
+						{
+							Names.add(name3);
+						}
+						try
+						{
+							String sendThis = "All_Joined,";
+							// I AM Player 0. IPs[0] is player 1 IPs[1] is Player 2 IPs[2] is Player 3.
+							for (int i = 0; i < no_p ; i ++)
+							{
+								sendThis += IPs.get(i) + ",";
+								sendThis += Ports.get(i) + ",";
+								sendThis += Names.get(i) + ",";
+							}
+
+
+							for (int i = 1; i < no_p; i ++)
+							{
+								// prepare string to be sent.
+								InetAddress ip = InetAddress.getByName(IPs.get(i));
+								byte[] sendData = new byte[1024];
+								String s2 = sendThis;
+								s2 += (i);
+								s2 += "," + Plevel;
+								sendData = s2.getBytes();
+								System.out.println("Sending All Joined\n" + s2);
+
+								DatagramPacket sendPacket = new DatagramPacket(sendData,s2.length(),ip , 1901);
+								clientSocket.send(sendPacket);
+							}
+						}
+						catch(Exception e)
+						{
+							e.printStackTrace();
+						}
+	// IPs has all IPs, including my own.
+						Player p1 = new Player(PName, Plevel, IPs, Ports, Names,0);
 					}
-					catch(Exception e)
-					{
-						e.printStackTrace();
-					}
-// IPs has all IPs, including my own.
-					Player p1 = new Player(PName, Plevel, IPs, Ports, Names,0);
 				}
 			}
 		}

@@ -22,6 +22,7 @@ public class Board
 		no_paddles = 0;
 		vector_paddles = new ArrayList<Paddle>();
 		dead_Alive = new ArrayList<Boolean>();
+		objects = new ArrayList<RandomObj>();
 	}
 
 	public 	ArrayList<Ball> getBalls()

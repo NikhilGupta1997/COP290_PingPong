@@ -100,6 +100,7 @@ public class Player
 	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports, ArrayList<String> names, int p_no)
 	{
 		// a Board object
+		System.out.println("Received level :" + plevel);
 		Board_backend = new Board();
 		Ball b;
 		 b = new Ball(-4.5*1.4, 3.5*1.4, 250.0, 280.0, 10);
@@ -108,7 +109,8 @@ public class Player
 		//if(player_no==0)
 		for (int i = 0; i < plevel ; i ++)
 		{
-			// Put code of random ball here.
+			// Put code of random ball here. TODO
+			// speed prop to level.
 			Board_backend.addBall(b);
 			c++;		
 		}
@@ -120,6 +122,9 @@ public class Player
 		Board_backend.addPaddle(p);
 		 p = new Paddle(100.0, 600.0, 400.0, 0,true);
 		Board_backend.addPaddle(p);
+
+		RandomObj r1 = new RandomObj(4.5,4.5,100,200,true);
+		Board_backend.addObject(r1);
 		Board_UI = new GameBoard();
 		 lastBwall =new int[c]; // array for multiple balls
 		 lastpaddle=new int[c];

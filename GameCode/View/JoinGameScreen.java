@@ -71,7 +71,7 @@ public class JoinGameScreen extends JPanel
          MyPort.setForeground(Color.decode("#05b8cc")); 
          MyPort.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
          labels.add(MyIP); 
-         labels.add(MyPort);
+         // labels.add(MyPort);
          labels.setBorder(BorderFactory.createEmptyBorder(40,0,0,0));
 
       this.add(headerLabel);
@@ -111,7 +111,7 @@ public class JoinGameScreen extends JPanel
       });
       spinner.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
       controlPanel.add(userIP);
-      controlPanel.add(spinner);
+      // controlPanel.add(spinner);
       // this.setVisible(true);
 	}
 
