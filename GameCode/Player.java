@@ -97,7 +97,7 @@ public class Player
 		Close_ball[i]=array_balls.get(closest[i]);
 
 	}		   
-	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports)
+	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports, ArrayList<String> names)
 	{
 		// a Board object
 		Board_backend = new Board();

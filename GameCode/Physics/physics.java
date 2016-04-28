@@ -38,10 +38,10 @@ public class physics
 	public int collision_wall(double posx,double posy,double radius,double x)     //x is the dimension of the square
 	{int wall_no=0;
 
-	if((posx+radius)>=x) wall_no=4;
-	else if((posy+radius+24.0)>=x) wall_no=3;
-	else if((posx-radius)<=0.0) wall_no=2;
-	else if((posy-radius+12.5)<=0.0) wall_no=1;
+	if((posx+radius)>=x-20) wall_no=4;
+	else if((posy+radius+24.0)>=x-20) wall_no=3;
+	else if((posx-radius)<=20.0) wall_no=2;
+	else if((posy-radius+12.5-20)<=0.0) wall_no=1;
 	//if(wall_no!=0)
 	//	System.out.print(posx+","+posy+","+x+"\n");
 	return wall_no;
@@ -52,10 +52,10 @@ public class physics
 
 		int corner_no=0;
 		double sqrt2=Math.sqrt(2);
-		if((Math.abs(posx+posy-l)/sqrt2)<=radius) corner_no=1;
-		else if(Math.abs(posy+posx-2*x+l)/sqrt2<=radius)corner_no=3;
-		else if(Math.abs(posy-posx+x-l)/sqrt2<=radius) corner_no=2;
-		else if(Math.abs(posy-posx-x+l)/sqrt2<=radius) corner_no=4;
+		if((Math.abs(posx+posy-l)/sqrt2)<=radius) corner_no=1;//working well
+		else if(Math.abs(posy+posx-2*x+l)/sqrt2<=radius+20.0)corner_no=3;//working well
+		else if(Math.abs(posy-posx+x-l)/sqrt2<=radius) corner_no=2;// working well
+		else if(Math.abs(posy-posx-x+l)/sqrt2<=radius+22.0) corner_no=4;
 		// if(corner_no!=0)
 		// {
 		// 	System.out.println(posx+","+posy);

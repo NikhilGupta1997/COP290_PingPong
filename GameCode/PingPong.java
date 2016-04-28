@@ -332,8 +332,13 @@ public class PingPong
 					System.out.println("Received : " + Received_Str);
 					String [] temp2 = Received_Str.split(" ");
 					String [] tokens=temp2[0].split(",");
+					System.out.println(tokens[0] + " " + receivePacket.getAddress());
+					String getAddSend = (receivePacket.getAddress()).toString();
+					System.out.println(getAddSend + " : Converted string");
+					String s2 = "/" + sendTo_IP;
+					System.out.println(s2);
 					// All_Joined, apna_naam, IP1, port1, name1, IP2, Port2, name2
-					if (tokens[0].equals("All_Joined") && receivePacket.getAddress().equals(sendTo_IP))
+					if (tokens[0].equals("All_Joined") && getAddSend.equals(s2))
 					{
 						// being received from the Creator IP.
 						done2 = true;
