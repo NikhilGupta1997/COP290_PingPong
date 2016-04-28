@@ -116,6 +116,7 @@ public class PingPong
 				// CHECK THE 3 IP, PORTs ENTERED.
 				ArrayList<JTextField> ips = create.GetIPs();
 				ArrayList<JSpinner> ports = create.GetPorts();
+				// DISABLE THIS BUTTON!
 
 				IPs = new ArrayList<String>();
 				Ports = new ArrayList<Integer>();
