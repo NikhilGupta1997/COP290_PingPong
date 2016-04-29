@@ -74,7 +74,7 @@ public class PingPong
 
 // JPanel:
 		final JoinGameScreen join = new JoinGameScreen();
-		JButton join_final = new JButton("Request to join!");
+		final JButton join_final = new JButton("Request to join!");
 		JButton backfromJo = new JButton("Back to Main Menu");
 		final JPanel jo_bttn = new JPanel();
 		final JPanel jo_bttn_ring = new JPanel();
