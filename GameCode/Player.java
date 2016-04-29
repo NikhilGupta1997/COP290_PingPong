@@ -220,6 +220,7 @@ public class Player
 		{
 			if(player_desc[i]==1) server=i; // Server decides which one controls the game
 		}
+			System.out.println("MY WINNER IS " + Board_UI.getWinner());
 			if(Board_UI.getWinner() == 1)
 			{
 				JOptionPane.showMessageDialog(null,"Click ok to start the server 1" );
@@ -481,15 +482,15 @@ public class Player
 				// For second player on left wall
 				if(new_paddlePos_Y - ClickDiff_Y > (540-length_paddle[1]/2) && player_d1==1)
 				{
-					Board_backend.movePaddle(1,0,(540-length_paddle[1]/2), length_paddle[1], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(1,0,(540-length_paddle[1]/2), length_paddle[1], myPaddle2.getBallMissed(), true);
 				}
 				else if(new_paddlePos_Y - ClickDiff_Y <(60+length_paddle[1]/2)&& player_d1==1)
 				{
-					Board_backend.movePaddle(1,0,(60+length_paddle[1]/2), length_paddle[1], myPaddle.getBallMissed(), true);		
+					Board_backend.movePaddle(1,0,(60+length_paddle[1]/2), length_paddle[1], myPaddle2.getBallMissed(), true);		
 				}
 				else if(player_d1==1)
 				{
-					Board_backend.movePaddle(1,0,new_paddlePos_Y - ClickDiff_Y, length_paddle[1], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(1,0,new_paddlePos_Y - ClickDiff_Y, length_paddle[1], myPaddle2.getBallMissed(), true);
 
 				}
 				else if(myBall.getCenterY() > (540-length_paddle[1]/2) && player_d1==3&&false)
@@ -500,61 +501,61 @@ public class Player
 					Board_backend.movePaddle(1,0,next_pos_2, length_paddle[1], myPaddle2.getBallMissed(), true);
 				else
 				{
-					Board_backend.movePaddle(1,yourpaddle_x[1],yourpaddle_y[1], length_paddle[1], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(1,yourpaddle_x[1],yourpaddle_y[1], length_paddle[1], myPaddle2.getBallMissed(), true);
 					// Depends on what it receives from other players
 				}
 
 				// For third player on the bottom part
 				if(new_paddlePos - ClickDiff > (540-length_paddle[2]/2) &&  player_d2==1)
-					Board_backend.movePaddle(2,(540-length_paddle[2]/2),600,length_paddle[2], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(2,(540-length_paddle[2]/2),600,length_paddle[2], myPaddle3.getBallMissed(), true);
 				else if(new_paddlePos - ClickDiff <(60+length_paddle[2]/2) && player_d2==1)
-					Board_backend.movePaddle(2,(60+length_paddle[2]/2),600, length_paddle[2], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(2,(60+length_paddle[2]/2),600, length_paddle[2], myPaddle3.getBallMissed(), true);
 				else if( player_d2==1)
-					Board_backend.movePaddle(2,new_paddlePos - ClickDiff,600, length_paddle[2], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(2,new_paddlePos - ClickDiff,600, length_paddle[2], myPaddle3.getBallMissed(), true);
 				else if(player_d2==3&&myBall.getCenterX() < (60+length_paddle[2]/2)&&false)
 				{//Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, myPaddle.getBallMissed(), true);
 				// Here I will set my paddle accordingly depending on what i receive
-					Board_backend.movePaddle(2,(60+length_paddle[2]/2),600,length_paddle[2] , ball_missed[2], true);// when the other one is player 0;
+					Board_backend.movePaddle(2,(60+length_paddle[2]/2),600,length_paddle[2] , myPaddle3.getBallMissed(), true);// when the other one is player 0;
 				}
 				else if (player_d2==3&&myBall.getCenterX() > (540-length_paddle[2]/2)&&false) 
 				{
-					Board_backend.movePaddle(2,(540-length_paddle[2]/2),600, length_paddle[2], ball_missed[2], true);		
+					Board_backend.movePaddle(2,(540-length_paddle[2]/2),600, length_paddle[2], myPaddle3.getBallMissed(), true);		
 				}
 				else if(player_d2==3)
 				{
-					Board_backend.movePaddle(2,next_pos_3,600, length_paddle[2], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(2,next_pos_3,600, length_paddle[2], myPaddle3.getBallMissed(), true);
 				}
 				else
 				{
-					Board_backend.movePaddle(2,yourpaddle_x[2],yourpaddle_y[2], length_paddle[2], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(2,yourpaddle_x[2],yourpaddle_y[2], length_paddle[2], myPaddle3.getBallMissed(), true);
 					//TODO: It receives from other player and updates its own board
 				}
 
 				// for the fourth player
 				if(new_paddlePos_Y - ClickDiff_Y > (540-length_paddle[3]/2)&& player_d3==1)
 				{
-					Board_backend.movePaddle(3,600,(540-length_paddle[3]/2), length_paddle[3], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(3,600,(540-length_paddle[3]/2), length_paddle[3], myPaddle4.getBallMissed(), true);
 				}
 				else if(new_paddlePos_Y - ClickDiff_Y <(60+length_paddle[3]/2)&& player_d3==1)
 				{
-					Board_backend.movePaddle(3,600,(60+length_paddle[3]/2), length_paddle[3], myPaddle.getBallMissed(), true);		
+					Board_backend.movePaddle(3,600,(60+length_paddle[3]/2), length_paddle[3], myPaddle4.getBallMissed(), true);		
 				}
 				else if(player_d3==1)
 				{ 
 					// System.out.println("dsd");
-					Board_backend.movePaddle(3,600,new_paddlePos_Y - ClickDiff_Y, length_paddle[3], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(3,600,new_paddlePos_Y - ClickDiff_Y, length_paddle[3], myPaddle4.getBallMissed(), true);
 				}
 				else if(myBall.getCenterY() > (540-length_paddle[3]/2) && player_d3==3 &&false)
-					Board_backend.movePaddle(3,600,(540-length_paddle[3]/2), length_paddle[3], myPaddle2.getBallMissed(), true);
+					Board_backend.movePaddle(3,600,(540-length_paddle[3]/2), length_paddle[3], myPaddle4.getBallMissed(), true);
 				else if(myBall.getCenterY() <(60+length_paddle[3]/2) && player_d3==3 &&false)
-					Board_backend.movePaddle(3,600,(60+length_paddle[3]/2), length_paddle[3], myPaddle2.getBallMissed(), true);
+					Board_backend.movePaddle(3,600,(60+length_paddle[3]/2), length_paddle[3], myPaddle4.getBallMissed(), true);
 				else if( player_d3==3)
 					{// System.out.println("fdfs");
-					Board_backend.movePaddle(3,600,next_pos_4, length_paddle[3], myPaddle2.getBallMissed(), true);
+					Board_backend.movePaddle(3,600,next_pos_4, length_paddle[3], myPaddle4.getBallMissed(), true);
 				}
 				else
 				{
-					Board_backend.movePaddle(3,yourpaddle_x[3],yourpaddle_y[3], length_paddle[3], myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(3,yourpaddle_x[3],yourpaddle_y[3], length_paddle[3], myPaddle4.getBallMissed(), true);
 					// Depends on what it receives from other players
 				}
 
