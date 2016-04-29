@@ -55,7 +55,7 @@ public class Player
 	private static int [] lastBwall ; // array for multiple balls
 	private static int [] lastpaddle;
 	private static int [] lastBcorner;
-	private static int [] ball_missed = new int[4];
+	private static int [] ball_missed = new int[5];
 	private static int [] player_desc= new int[4];//Player_desc for all players 
 
 	private static int [] Collide_paddle ;// we need to make array when no of balls grow
@@ -218,7 +218,7 @@ public class Player
 			// player_desc is 1 for current player,2 for other and 3 for computer
 		for (int i=0;i<4;i++)
 		{
-			if(player_desc[i]==1) server=i; // Server decides which one controls the game
+			if(player_desc[i]==1|| player_desc[i]==2) server=i; // Server decides which one controls the game
 		}
 			// System.out.println("MY WINNER IS " + Board_UI.getWinner());
 			if(Board_UI.getWinner() == 1)
@@ -266,13 +266,13 @@ public class Player
 			//System.out.println("lost=="+lostl+"\n\n\n\n\n");
 			Board_UI.reDraw(updatedBalls, updatedPaddles, updatedObjects);
 
-			Paddle myPaddle2 = Board_backend.getPaddles().get(1);
-			Paddle myPaddle3 = Board_backend.getPaddles().get(2);
-			Paddle myPaddle4 = Board_backend.getPaddles().get(3);
-			Paddle myPaddle1 = Board_backend.getPaddles().get(0);
+			Paddle myPaddle2 = updatedPaddles.get(1);
+			Paddle myPaddle3 = updatedPaddles.get(2);
+			Paddle myPaddle4 = updatedPaddles.get(3);
+			Paddle myPaddle1 = updatedPaddles.get(0);
 			double [] length_paddle1={myPaddle1.getPaddleLength(),myPaddle2.getPaddleLength(),myPaddle3.getPaddleLength(),myPaddle4.getPaddleLength()};
 			length_paddle=length_paddle1;
-			Paddle myPaddle = Board_backend.getPaddles().get(player_no);
+			Paddle myPaddle = updatedPaddles.get(player_no);
 			//System.out.println(length_paddle[0]+","+length_paddle[1]+","+length_paddle[2]+","+length_paddle[3]);
 			// TODO: Important to change the paddle no 
 			// TODO : Handle collisions of Random Objs.
@@ -348,14 +348,17 @@ public class Player
              	boolean [][] collision_happened=new boolean[4][no_balls];
              	int k=0;
              	for(int i=0;i<no_players;i++)
-             	{ 	if(i==player_no) {continue;}
+             	{ 	if(i==player_no) 
+             	{ 
+
+             		continue;
+             	}
              	ReceiverThread receive=RecieveThreads.get(k);
 
-             	
              	yourpaddle_x[i] = receive.rec_paddleX;
              	yourpaddle_y[i] = receive.rec_paddleY;
              	for(int k1=0;k1<no_balls;k1++)
-             	{
+             	{// i is the player no
              	collision_happened[i][k1]=receive.rec_collision_occur[k1];
              	ball_vel_cx[i][k1] = receive.rec_ball_velX[k1];
              	ball_vel_cy[i][k1] = receive.rec_ball_velY[k1]; // pick ith ball.
@@ -367,8 +370,20 @@ public class Player
              //	collision_happened= receive.rec_collision_occur;
                 k++;
              	}
+             	int [] collision_paddle=new int[curr_Balls.size()];
+             	for(int i=0;i<curr_Balls.size();i++)
+             		{// ball no.
+             			collision_paddle[i]=-1;
+             			for(int k1=0;k<4;k++)
+             			{if(k1==player_no) continue;
+             			if(collision_happened[k1][i])
+             			{
+             				collision_paddle[i]=k1;
+             			}	
+             			}
+             		}
 
-
+            //Setting final values after receiving 
 		  // System.out.println("The value received is "+ new String(receivePacket.getData()));
 
 			if(LastClick != click_pos)
@@ -585,7 +600,16 @@ public class Player
 // TODO:We need to change depending on player no. we are
 
 			///////////////////////////NOT GENERIC /////////////////////////////////////// Write for other balls as well
-			Board_backend.moveBall(0,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);
+			for(int i=0;i<curr_Balls.size();i++)
+			{
+				if(collision_paddle[i]!=-1)
+			Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX,ball_vel_cx[collision_paddle[i]-1][i] + lastY, 10);	
+			else if(server==player_no)		
+			Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
+			else
+			Board_backend.moveBall(i,ball_vel_cx[server][i], ball_vel_cy[server][i], myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
+			 
+			}
 
 			//if(!collision_happened[i]) Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);
 			//else Board_backend.moveBall(0,ball_vel_cx, ball_vel_cy, -ball_vel_cx + lastX, -ball_vel_cy + lastY, 10);
@@ -988,7 +1012,8 @@ public class Player
 				            }
 				        }
 					else	
-						{Board_backend.moveBall(i,vel_cy , vel_cx, center_x ,center_y ,radius);
+						{
+							Board_backend.moveBall(i,vel_cy , vel_cx, center_x ,center_y ,radius);
 							try
 				            {
 				              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
@@ -1032,7 +1057,7 @@ public class Player
 							double center_y2 = jth.getCenterY();
 							double cc_dist = Math.sqrt( (center_x - center_x2)*(center_x - center_x2) + (center_y - center_y2)*(center_y - center_y2) );
 							if(cc_dist<35)System.out.println("dsfafa=="+cc_dist);
-							if (Math.abs(cc_dist - 20) < 0.001)
+							if ((cc_dist - 20) < 0.001)
 							{System.out.println("YO---collision");
 								// ball 2 ball
 								any_colln = true;
