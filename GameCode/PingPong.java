@@ -31,9 +31,6 @@ public class PingPong
 	private static JoinGameThread2 jg2;
 	private static StartGameThread start_final;
 	private static CreateGameThread cg1;
-	private static CreateGameThread cg2;
-	private static CreateGameThread cg3;
-
 	public PingPong()
 	{
 
@@ -67,18 +64,24 @@ public class PingPong
 		JButton create_final = new JButton("Start Game!");
 		JButton backfromCr = new JButton("Back to Main Menu");
 		final JPanel cr_bttn = new JPanel();
+		final JPanel cr_bttn_ring = new JPanel();
+		cr_bttn_ring.setLayout(new BoxLayout(cr_bttn_ring, BoxLayout.Y_AXIS));
 		cr_bttn.setLayout(new FlowLayout());
 		cr_bttn.add(create_final);
 		cr_bttn.add(backfromCr);
+		cr_bttn_ring.add(cr_bttn);
 
 // JPanel:
 		final JoinGameScreen join = new JoinGameScreen();
 		JButton join_final = new JButton("Request to join!");
 		JButton backfromJo = new JButton("Back to Main Menu");
 		final JPanel jo_bttn = new JPanel();
+		final JPanel jo_bttn_ring = new JPanel();
+		jo_bttn_ring.setLayout(new BoxLayout(jo_bttn_ring, BoxLayout.Y_AXIS));
 		jo_bttn.setLayout(new FlowLayout());
 		jo_bttn.add(join_final);
 		jo_bttn.add(backfromJo);
+		jo_bttn_ring.add(jo_bttn);
 
 
    		createGame.addActionListener(new ActionListener() {
@@ -95,7 +98,7 @@ public class PingPong
 
    				m.setLayout(new GridLayout(2,1,0,50));
    				m.getContentPane().add(create);
-   				m.getContentPane().add(cr_bttn);
+   				m.getContentPane().add(cr_bttn_ring);
 				// create.setVisible(true);
 				m.revalidate();
 				m.repaint();
@@ -113,7 +116,7 @@ public class PingPong
 				
 				m.setLayout(new GridLayout(2,1,0,50));
 				m.getContentPane().add(join);
-   				m.getContentPane().add(jo_bttn);
+   				m.getContentPane().add(jo_bttn_ring);
 				m.revalidate();
 				m.repaint();
 			}
@@ -140,38 +143,30 @@ public class PingPong
 				Wait_for_Join_Start = System.currentTimeMillis();
 				System.out.println(Wait_for_Join_Start + " Time");
 
+				ImageIcon image = new ImageIcon("loading.gif");
+				JLabel waiting = new JLabel(image, SwingConstants.CENTER); //TODO
+				// waiting.setAlignmentX(Component.CENTER_ALIGNMENT);
+				// create.add(Box.createVerticalGlue());
+				cr_bttn_ring.add(waiting);
+				// create.add(Box.createVerticalGlue());
+				m.revalidate();
+				m.repaint();
+
+
 				if (no_players > 0)
 				{
+					cg1 = new CreateGameThread(IPs);
+					cg1.start();
 					if (no_players == 1)
 					{
-						System.out.println(IPs.get(0));
-						cg1 = new CreateGameThread(1,IPs.get(0), Ports.get(0));
-						cg1.start();
-
 						bool2 = true;
 						name2 = "";
 						bool3 = true;
+						name3 = "";
 					}
 					else if (no_players == 2)
 					{
-						cg1 = new CreateGameThread(1, IPs.get(0), Ports.get(0));
-						cg1.start();
-						
-						cg2 = new CreateGameThread(2, IPs.get(1), Ports.get(1));
-						cg2.start();
-
 						bool3 = true;
-					}
-					else
-					{
-						cg1 = new CreateGameThread(1, IPs.get(0), Ports.get(0));
-						cg1.start();
-						
-						cg2 = new CreateGameThread(2, IPs.get(1), Ports.get(1));
-						cg2.start();
-
-						cg3 = new CreateGameThread(3, IPs.get(2), Ports.get(2));
-						cg3.start();
 					}
 				}
 				else
@@ -192,6 +187,12 @@ public class PingPong
 			{
 				join_final.setEnabled(false);
 				// SEND 1 PACKET TO IP, port, say 'Join'S Thread!
+				ImageIcon image = new ImageIcon("loading.gif");
+				JLabel waiting = new JLabel(image, SwingConstants.CENTER); //TODO
+				jo_bttn_ring.add(waiting);
+				m.revalidate();
+				m.repaint();
+
 				jg1 = new JoinGameThread((int) join.spinner.getValue(),join.userIP.getText());
 				jg1.start();
 
@@ -199,7 +200,7 @@ public class PingPong
 				jg2.start();
 
 				// check if player can join the given IP's address.
-				// Receiver thread
+				// Receiver thread TODO : gif
 			}
 		});
 
@@ -214,12 +215,6 @@ public class PingPong
 				addMainScreen();
 				if (cg1 != null)
 					cg1.stop();
-
-				if (cg2 != null)
-					cg2.stop();
-
-				if (cg3 != null)
-					cg3.stop();
 
 				if (start_final != null)
 					start_final.stop();
@@ -308,8 +303,8 @@ public class PingPong
 					// int send_to_port = sendTo_Port;
 					String send_this = "Join," + PName;
 					System.out.println(send_this);
-					byte[] sendData = new byte[1024];
-					sendData = send_this.getBytes();
+					byte[] sendData = (send_this).getBytes();
+					// sendData = send_this.getBytes();
 					DatagramPacket sendPacket = new DatagramPacket(sendData,send_this.length(), IP_game, 1800);
 					clientSocket.send(sendPacket);
 
@@ -318,6 +313,7 @@ public class PingPong
 				catch(Exception e)
 				{
 					e.printStackTrace();
+
 				}			
 			}
 		}
@@ -357,8 +353,9 @@ public class PingPong
 					DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 					serverSocket.receive(receivePacket);
 					Received_Str =  new String(receivePacket.getData());
-					System.out.println("Received : " + Received_Str);
-					String [] temp2 = Received_Str.split(" ");
+					System.out.println("Length : " + Received_Str.length() + "Received : " + Received_Str);
+
+					String [] temp2 = Received_Str.split("\\s+");
 					String [] tokens=temp2[0].split(",");
 					System.out.println(tokens[0] + " " + receivePacket.getAddress());
 					String getAddSend = (receivePacket.getAddress()).toString();
@@ -381,7 +378,7 @@ public class PingPong
 						for (int i = 0; i < no_players; i ++)
 						{
 							joinIPs.add(tokens[3*i + 1]);
-							joinPorts.add(Integer.parseInt(tokens[3*i + 2]));
+							joinPorts.add(Integer.parseInt((tokens[3*i + 2]).trim()));
 							joinNames.add(tokens[3*i + 3]);
 						}
 
@@ -391,13 +388,13 @@ public class PingPong
 						// LEVEL MUST BE THAT OF CREATOR!
 						System.out.println("IPs at joiner : " + joinIPs);
 						m.setVisible(false);
-						Player p_join = new Player(PName, Integer.parseInt(tokens[tokens.length - 1]),joinIPs, joinPorts, joinNames,Integer.parseInt(tokens[tokens.length - 2]));
+						Player p_join = new Player(PName, Integer.parseInt((tokens[tokens.length - 1]).trim()),joinIPs, joinPorts, joinNames,Integer.parseInt((tokens[tokens.length - 2]).trim()));
 					}
 
 				}
 				catch(Exception e)
 				{
-
+					e.printStackTrace();
 				}
 			}
 		}
@@ -408,25 +405,26 @@ public class PingPong
 	{
 		// 1 serverSocket for receiving.
 		// list of clientSocket to send.
-		public boolean ith_Joined;
-		public boolean Game_Started;
-		private static String entered_IP;
-		private static int otherPort;
-		private static int i;
+		public static boolean[] ith_Joined;
+		public static boolean Game_Started;
+		private static String[] entered_IP;
 
 		private static DatagramSocket serverSocket; // receiving.
 		private static byte[] receiveData = new byte[1024];
 		public static String Received_Str;
 
 
-		public CreateGameThread(int ith, String otherIP, int otherPort)
+		public CreateGameThread(ArrayList<String> otherIP)
 		{
 			// sets bool I, name I.
-			ith_Joined = false;
-			entered_IP = otherIP;
+			int x = otherIP.size();
+			ith_Joined = new boolean[x];
+			for (int i = 0; i < x; i ++)
+				ith_Joined[i] = false;
+			entered_IP = new String[x];
+			for (int i = 0; i < x; i ++)
+				entered_IP[i] = "/" + otherIP.get(i);
 			System.out.println(entered_IP);
-			otherPort = otherPort;
-			i = ith;
 			try
 			{
 				serverSocket = new DatagramSocket(1800); // receive
@@ -438,29 +436,71 @@ public class PingPong
 			}
 		}
 
+		public static int matchAny(String ip)
+		{
+			boolean rthis = false;
+			for (int i = 0; i < entered_IP.length && !rthis ; i ++)
+			{
+				if (entered_IP[i].equals(ip))
+				{
+					rthis = true;
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		public static void updateGameStart()
+		{
+			for (int i = 0; i < ith_Joined.length; i ++)
+				Game_Started = Game_Started && ith_Joined[i];
+		}
+
 		public void run()
 		{
-			while (!ith_Joined)
+			while (!(this.Game_Started))
 			{
 				try
 				{
 					DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 					System.out.println("Receive packet 1: ");
 					serverSocket.receive(receivePacket);
+					// byte[] data = new byte[receivePacket.getLength()];
 					System.out.println("Received Packet 2: ");
 					Received_Str =  new String(receivePacket.getData());
+
 					System.out.println("Received : " + Received_Str);
-					String [] temp2 = Received_Str.split(" ");
-					String [] tokens=temp2[0].split(",");
-					System.out.println(tokens[0] + " " + receivePacket.getAddress());
+
+					// char[] char_in = Received_Str.toCharArray();
+					Received_Str = Received_Str.replace(" ","");
+					Received_Str = Received_Str.replace("\t", "");
+					System.out.println(Received_Str + " : replaced");
+					String [] temp2 = (Received_Str).split("\\s+");
+
+					char[] annoyingchar = new char[1];
+        			char[] charresult = Received_Str.toCharArray();
+        			String result = "";
+			        for(int i=0;i<charresult.length;i++)
+			        {
+            			if(charresult[i]==annoyingchar[0])
+            			{
+                			break;
+            			}
+			            result+=charresult[i];
+        			}
+
+        			System.out.println("Final : " + result);
+
+					String [] tokens=result.split(",");
+					System.out.println(tokens[1] + " " + receivePacket.getAddress());
 					String getAdd = (receivePacket.getAddress()).toString();
 					System.out.println(getAdd + " : Converted string");
-					String s = "/" + entered_IP;
-					System.out.println(s);
-					if (tokens[0].equals("Join") && getAdd.equals(s))
+					int i = matchAny(getAdd);
+
+					if (tokens[0].equals("Join") && i > -1)
 					{
 						System.out.println("Kewl " + i);
-						if (i == 1)
+						if (i == 0)
 						{
 							System.out.println("Received player 1 details");
 							bool1 = true;
@@ -468,17 +508,19 @@ public class PingPong
 							if (bool1 && bool2 && bool3)
 								System.out.println("All true now, in create game THREAD");
 						}
-						else if (i == 2)
+						else if (i == 1)
 						{
 							bool2 = true;
 							name2 = tokens[1];
 						}
-						else if (i == 3)
+						else if (i == 2)
 						{
 							bool3 = true;
 							name3 = tokens[1];
 						}
-						ith_Joined = true;
+						ith_Joined[i] = true;
+						updateGameStart();
+						// this.sleep(120000);
 					}
 				}
 				catch(Exception e)
@@ -516,8 +558,8 @@ public class PingPong
 			{
 				// System.out.println("Game not started");
 				// update wait_for_join.
-				System.out.println(System.currentTimeMillis());
-				if ((System.currentTimeMillis() - Wait_for_Join_Start) > 5000)
+				// System.out.println(System.currentTimeMillis());
+				if ((System.currentTimeMillis() - Wait_for_Join_Start) > 120000)
 				{
 					System.out.println("Time exceeded. Starting game.");
 					int no_pl = IPs.size();
@@ -586,7 +628,7 @@ public class PingPong
 								InetAddress ip = InetAddress.getByName(finalIPs.get(i));
 								byte[] sendData = new byte[1024];
 								String sData = sendThis2;
-								sData += (i);
+								sData += i;
 								sData += "," + Plevel;
 								sendData = sData.getBytes();
 								System.out.println("Sending All Joined\n" + sData);
@@ -598,14 +640,16 @@ public class PingPong
 						catch(Exception e)
 						{
 							e.printStackTrace();
-						}					
-					m.setVisible(false);
+						}	
+					m.setVisible(false);				
+
 					Player p = new Player(PName, Plevel, finalIPs, finalPorts, PNames,0);
 
 					Game_Started = true;
 				}
 				else
 				{
+					// System.out.println("bool1 :" + Boolean.toString(bool1) + " bool2 :" + Boolean.toString(bool2) + "bool3 :" + Boolean.toString(bool3));
 
 					if (bool1 && bool2 && bool3)
 					{
@@ -639,6 +683,7 @@ public class PingPong
 						try
 						{
 							String sendThis = "All_Joined,";
+							System.out.println(no_p+"Shift is bad "+ sendThis);
 							// I AM Player 0. IPs[0] is player 1 IPs[1] is Player 2 IPs[2] is Player 3.
 							for (int i = 0; i < no_p ; i ++)
 							{
@@ -647,14 +692,15 @@ public class PingPong
 								sendThis += Names.get(i) + ",";
 							}
 
+							System.out.println(sendThis);
 
 							for (int i = 1; i < no_p; i ++)
 							{
 								// prepare string to be sent.
 								InetAddress ip = InetAddress.getByName(IPs.get(i));
 								byte[] sendData = new byte[1024];
-								String s2 = sendThis;
-								s2 += (i);
+								String s2 = "" + sendThis;
+								s2 += i;
 								s2 += "," + Plevel;
 								sendData = s2.getBytes();
 								System.out.println("Sending All Joined\n" + s2);
