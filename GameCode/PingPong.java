@@ -27,6 +27,13 @@ public class PingPong
 	private static ArrayList<String> IPs;
 	private static ArrayList<Integer> Ports;
 	private static long Wait_for_Join_Start;
+	private static JoinGameThread jg1;
+	private static JoinGameThread2 jg2;
+	private static StartGameThread start_final;
+	private static CreateGameThread cg1;
+	private static CreateGameThread cg2;
+	private static CreateGameThread cg3;
+
 	public PingPong()
 	{
 
@@ -72,6 +79,7 @@ public class PingPong
 		jo_bttn.setLayout(new FlowLayout());
 		jo_bttn.add(join_final);
 		jo_bttn.add(backfromJo);
+
 
    		createGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -137,7 +145,7 @@ public class PingPong
 					if (no_players == 1)
 					{
 						System.out.println(IPs.get(0));
-						CreateGameThread cg1 = new CreateGameThread(1,IPs.get(0), Ports.get(0));
+						cg1 = new CreateGameThread(1,IPs.get(0), Ports.get(0));
 						cg1.start();
 
 						bool2 = true;
@@ -146,23 +154,23 @@ public class PingPong
 					}
 					else if (no_players == 2)
 					{
-						CreateGameThread cg1 = new CreateGameThread(1, IPs.get(0), Ports.get(0));
+						cg1 = new CreateGameThread(1, IPs.get(0), Ports.get(0));
 						cg1.start();
 						
-						CreateGameThread cg2 = new CreateGameThread(2, IPs.get(1), Ports.get(1));
+						cg2 = new CreateGameThread(2, IPs.get(1), Ports.get(1));
 						cg2.start();
 
 						bool3 = true;
 					}
 					else
 					{
-						CreateGameThread cg1 = new CreateGameThread(1, IPs.get(0), Ports.get(0));
+						cg1 = new CreateGameThread(1, IPs.get(0), Ports.get(0));
 						cg1.start();
 						
-						CreateGameThread cg2 = new CreateGameThread(2, IPs.get(1), Ports.get(1));
+						cg2 = new CreateGameThread(2, IPs.get(1), Ports.get(1));
 						cg2.start();
 
-						CreateGameThread cg3 = new CreateGameThread(3, IPs.get(2), Ports.get(2));
+						cg3 = new CreateGameThread(3, IPs.get(2), Ports.get(2));
 						cg3.start();
 					}
 				}
@@ -173,7 +181,7 @@ public class PingPong
 					bool3 = true;
 				}
 
-				StartGameThread start_final = new StartGameThread();
+				start_final = new StartGameThread();
 				start_final.start();
 				// this one sends final msg to all others.
 			}
@@ -182,11 +190,12 @@ public class PingPong
 		join_final.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae)
 			{
+				join_final.setEnabled(false);
 				// SEND 1 PACKET TO IP, port, say 'Join'S Thread!
-				JoinGameThread jg1 = new JoinGameThread((int) join.spinner.getValue(),join.userIP.getText());
+				jg1 = new JoinGameThread((int) join.spinner.getValue(),join.userIP.getText());
 				jg1.start();
 
-				JoinGameThread2 jg2 = new JoinGameThread2((int) join.spinner.getValue(),join.userIP.getText());
+				jg2 = new JoinGameThread2((int) join.spinner.getValue(),join.userIP.getText());
 				jg2.start();
 
 				// check if player can join the given IP's address.
@@ -203,6 +212,18 @@ public class PingPong
 				System.out.println("Components removed again");
 
 				addMainScreen();
+				if (cg1 != null)
+					cg1.stop();
+
+				if (cg2 != null)
+					cg2.stop();
+
+				if (cg3 != null)
+					cg3.stop();
+
+				if (start_final != null)
+					start_final.stop();
+
 				m.getContentPane().add(main_bttn);
 				m.revalidate();
 				m.repaint();
@@ -218,7 +239,11 @@ public class PingPong
 			{
 				m.getContentPane().remove(join);
 				m.getContentPane().remove(jo_bttn);
-
+				join_final.setEnabled(true);
+				if (jg1 != null)
+				jg1.stop();
+				if (jg2 != null)
+				jg2.stop();
 				addMainScreen();
 				m.getContentPane().add(main_bttn);
 				m.revalidate();
@@ -282,6 +307,7 @@ public class PingPong
 					InetAddress IP_game = InetAddress.getByName(sendTo_IP);
 					// int send_to_port = sendTo_Port;
 					String send_this = "Join," + PName;
+					System.out.println(send_this);
 					byte[] sendData = new byte[1024];
 					sendData = send_this.getBytes();
 					DatagramPacket sendPacket = new DatagramPacket(sendData,send_this.length(), IP_game, 1800);
@@ -350,6 +376,7 @@ public class PingPong
 
 // 1. creator of game IP at 0
 						int no_players = (tokens.length - 2)/3;
+						System.out.println("No players: " + no_players);
 
 						for (int i = 0; i < no_players; i ++)
 						{
@@ -363,6 +390,7 @@ public class PingPong
 						System.out.println("Starting Player at Join");
 						// LEVEL MUST BE THAT OF CREATOR!
 						System.out.println("IPs at joiner : " + joinIPs);
+						m.setVisible(false);
 						Player p_join = new Player(PName, Integer.parseInt(tokens[tokens.length - 1]),joinIPs, joinPorts, joinNames,Integer.parseInt(tokens[tokens.length - 2]));
 					}
 
@@ -508,6 +536,7 @@ public class PingPong
 					finalPorts.add(0, 1001);
 					if (no_pl == 0)
 					{
+						m.setVisible(false);
 						Player p1 = new Player(PName, Plevel, finalIPs, finalPorts, PNames,0);
 					}
 					else if (no_pl >= 1)
@@ -570,7 +599,7 @@ public class PingPong
 						{
 							e.printStackTrace();
 						}					
-
+					m.setVisible(false);
 					Player p = new Player(PName, Plevel, finalIPs, finalPorts, PNames,0);
 
 					Game_Started = true;
@@ -639,6 +668,7 @@ public class PingPong
 							e.printStackTrace();
 						}
 	// IPs has all IPs, including my own.
+						m.setVisible(false);
 						Player p1 = new Player(PName, Plevel, IPs, Ports, Names,0);
 					}
 				}

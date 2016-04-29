@@ -191,6 +191,44 @@ public class Player
 			}
 			// player_desc is 1 for current player,2 for other and 3 for computer
 
+			if(Board_UI.getWinner() == 1)
+			{
+				JOptionPane.showMessageDialog(null,"Click ok to start the server 1" );
+				Board_UI.setVisible(false);
+				Board_UI.setReset();
+				Board_UI.setDefaultCloseOperation(Board_UI.EXIT_ON_CLOSE);
+				PingPong.main(null);
+				gameTimer.stop();
+			}
+			else if(Board_UI.getWinner() == 2)
+			{	JOptionPane.showMessageDialog(null,"Click ok to start the server 2" );
+				Board_UI.setVisible(false);
+				Board_UI.setReset();
+				Board_UI.setDefaultCloseOperation(Board_UI.EXIT_ON_CLOSE);
+				PingPong.main(null);
+				gameTimer.stop();
+			}
+			else if(Board_UI.getWinner() == 3)
+			{
+				JOptionPane.showMessageDialog(null,"Click ok to start the server 3" );
+				Board_UI.setVisible(false);
+				Board_UI.setReset();
+				Board_UI.setDefaultCloseOperation(Board_UI.EXIT_ON_CLOSE);
+				PingPong.main(null);
+				gameTimer.stop();
+			}
+			else if(Board_UI.getWinner() == 4)
+			{
+				JOptionPane.showMessageDialog(null,"Click ok to start the server 4" );
+				Board_UI.setVisible(false);
+				Board_UI.setReset();
+				Board_UI.setDefaultCloseOperation(Board_UI.EXIT_ON_CLOSE);
+				PingPong.main(null);
+				gameTimer.stop();
+			}
+			else 
+			{}
+
 			update_Phy();// parameters: Collision with paddle ,we need to ignore other collisions of the same wall
 			ArrayList<Ball> updatedBalls = Board_backend.getBalls();
 			ArrayList<Paddle> updatedPaddles = Board_backend.getPaddles();
@@ -676,7 +714,11 @@ public class Player
 					Board_backend.movePaddle(0,myPaddle1.getPaddleX(),myPaddle1.getPaddleY(), 100.0, myPaddle1.getBallMissed() + 1, true);
 					try
 			            {
-			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
+			            	AudioInputStream audio1;
+			              if(myPaddle1.getBallMissed()>=5)
+			              	audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
+			              else
+			              	audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
 			              // .getAbsoluteFile()
 			              // System.out.println("after l1");
 			              Clip clip = AudioSystem.getClip();
@@ -707,7 +749,11 @@ public class Player
 					Board_backend.movePaddle(1,myPaddle2.getPaddleX(),myPaddle2.getPaddleY(), 100.0, myPaddle2.getBallMissed() + 1, true);
 					try
 			            {
-			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
+			            	AudioInputStream audio1;
+			              if(myPaddle2.getBallMissed()>=5)
+			              	audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
+			              else
+			              	audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
 			              // .getAbsoluteFile()
 			              // System.out.println("after l1");
 			              Clip clip = AudioSystem.getClip();
@@ -738,7 +784,11 @@ public class Player
 					Board_backend.movePaddle(2,myPaddle3.getPaddleX(),myPaddle3.getPaddleY(), 100.0, myPaddle3.getBallMissed() + 1, true);
 					try
 			            {
-			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
+			            	AudioInputStream audio1;
+			              if(myPaddle3.getBallMissed()>=5)
+			              	audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
+			              else
+			              	audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
 			              // .getAbsoluteFile()
 			              // System.out.println("after l1");
 			              Clip clip = AudioSystem.getClip();
@@ -769,7 +819,11 @@ public class Player
 					Board_backend.movePaddle(3,myPaddle4.getPaddleX(),myPaddle4.getPaddleY(), 100.0, myPaddle4.getBallMissed() + 1, true);
 					try
 			            {
-			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
+			            	AudioInputStream audio1;
+			              if(myPaddle4.getBallMissed()>=5)
+			              	audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
+			              else
+			              	audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
 			              // .getAbsoluteFile()
 			              // System.out.println("after l1");
 			              Clip clip = AudioSystem.getClip();

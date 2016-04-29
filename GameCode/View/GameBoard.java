@@ -6,18 +6,24 @@ import java.awt.*;
 import Model.*;
 import java.util.*;
 import java.awt.event.*;
+import java.io.*;
+import javax.swing.event.*;
 // TODO: setIconImage to remove coffee cup
 
 public class GameBoard extends JFrame
 {
 	/** This class is a JFrame, that will contain the main JPanel.	**/
 	private MainPanel GamePanel;
+	private BackPanel BackGamePanel;
 
 	public GameBoard()
 	{
 		/** Constructor. Sets visibility true. **/
 		super("PingPong");
 		GamePanel = new MainPanel();
+		BackGamePanel = new BackPanel();
+		GamePanel.setBorder(BorderFactory.createEmptyBorder(100,0,40,0));
+		GamePanel.setBackground(Color.BLACK);
 		startBoard();
 	}
 
@@ -38,15 +44,25 @@ public class GameBoard extends JFrame
 
 	public void addGamePanel()
 	{
-		/** Adds the game JPanel to JFrame **/
-		this.add(GamePanel);
+		BackGamePanel.setLayout(new OverlayLayout(BackGamePanel));
+		GamePanel.setOpaque(false);
+		JButton button = new JButton("Small");
+	    button.setMaximumSize(new Dimension(25, 25));
+	    button.setBackground(Color.white);
+	    BackGamePanel.add(GamePanel);
+		this.add(BackGamePanel);
+		
+		
 	}
 
 	public void reDraw(ArrayList<Ball> balls, ArrayList<Paddle> paddles, ArrayList<RandomObj> objects)
 	{
 		/** Calls the update function of MainPanel class to render the
 		* whole board with new arrays of balls and paddles **/
+		BackGamePanel.remove(GamePanel);
 		GamePanel.updateBoard(balls, paddles, objects);
+		// BackGamePanel.add(GamePanel);
+		// this.add(BackGamePanel);
 	}
 
 	public int getPaddleX()
@@ -69,6 +85,22 @@ public class GameBoard extends JFrame
 	public int getPClickY()
 	{
 		return GamePanel.getClickY();
+	}
+
+	public int getWinner()
+	{
+		return GamePanel.getWinner();
+	}
+
+	public void setReset()
+	{
+		GamePanel.winner = -1;
+		GamePanel.Paddles_out = 0;
+ 		GamePanel.first1 = 0;
+ 		GamePanel.first2 = 0;
+ 		GamePanel.first3 = 0;
+ 		GamePanel.first4 = 0;
+ 	
 	}
 
 }
