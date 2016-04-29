@@ -62,7 +62,7 @@ public class GameBoard extends JFrame
 		// BackGamePanel.remove(GamePanel);
 		// GamePanel = new MainPanel();
 		// GamePanel.setOpaque(false);
-		GamePanel.removeAll();
+		// GamePanel.removeAll();
 		GamePanel.repaint();
 		GamePanel.updateBoard(balls, paddles, objects);
 		BackGamePanel.add(GamePanel);
@@ -72,23 +72,23 @@ public class GameBoard extends JFrame
 	public int getPaddleX()
 	{
 		/** Returns new X after user movement by mouse/keyboard **/
-		return GamePanel.getNewX();
+		return BackGamePanel.getNewX();
 	}
 
 	public int getPaddleY()
 	{
 		/** Returns new Y after user movement by mouse/keyboard **/
-		return GamePanel.getNewY();
+		return BackGamePanel.getNewY();
 	}
 
 	public int getPClickX()
 	{
-		return GamePanel.getClickX();
+		return BackGamePanel.getClickX();
 	}
 
 	public int getPClickY()
 	{
-		return GamePanel.getClickY();
+		return BackGamePanel.getClickY();
 	}
 
 	public int getWinner()
@@ -106,5 +106,7 @@ public class GameBoard extends JFrame
  		GamePanel.first4 = 0;
  	
 	}
+
+
 
 }

@@ -24,8 +24,31 @@ public class BackPanel extends JPanel
  	private static String Name2 = "Player2";
  	private static String Name3 = "Player3";
  	private static String Name4 = "Player4";
+ 	private static int PaddleX;
+	private static int PaddleY;
+	private static int PClickX;
+	private static int PClickY;
 
+	public int getNewX()
+	{
+		return PaddleX;
+	}
 
+	public int getNewY()
+	{
+		return PaddleY;
+	}
+
+	public int getClickX()
+	{
+		return PClickX;
+	}
+
+	public int getClickY()
+	{
+		return PClickY;
+	}
+	
 	public BackPanel()
 	{
 		/** Constructor **/
@@ -35,6 +58,8 @@ public class BackPanel extends JPanel
 		this.setPreferredSize(new Dimension(Default_Width, Default_Height));
 		this.setVisible(true);
 		this.setBackground(Color.LIGHT_GRAY);
+		this.addMouseMotionListener(new CustomMouseMotionListener());
+		this.addMouseListener(new CustomMouseListener());
 
 	}
 
@@ -101,5 +126,40 @@ public class BackPanel extends JPanel
 
 		Polygon ps3 = new Polygon(new int[] {590,550,590}, new int [] {590,590,550},3);
 		g.fillPolygon(ps3);
-	}
+	}	
+
+		public static class CustomMouseMotionListener implements MouseMotionListener {
+		public void mouseDragged(MouseEvent e)
+		{
+System.out.println("Mouse Dragged BACK ***: ("+e.getX()+", "+e.getY() +")");
+        PaddleX = e.getX();
+        PaddleY = e.getY();
+      }
+
+      public void mouseMoved(MouseEvent e) {
+         // statusLabel.setText("Mouse Moved: ("+e.getX()+", "+e.getY() +")");
+      }    
+   }
+
+	class CustomMouseListener implements MouseListener{
+      public void mouseClicked(MouseEvent e) {
+        System.out.println("Mouse Clicked BACK ***: ("+e.getX()+", "+e.getY() +")");
+         PClickX = e.getX();
+         PClickY = e.getY();
+         PaddleX = e.getX();
+         PaddleY = e.getY();
+      }
+
+      public void mousePressed(MouseEvent e) {
+      }
+
+      public void mouseReleased(MouseEvent e) {
+      }
+
+      public void mouseEntered(MouseEvent e) {
+      }
+
+      public void mouseExited(MouseEvent e) {
+      }
+   }
 }

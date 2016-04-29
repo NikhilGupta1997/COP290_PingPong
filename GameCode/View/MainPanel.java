@@ -25,10 +25,7 @@ public class MainPanel extends JPanel
 	private static ArrayList<RandomObj> theObjects;
 	private static final int Default_Height = 800;
 	private static final int Default_Width = 600;
-	private static int PaddleX;
-	private static int PaddleY;
-	private static int PClickX;
-	private static int PClickY;
+	
 	private static String Name1 = "Player1";
  	private static String Name2 = "Player2";
  	private static String Name3 = "Player3";
@@ -50,29 +47,10 @@ public class MainPanel extends JPanel
 		// setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setPreferredSize(new Dimension(Default_Width, Default_Height));
 		this.setVisible(true);
-		this.addMouseMotionListener(new CustomMouseMotionListener());
-		this.addMouseListener(new CustomMouseListener());
+		
 	}
 
-	public int getNewX()
-	{
-		return PaddleX;
-	}
-
-	public int getNewY()
-	{
-		return PaddleY;
-	}
-
-	public int getClickX()
-	{
-		return PClickX;
-	}
-
-	public int getClickY()
-	{
-		return PClickY;
-	}
+	
 
 	public int getWinner()
 	{
@@ -513,39 +491,6 @@ public class MainPanel extends JPanel
 			
 	}
 
-	public static class CustomMouseMotionListener implements MouseMotionListener {
-		public void mouseDragged(MouseEvent e)
-		{
-System.out.println("Mouse Dragged: ("+e.getX()+", "+e.getY() +")");
-        PaddleX = e.getX();
-        PaddleY = e.getY();
-      }
 
-      public void mouseMoved(MouseEvent e) {
-         // statusLabel.setText("Mouse Moved: ("+e.getX()+", "+e.getY() +")");
-      }    
-   }
-
-	class CustomMouseListener implements MouseListener{
-      public void mouseClicked(MouseEvent e) {
-        System.out.println("Mouse Clicked: ("+e.getX()+", "+e.getY() +")");
-         PClickX = e.getX();
-         PClickY = e.getY();
-         PaddleX = e.getX();
-         PaddleY = e.getY();
-      }
-
-      public void mousePressed(MouseEvent e) {
-      }
-
-      public void mouseReleased(MouseEvent e) {
-      }
-
-      public void mouseEntered(MouseEvent e) {
-      }
-
-      public void mouseExited(MouseEvent e) {
-      }
-   }
 
 }
