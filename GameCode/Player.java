@@ -188,7 +188,7 @@ public class Player
 	 	{
 	 		lastBwall[i]=0;lastpaddle[i]=0;lastBcorner[i]=0;
 	 	}
-		timerDelay = 40;
+		timerDelay = 25;
 		gameTimer = new Timer(timerDelay, timerAction);
 		gameTimer.start();
 		M =0;
@@ -1106,12 +1106,18 @@ public class Player
 									// System.out.println("dsfafa j " + j + " vx: " + vel_b2_x + " vy: " + vel_b2_y + " cx: " + center_x2 + " cy: " + center_y2);
 
 								}
-							if (((cc_dist - 20) < 0.001) && (lastBBCollision[i] != j) && (lastBBCollision[j] != i))
+							if (((cc_dist - 20) < 0.001) && ((lastBBCollision[i] != j) || (lastBBCollision[j] != i)))
 							{
 								System.out.println("YO---collision" + i + j);
 								// ball 2 ball
 								lastBBCollision[i] = j;
 								lastBBCollision[j] = i;
+								lastBcorner[i] = 0;
+								lastBcorner[j] = 0;
+								lastBwall[i] = 0;
+								lastBwall[j] = 0;
+								lastpaddle[i] = 0;
+								lastpaddle[j] = 0;
 
 								any_colln = true;
 								Double x1x2 = Math.abs(center_x2 - center_x);
