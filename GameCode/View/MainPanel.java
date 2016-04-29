@@ -114,7 +114,7 @@ public class MainPanel extends JPanel
 			if(i == 0)
 				{ 
 				if(loves <= 0)
-				g.setColor(customColorBrown);
+				g.setColor(Color.RED);
 				else
 				g.setColor(Color.BLUE);
 				g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y), (int) (P_length), 20);
@@ -144,7 +144,7 @@ public class MainPanel extends JPanel
 			else if(i ==1)
 				{
 				if(loves <= 0)
-				g.setColor(customColorBrown);
+				g.setColor(Color.RED);
 				else
 				g.setColor(Color.BLUE);	
 				g.fillRect((int)(paddle_x), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
@@ -173,7 +173,7 @@ public class MainPanel extends JPanel
 			else if(i ==2)
 				{
 				if(loves <= 0)
-				g.setColor(customColorBrown);
+				g.setColor(Color.RED);
 				else
 				g.setColor(Color.BLUE);
 				g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-20), (int) (P_length), 20);
@@ -202,7 +202,7 @@ public class MainPanel extends JPanel
 			else if(i ==3)
 				{
 				if(loves <= 0)
-				g.setColor(customColorBrown);
+				g.setColor(Color.RED);
 				else
 				g.setColor(Color.BLUE);
 				g.fillRect((int)(paddle_x - 20), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));

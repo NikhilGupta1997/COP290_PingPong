@@ -342,8 +342,8 @@ public class Player
              	boolean [][] collision_happened=new boolean[4][no_balls];
              	int k=0;
              	for(int i=0;i<no_players;i++)
-             	{ ReceiverThread receive=RecieveThreads.get(k);
-             		if(i==player_no) {continue;}
+             	{ 	if(i==player_no) {continue;}
+             	ReceiverThread receive=RecieveThreads.get(k);
              	
              	yourpaddle_x[i] = receive.rec_paddleX;
              	yourpaddle_y[i] = receive.rec_paddleY;
