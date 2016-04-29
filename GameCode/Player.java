@@ -165,13 +165,13 @@ public class Player
 			c++;		
 		}
 
-		// ball_colln = new int[plevel];
+		ball_colln = new boolean[plevel];
 
-		// lastBBCollision = new int[plevel];
-		// for (int i = 0; i < plevel; i ++)
-		// {
-		// 	lastBBCollision[i] = -1;
-		// }
+		lastBBCollision = new int[plevel];
+		for (int i = 0; i < plevel; i ++)
+		{
+			lastBBCollision[i] = -1;
+		}
 		Paddle p = new Paddle(100.0, 400.0, 0.0, 0,true);
 		Board_backend.addPaddle(p);
 		 p = new Paddle(150.0, 0.0, 400.0, 0,true);
@@ -240,12 +240,18 @@ public class Player
 			ArrayList<Ball> curr_Balls = Board_backend.getBalls();
 			int no_balls=curr_Balls.size();
 			int player_d0=player_desc[0],player_d1=player_desc[1],player_d2=player_desc[2],player_d3=player_desc[3];
-			//System.out.println(player_d0+","+player_d1+","+player_d2+","+player_d3);
+			System.out.println(player_d0+","+player_d1+","+player_d2+","+player_d3);
 			// player_desc is 1 for current player,2 for other and 3 for computer
+			server=-1;// change 1
 		for (int i=0;i<4;i++)
 		{
-			if(player_desc[i]==1|| player_desc[i]==2) server=i; // Server decides which one controls the game
+			if(player_desc[i]==1|| player_desc[i]==2) 
+			{
+			server=i; // Server decides which one controls the game
+			break;
+			}
 		}
+		System.out.println("Player and server are="+player_no+","+server);
 			if(Board_UI.getWinner() == 1)
 			{
 				JOptionPane.showMessageDialog(null,"Click ok to start the server 1" );
@@ -631,16 +637,20 @@ public class Player
 			///////////////////////////NOT GENERIC /////////////////////////////////////// Write for other balls as well
 			for(int i=0;i<curr_Balls.size();i++)
 			 {Ball myBall1=updatedBalls.get(i);
-			 	Double lastY1 = myBall1.getCenterY();
-			Double lastX1 = myBall1.getCenterX();
+			 Double lastY1 = myBall1.getCenterY();
+			 Double lastX1 = myBall1.getCenterX();
+			 Double lastY2 = ball_pos_cy[server][i];
+			 Double lastX2 = ball_pos_cx[server][i];
 			
 			 if(collision_paddle[i]!=-1)
 			 Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX1,ball_vel_cx[collision_paddle[i]-1][i] + lastY1, 10);	
 			 else if(server==player_no)		
 			 Board_backend.moveBall(i,myBall1.getVelX(), myBall1.getVelY(), myBall1.getVelX() + lastX1, myBall1.getVelY() + lastY1, 10);	
 			 else
-			 Board_backend.moveBall(i,ball_vel_cx[server][i], ball_vel_cy[server][i], myBall1.getVelX() + lastX1, myBall1.getVelY() + lastY1, 10);	
-			 
+			 {
+			 System.out.println("sdasa "+ "Aayan is,worst i can , nikhil");
+			 Board_backend.moveBall(i,ball_vel_cx[server][i], ball_vel_cy[server][i], lastX2, lastY2, 10);	
+			 }
 			 }
 			
 			//if(!collision_happened[i]) Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);
