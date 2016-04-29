@@ -428,7 +428,7 @@ public class PingPong
 						int[][] ports = new int[no_players][no_players];
 						for (int i = 0; i < no_players; i ++)
 							for (int j = 0; j < no_players; j ++)
-								ports[i][j] = Integer.parseInt(tokens[4*i + j]);
+								ports[i][j] = Integer.parseInt(tokens[no_players*i + j + 1 + 2*no_players]);
 
 						Player p_join = new Player(PName, Integer.parseInt((tokens[tokens.length - 1]).trim()),joinIPs,ports, joinNames,Integer.parseInt((tokens[tokens.length - 2]).trim()));
 					}
@@ -560,6 +560,7 @@ public class PingPong
         			System.out.println("PINGPONG:" +"Final : " + result);
 
 					String [] tokens=result.split(",");
+					if(tokens[1] != null)
 					System.out.println(tokens[1] + " " + receivePacket.getAddress());
 					String getAdd = (receivePacket.getAddress()).toString();
 					System.out.println(getAdd + " : Converted string");
@@ -624,11 +625,11 @@ public class PingPong
 
 			for (int i = 0; i < 3; i ++)
 				for (int j = 0; j < 3; j ++)
-					player3[i][j] = 1000+4*i+j;
+					player3[i][j] = 1000+3*i+j;
 
 			for (int i = 0; i < 2; i ++)
 				for (int j = 0; j < 2; j ++)
-					player2[i][j] = 1000+4*i+j;
+					player2[i][j] = 1000+2*i+j;
 
 			player1 = new int[1][1];
 			player1[0][0] = -1;
@@ -649,7 +650,7 @@ public class PingPong
 			{
 				// System.out.println("Game not started");
 				// update wait_for_join.
-				// System.out.println(System.currentTimeMillis());
+				System.out.println(System.currentTimeMillis());
 				if ((System.currentTimeMillis() - Wait_for_Join_Start) > 120000)
 				{
 					System.out.println("PINGPONG:" +"Time exceeded. Starting game.");

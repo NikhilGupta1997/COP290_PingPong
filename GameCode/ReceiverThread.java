@@ -31,7 +31,7 @@ public class ReceiverThread extends Thread
 	private  int lostlife;
 
 	public ReceiverThread(int port,int level)
-	{
+	{  System.out.println("Port is"+ port+" level is"+level);
 		Port_connect = port;
 		rec_collision_occur=new boolean[level];
 		rec_ball_velX = new double[level];
@@ -42,7 +42,7 @@ public class ReceiverThread extends Thread
 		try
 		{
 			serverSocket = new DatagramSocket(port);
-			serverSocket.setSoTimeout(2000);
+			serverSocket.setSoTimeout(20000);
 		}
 		catch(Exception e)
 		{
@@ -59,8 +59,9 @@ public class ReceiverThread extends Thread
 			{
 				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				try
-				{
+				{ //System.out.println("Receiver thread is working");
 					serverSocket.receive(receivePacket);
+					System.out.println("fds");
 					isConnected = true;
 					Received_Str =  new String(receivePacket.getData());
 					System.out.println("Received : " + Received_Str);
