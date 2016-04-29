@@ -19,14 +19,14 @@ public class CreateGameScreen extends JPanel
       // private JPanel p3;
       private InetAddress IPAddress;
    	public ArrayList<JTextField> IPs;
-      public ArrayList<JSpinner> Ports;
+      // public ArrayList<JSpinner> Ports;
 
 	public CreateGameScreen()
 	{
 		/** Constructor. Sets visibility true. **/
 		// super("PingPongCreate");
       IPs = new ArrayList<JTextField>();
-      Ports = new ArrayList<JSpinner>();
+      // Ports = new ArrayList<JSpinner>();
 		startBoard();
 	}
 
@@ -35,10 +35,10 @@ public class CreateGameScreen extends JPanel
       return IPs;
    }
 
-   public ArrayList<JSpinner> GetPorts()
-   {
-      return Ports;
-   }
+   // public ArrayList<JSpinner> GetPorts()
+   // {
+   //    return Ports;
+   // }
 
 	public void startBoard()
 	{
@@ -156,7 +156,7 @@ public class CreateGameScreen extends JPanel
 		// headerLabel.setText("");
       this.remove(p);
       IPs = new ArrayList<JTextField>();
-      Ports = new ArrayList<JSpinner>();
+      // Ports = new ArrayList<JSpinner>();
 
   
 
@@ -169,22 +169,22 @@ public class CreateGameScreen extends JPanel
          JTextField ith_T = new JTextField("0.0.0.0", 10);
          ith_T.setHorizontalAlignment(JTextField.RIGHT);
          IPs.add(ith_T);
-         SpinnerModel spinnerModel =
-         new SpinnerNumberModel(0, //initial value
-            0, //min
-            9999, //max
-            1);//step
-      JSpinner spinner1 = new JSpinner(spinnerModel);
-      spinner1.addChangeListener(new ChangeListener() {
-         public void stateChanged(ChangeEvent e) {
-            // statusLabel.setText("Value : " + ((JSpinner)e.getSource()).getValue());
-         }
-      });
-      Ports.add(spinner1);
+      //    SpinnerModel spinnerModel =
+      //    new SpinnerNumberModel(0, //initial value
+      //       0, //min
+      //       9999, //max
+      //       1);//step
+      // JSpinner spinner1 = new JSpinner(spinnerModel);
+      // spinner1.addChangeListener(new ChangeListener() {
+      //    public void stateChanged(ChangeEvent e) {
+      //       // statusLabel.setText("Value : " + ((JSpinner)e.getSource()).getValue());
+      //    }
+      // });
+      // Ports.add(spinner1);
          // ith_T.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
          // spinner1.setBorder(BorderFactory.createMatteBorder(0,30,0,0, Color.Blue));
          ith.add(ith_T);
-         ith.add(spinner1);
+         // ith.add(spinner1);
          p.add(ith);
       }
 

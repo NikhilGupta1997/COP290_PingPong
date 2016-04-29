@@ -47,6 +47,9 @@ public class MainPanel extends JPanel
 		// setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setPreferredSize(new Dimension(Default_Width, Default_Height));
 		this.setVisible(true);
+		theBalls = new ArrayList<Ball>();
+		thePaddles = new ArrayList<Paddle>();
+		theObjects = new ArrayList<RandomObj>();
 		
 	}
 
@@ -232,21 +235,21 @@ public class MainPanel extends JPanel
  			}
  		}
 
- 		// // for (int j = 0; j < objs.size(); j ++)
-		// // {
-		// // 	RandomObj ith = objs.get(j);
-		// // 	double center_x = ith.getCenterX();
-		// // 	double center_y = ith.getCenterY();
-		// // 	boolean effect = ith.getEffect();
-		// // 	if (effect)
-		// // 	{
-		// // 		g.drawImage(Image.getProperty("expand.png",this), center_x - 10,center_y - 10,20,20,this);
-		// // 	}
-		// // 	else
-		// // 	{
-		// // 		g.drawImage(Image.getProperty("shrink.png",this), center_x - 10,center_y - 10,20,20,this);
-		// // 	}
-		// // }
+ 	// 	for (int j = 0; j < theObjects.size(); j ++)
+		// {
+		// 	RandomObj ith = theObjects.get(j);
+		// 	double center_x = ith.getCenterX();
+		// 	double center_y = ith.getCenterY();
+		// 	boolean effect = ith.getEffect();
+		// 	if (effect)
+		// 	{
+		// 		g.drawImage(Image.getProperty("expand.png",this), center_x - 10,center_y - 10,20,20,this);
+		// 	}
+		// 	else
+		// 	{
+		// 		g.drawImage(Image.getProperty("shrink.png",this), center_x - 10,center_y - 10,20,20,this);
+		// 	}
+		// }
 		
 	}
 

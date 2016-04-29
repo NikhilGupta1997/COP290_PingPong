@@ -25,7 +25,7 @@ public class PingPong
 	private static String name2;
 	private static String name3;
 	private static ArrayList<String> IPs;
-	private static ArrayList<Integer> Ports;
+	// private static ArrayList<Integer> Ports;
 	private static long Wait_for_Join_Start;
 	private static long Wait_for_JoinGameThread;
 	private static JoinGameThread jg1;
@@ -133,18 +133,18 @@ public class PingPong
 			public void actionPerformed(ActionEvent ae) {
 				// CHECK THE 3 IP, PORTs ENTERED.
 				ArrayList<JTextField> ips = create.GetIPs();
-				ArrayList<JSpinner> ports = create.GetPorts();
+				// ArrayList<JSpinner> ports = create.GetPorts();
 				// DISABLE THIS BUTTON!
 
 				IPs = new ArrayList<String>();
-				Ports = new ArrayList<Integer>();
+				// Ports = new ArrayList<Integer>();
 
 				int no_players = ips.size();
 
 				for (int i = 0; i < no_players; i ++)
 				{
 					IPs.add((ips.get(i)).getText());
-					Ports.add((int)(ports.get(i)).getValue());
+					// Ports.add((int)(ports.get(i)).getValue());
 				}
 				System.out.println(IPs);
 				Wait_for_Join_Start = System.currentTimeMillis();
@@ -396,18 +396,27 @@ public class PingPong
 						// being received from the Creator IP.
 						done2 = true;
 						ArrayList<String> joinIPs = new ArrayList<String>();
-						ArrayList<Integer> joinPorts = new ArrayList<Integer>();
 						ArrayList<String> joinNames = new ArrayList<String>();
 
 // 1. creator of game IP at 0
-						int no_players = (tokens.length - 2)/3;
+						int no_tokens = tokens.length;
+						int no_players;
+						if (no_tokens == 27)
+							no_players = 4;
+						else if (no_tokens == 18)
+							no_players = 3;
+						else if (no_tokens == 11)
+							no_players = 2;
+						else
+							no_players = 1;
+
 						System.out.println("PINGPONG:" +"No players: " + no_players);
 
 						for (int i = 0; i < no_players; i ++)
 						{
-							joinIPs.add(tokens[3*i + 1]);
-							joinPorts.add(Integer.parseInt((tokens[3*i + 2]).trim()));
-							joinNames.add(tokens[3*i + 3]);
+							joinIPs.add(tokens[2*i + 1]);
+							// joinPorts.add(Integer.parseInt((tokens[3*i + 2]).trim()));
+							joinNames.add(tokens[2*i + 2]);
 						}
 
 						// clientSocket.clfplayeose();
@@ -416,7 +425,12 @@ public class PingPong
 						// LEVEL MUST BE THAT OF CREATOR!
 						System.out.println("PINGPONG:" +"IPs at joiner : " + joinIPs);
 						m.setVisible(false);
-						Player p_join = new Player(PName, Integer.parseInt((tokens[tokens.length - 1]).trim()),joinIPs, joinPorts, joinNames,Integer.parseInt((tokens[tokens.length - 2]).trim()));
+						int[][] ports = new int[no_players][no_players];
+						for (int i = 0; i < no_players; i ++)
+							for (int j = 0; j < no_players; j ++)
+								ports[i][j] = Integer.parseInt(tokens[4*i + j]);
+
+						Player p_join = new Player(PName, Integer.parseInt((tokens[tokens.length - 1]).trim()),joinIPs,ports, joinNames,Integer.parseInt((tokens[tokens.length - 2]).trim()));
 					}
 
 				}
@@ -594,9 +608,31 @@ public class PingPong
 	{
 		private static boolean Game_Started = false;
 		private static DatagramSocket clientSocket;
+		private static int[][] player4;
+		private static int[][] player3;
+		private static int[][] player2;
+		private static int[][] player1;
 		public StartGameThread()
 		{
 			Game_Started = false;
+			player4 = new int[4][4];
+			player3 = new int[3][3];
+			player2 = new int[2][2];
+			for (int i = 0; i < 4; i ++)
+				for (int j = 0; j < 4; j ++)
+					player4[i][j] = 1000+4*i+j;
+
+			for (int i = 0; i < 3; i ++)
+				for (int j = 0; j < 3; j ++)
+					player3[i][j] = 1000+4*i+j;
+
+			for (int i = 0; i < 2; i ++)
+				for (int j = 0; j < 2; j ++)
+					player2[i][j] = 1000+4*i+j;
+
+			player1 = new int[1][1];
+			player1[0][0] = -1;
+
 			try
 			{
 				clientSocket = new DatagramSocket();
@@ -620,7 +656,7 @@ public class PingPong
 					int no_pl = IPs.size();
 					ArrayList<String> PNames = new ArrayList<String>();
 					ArrayList<String> finalIPs = new ArrayList<String>();
-					ArrayList<Integer> finalPorts = new ArrayList<Integer>();
+					// ArrayList<Integer> finalPorts = new ArrayList<Integer>();
 					PNames.add(PName);
 					try
 					{
@@ -630,11 +666,11 @@ public class PingPong
 					{
 						e.printStackTrace();
 					}
-					finalPorts.add(0, 1001);
+					// finalPorts.add(0, 1001);
 					if (no_pl == 0)
 					{
 						m.setVisible(false);
-						Player p1 = new Player(PName, Plevel, finalIPs, finalPorts, PNames,0);
+						Player p1 = new Player(PName, Plevel, finalIPs, player1, PNames,0);
 					}
 					else if (no_pl >= 1)
 					{
@@ -642,7 +678,7 @@ public class PingPong
 						{
 							PNames.add(name1);
 							finalIPs.add(IPs.get(0));
-							finalPorts.add(Ports.get(0));
+							// finalPorts.add(Ports.get(0));
 						}
 					}
 					else if (no_pl >= 2)
@@ -651,7 +687,7 @@ public class PingPong
 						{
 							PNames.add(name2);
 							finalIPs.add(IPs.get(1));
-							finalPorts.add(Ports.get(1));
+							// finalPorts.add(Ports.get(1));
 						}
 					}
 					else // 3 more players.
@@ -660,24 +696,35 @@ public class PingPong
 						{
 							PNames.add(name3);
 							finalIPs.add(IPs.get(2));
-							finalPorts.add(Ports.get(2));
+							// finalPorts.add(Ports.get(2));
 						}
 					}
 
 					// send to those active.
+						int no = finalIPs.size();
 						try
 						{
 							String sendThis2 = "All_Joined,";
 							// I AM Player 0. IPs[0] is player 1 IPs[1] is Player 2 IPs[2] is Player 3.
-							for (int i = 0; i < finalPorts.size() ; i ++)
+							for (int i = 0; i < finalIPs.size() ; i ++)
 							{
 								sendThis2 += finalIPs.get(i) + ",";
-								sendThis2 += finalPorts.get(i) + ",";
+								// sendThis2 += finalPorts.get(i) + ",";
 								sendThis2 += PNames.get(i) + ",";
 							}
 
+							// append ARRAY STRING.
+							if (no == 4)
+								sendThis2 += ArrToString(player4, 4);
+							else if (no == 3)
+								sendThis2 += ArrToString(player3, 3);
+							else if (no == 2)
+								sendThis2 += ArrToString(player2, 2);
+							else
+								sendThis2 += "-1,";
 
-							for (int i = 1; i < finalPorts.size() ; i ++)
+
+							for (int i = 1; i < no ; i ++)
 							{
 								// prepare string to be sent.
 								InetAddress ip = InetAddress.getByName(finalIPs.get(i));
@@ -698,7 +745,15 @@ public class PingPong
 						}	
 					m.setVisible(false);
 					cg1.stop();
-					Player p = new Player(PName, Plevel, finalIPs, finalPorts, PNames,0);
+					Player p;
+					if (no == 4)
+						p = new Player(PName, Plevel, finalIPs, player4, PNames,0);
+					else if (no == 3)
+						p = new Player(PName, Plevel, finalIPs, player3, PNames,0);
+					else if (no == 2)
+						p = new Player(PName, Plevel, finalIPs, player2, PNames,0);
+					else
+						p = new Player(PName, Plevel, finalIPs, player1, PNames,0);
 					Game_Started = true;
 					this.stop();
 				}
@@ -721,7 +776,7 @@ public class PingPong
 						{
 							e.printStackTrace();
 						}
-						Ports.add(0, 1001);
+						// Ports.add(0, 1001);
 
 						int no_p = IPs.size();
 						if (no_p >= 2)
@@ -744,11 +799,20 @@ public class PingPong
 							for (int i = 0; i < no_p ; i ++)
 							{
 								sendThis += IPs.get(i) + ",";
-								sendThis += Ports.get(i) + ",";
+								// sendThis += Ports.get(i) + ",";
 								sendThis += Names.get(i) + ",";
 							}
 
-							System.out.println("PINGPONG:" +sendThis);
+							if (no_p == 4)
+								sendThis += ArrToString(player4, 4);
+							else if (no_p == 3)
+								sendThis += ArrToString(player3, 3);
+							else if (no_p == 2)
+								sendThis += ArrToString(player2, 2);
+							else
+								sendThis += "-1,";
+
+							System.out.println("PINGPONG:" + sendThis);
 
 							for (int i = 1; i < no_p; i ++)
 							{
@@ -773,12 +837,34 @@ public class PingPong
 						m.setVisible(false);
 						if (cg1 != null)
 							cg1.stop();
+						Player p1;
+						if (no_p == 4)
+							p1 = new Player(PName, Plevel, IPs, player4, Names,0);
+						else if (no_p == 3)
+							p1 = new Player(PName, Plevel, IPs, player3, Names,0);
+						else if (no_p == 2)
+							p1 = new Player(PName, Plevel, IPs,player2 , Names,0);
+						else
+							p1 = new Player(PName, Plevel, IPs,player1 , Names,0);
 
-						Player p1 = new Player(PName, Plevel, IPs, Ports, Names,0);
 						this.stop();
 					}
 				}
 			}
 		}
+	}
+
+
+	public static String ArrToString(int[][] arr, int size)
+	{
+		String s = "";
+		for (int i = 0; i < size; i ++)
+		{
+			for (int j = 0; j < size; j ++)
+			{
+				s += arr[i][j] + ",";
+			}
+		}
+		return s;
 	}
 }

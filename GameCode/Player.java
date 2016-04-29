@@ -26,8 +26,8 @@ public class Player
 	* No of receiver threads = no of other players playing with the current one. **/
 	private static ArrayList<ReceiverThread> RecieveThreads;
 	private static ArrayList<String> gl_other_ips=new ArrayList<String>();
-	private static ArrayList<Integer> gl_other_ports=new ArrayList<Integer>();
-	private static ArrayList<String> gl_names=new ArrayList<String>(); 
+	private static int [] [] gl_other_ports;
+	private static ArrayList<String> gl_names; 
 	private static Board Board_backend;
 	private static Game MyGame;
 	private static GameBoard Board_UI;
@@ -61,24 +61,25 @@ public class Player
 	private static int [] Collide_paddle ;// we need to make array when no of balls grow
 	//1 for above wall,2 for right wall and so on...... 
 	// 5 for top paddle and so on 
-		private static String sentence1;
-			private static byte[] sendData = new byte[1024];    
-			private static DatagramSocket clientSocket;//
-			private static InetAddress IPAddress;
-			private static DatagramPacket sendPacket;  
-			private static String destPort;
+	private static String sentence1;
+	private static byte[] sendData = new byte[1024];    
+	private static DatagramSocket clientSocket;//
+	private static InetAddress IPAddress;
+	private static DatagramPacket sendPacket;  
+	private static String destPort;
 			//clientSocket = new DatagramSocket();
 
 
 				   // wE NEED TO BIND IT TO ANOTHER MACHINE FROM HERE
-			private static int port1=180;
+	private static int port1=180;
 
-			 // private static DatagramSocket serverSocket;//
-				//    private static byte[] receiveData = new byte[1024]; 
-				//    private static DatagramPacket receivePacket;
-				   private static String sentence;
-				   private static String servPort;
-				   private static boolean packetStatus;
+	 // private static DatagramSocket serverSocket;//
+		//    private static byte[] receiveData = new byte[1024]; 
+		//    private static DatagramPacket receivePacket;
+   private static String sentence;
+   private static String servPort;
+   private static boolean packetStatus;
+   private static int[] lastBBCollision;
 
 	public static double average(double a,double b,double c,double d)
 	{
@@ -118,7 +119,7 @@ public class Player
 			Close_ball[i]=array_balls.get(closest[i]);
 
 	}		   
-	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports, ArrayList<String> names, int p_no)
+	public Player(String pname, int plevel, ArrayList<String> other_ips, int [] [] other_ports, ArrayList<String> names, int p_no)
 	{
 		// a Board object
 
@@ -138,7 +139,7 @@ public class Player
 		Board_backend = new Board();
 		Ball [] b=new Ball[5];
 		 b[0] = new Ball(-4.5*1.4, 3.5*1.4, 250.0, 280.0, 10);
-		 b[1] = new Ball(4.5*1.4, 3.5*1.4, 150.0, 280.0, 10);
+		 b[1] = new Ball(5.5*1.4, 3.5*1.4, 150.0, 280.0, 10);
 		 b[2] = new Ball(2.5*1.4, 5.5*2.4, 350.0, 180.0, 10);
 		 b[3] = new Ball(4.5*1.4, 2.5*2.4, 150.0, 180.0, 10);
 		 b[4] = new Ball(4.0*1.4, 2.5*2.4, 50.0, 200.0, 10);
@@ -151,6 +152,11 @@ public class Player
 			// speed prop to level.
 			Board_backend.addBall(b[i]);
 			c++;		
+		}
+		lastBBCollision = new int[plevel];
+		for (int i = 0; i < plevel; i ++)
+		{
+			lastBBCollision[i] = -1;
 		}
 		Paddle p = new Paddle(100.0, 400.0, 0.0, 0,true);
 		Board_backend.addPaddle(p);
@@ -194,7 +200,7 @@ public class Player
 		RecieveThreads = new ArrayList<ReceiverThread>();
 		for(int i=0;i<no_players;i++)
 		{if(i==p_no) continue;
-		RecieveThreads.add(new ReceiverThread(other_ports.get(i),plevel));// listens on this port
+		RecieveThreads.add(new ReceiverThread(other_ports[i],plevel));// listens on this port
 		(RecieveThreads.get(i)).start();
 		}
 		player_no=p_no;
@@ -220,7 +226,7 @@ public class Player
 		{
 			if(player_desc[i]==1|| player_desc[i]==2) server=i; // Server decides which one controls the game
 		}
-			System.out.println("MY WINNER IS " + Board_UI.getWinner());
+			// System.out.println("MY WINNER IS " + Board_UI.getWinner());
 			if(Board_UI.getWinner() == 1)
 			{
 				JOptionPane.showMessageDialog(null,"Click ok to start the server 1" );
@@ -600,16 +606,16 @@ public class Player
 // TODO:We need to change depending on player no. we are
 
 			///////////////////////////NOT GENERIC /////////////////////////////////////// Write for other balls as well
-			for(int i=0;i<curr_Balls.size();i++)
-			{
-				if(collision_paddle[i]!=-1)
-			Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX,ball_vel_cx[collision_paddle[i]-1][i] + lastY, 10);	
-			else if(server==player_no)		
-			Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
-			else
-			Board_backend.moveBall(i,ball_vel_cx[server][i], ball_vel_cy[server][i], myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
+			// for(int i=0;i<curr_Balls.size();i++)
+			// {
+			// 	if(collision_paddle[i]!=-1)
+			// Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX,ball_vel_cx[collision_paddle[i]-1][i] + lastY, 10);	
+			// else if(server==player_no)		
+			// Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
+			// else
+			// Board_backend.moveBall(i,ball_vel_cx[server][i], ball_vel_cy[server][i], myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
 			 
-			}
+			// }
 
 			//if(!collision_happened[i]) Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);
 			//else Board_backend.moveBall(0,ball_vel_cx, ball_vel_cy, -ball_vel_cx + lastX, -ball_vel_cy + lastY, 10);
@@ -643,7 +649,8 @@ public class Player
 		//double pos_pad_x=myPaddle.
 		//System.out.println("pos of my paddle--"+myX+","+myY);
 		for (int i = 0; i < no_balls ; i ++)
-		{	ball_missed[i]=0;
+		{
+			ball_missed[i]=0;
 			Collide_paddle[i]=0;
 			Ball ith = curr_Balls.get(i);
 			double radius = ith.getRadius();
@@ -669,14 +676,16 @@ public class Player
 			b2paddlea[3] = PEngine.collision_paddle(center_x, center_y, length_paddle[3]+40, 600, radius, myPaddle4.getPaddleX(),  myPaddle4.getPaddleY(),20,4);
 			for(int it=0;it<4;it++)
 			{
-				if(b2paddlea[it])  b2paddle=it+1; 
+				if(b2paddlea[it])  b2paddle=it+1;
 			}
 			//if(b2paddle!=0) System.out.println("Print1 "+b2paddle);
 			boolean check_wall_paddle=(lastBwall[i]+4 == b2paddle + 4);
 			//check_wall_paddle=false;
 			// b2paddle=false;
 			if (b2paddle!=0 && lastpaddle[i]!=b2paddle+4&& !check_wall_paddle&&(player_desc[b2paddle-1]==3||player_desc[b2paddle-1]==1))
-			{   lastpaddle[i]=b2paddle+ 4;
+			{   
+				lastBBCollision[i] = -1;
+				lastpaddle[i]=b2paddle+ 4;
 				lastBwall[i]=0; lastBcorner[i]=0;
 				//System.out.println("Print2 "+b2paddle);
 				if(b2paddle-1==Paddle_No)
@@ -684,8 +693,10 @@ public class Player
 					Collide_paddle[i]=1;
 				 	System.out.println("collision with myPaddle.");
 				}
+
 				if((b2paddle-1)==0)
-				{Board_backend.moveBall(i,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				{
+					Board_backend.moveBall(i,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					try
 			            {
 			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
@@ -715,7 +726,8 @@ public class Player
 			            }
 				}
 				else if((b2paddle-1)==1)
-				{Board_backend.moveBall(i,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				{
+					Board_backend.moveBall(i,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					try
 			            {
 			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
@@ -745,7 +757,8 @@ public class Player
 			            }
 				}
 				else if((b2paddle-1)==2)
-				{Board_backend.moveBall(i,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				{
+					Board_backend.moveBall(i,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					try
 			            {
 			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
@@ -775,7 +788,8 @@ public class Player
 			            }
 				}
 				else 
-				{Board_backend.moveBall(i,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+				{
+					Board_backend.moveBall(i,-myBall.getVelX(), myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					try
 			            {
 			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
@@ -814,7 +828,9 @@ public class Player
 				if(b2wall!=0) System.out.println("length is "+length_paddle[b2wall-1]);
 				boolean check_paddle_wall=(b2wall+4== lastpaddle[i]) ;
 				if(b2wall > 0 && b2wall != lastBwall[i] && !check_paddle_wall)
-				{   lastpaddle[i]=0;
+				{
+					lastBBCollision[i] = -1;
+					lastpaddle[i]=0;
 				    lastBcorner[i]=0;
 					 System.out.println("collision of this ball with wall " + b2wall + "\t" + i+" length is"+length_paddle[b2wall-1]);
 					lastBwall[i] = b2wall;
@@ -857,7 +873,8 @@ public class Player
 			            }
 					}
 					else if(b2wall == 2)
-					{Board_backend.moveBall(i,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+					{
+						Board_backend.moveBall(i,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					Board_backend.movePaddle(1,myPaddle2.getPaddleX(),myPaddle2.getPaddleY(),  length_paddle[1], myPaddle2.getBallMissed() + 1, true);
 					try
 			            {
@@ -892,7 +909,8 @@ public class Player
 			            }
 					}
 					else if(b2wall == 3)
-					{Board_backend.moveBall(i,k*myBall.getVelX(), -k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+					{
+						Board_backend.moveBall(i,k*myBall.getVelX(), -k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					Board_backend.movePaddle(2,myPaddle3.getPaddleX(),myPaddle3.getPaddleY(),  length_paddle[2], myPaddle3.getBallMissed() + 1, true);
 					try
 			            {
@@ -927,8 +945,9 @@ public class Player
 			            }
 					}
 					else if(b2wall == 4)
-					{Board_backend.moveBall(i,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
-					Board_backend.movePaddle(3,myPaddle4.getPaddleX(),myPaddle4.getPaddleY(), length_paddle[3], myPaddle4.getBallMissed() + 1, true);
+					{
+						Board_backend.moveBall(i,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
+						Board_backend.movePaddle(3,myPaddle4.getPaddleX(),myPaddle4.getPaddleY(), length_paddle[3], myPaddle4.getBallMissed() + 1, true);
 					try
 			            {
 			            	AudioInputStream audio1;
@@ -966,7 +985,7 @@ public class Player
 				
 				else
 				{
-					double l = 0.0; // TODO : whats this?
+					double l = 0.0; // TODO : whats this? check ball to corner here
 					int b2corner = PEngine.collision_corner(center_x, center_y, radius, 600.0, 60.0);
 
 					//b2corner=0
@@ -978,12 +997,15 @@ public class Player
 					if(b2corner==4&&(lastBwall[i]==2||lastBwall[i]==3||lastpaddle[i]==6||lastpaddle[i]==7)) c4=false;
 					check=c1&&c2&&c3&&c4; 
 					if (b2corner > 0 && b2corner!=lastBcorner[i] && check)
-					{ lastBcorner[i]=b2corner;
-					lastBwall[i]=0;
-					lastpaddle[i]=0;	
-					if(b2corner%2==1)
-						{Board_backend.moveBall(i,-vel_cy , -vel_cx, center_x ,center_y ,radius);
-						try
+					{ 
+						lastBBCollision[i] = -1;
+						lastBcorner[i]=b2corner;
+						lastBwall[i]=0;
+						lastpaddle[i]=0;	
+						if(b2corner%2==1)
+						{
+							Board_backend.moveBall(i,-vel_cy , -vel_cx, center_x ,center_y ,radius);
+							try
 				            {
 				              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
 				              // .getAbsoluteFile()
@@ -1011,7 +1033,7 @@ public class Player
 				              System.out.println("e3");
 				            }
 				        }
-					else	
+						else	
 						{
 							Board_backend.moveBall(i,vel_cy , vel_cx, center_x ,center_y ,radius);
 							try
@@ -1048,26 +1070,53 @@ public class Player
 					{
 						// now check b2b collision.
 						boolean any_colln = false;
-						for (int j = 0; j < i; j ++)
+						for (int j = 0; j < i && !any_colln; j ++)
 						{ 
 							// distance b/w centers.
 							Ball jth = curr_Balls.get(j);
 							double rad2 = jth.getRadius();
 							double center_x2 = jth.getCenterX();
 							double center_y2 = jth.getCenterY();
+							double vel_b2_x = jth.getVelX();
+							double vel_b2_y = jth.getVelY();
 							double cc_dist = Math.sqrt( (center_x - center_x2)*(center_x - center_x2) + (center_y - center_y2)*(center_y - center_y2) );
-							if(cc_dist<35)System.out.println("dsfafa=="+cc_dist);
-							if ((cc_dist - 20) < 0.001)
-							{System.out.println("YO---collision");
+							if(cc_dist<50)
+								{
+									System.out.println("dsfafa=="+cc_dist);
+									// System.out.println("dsfafa i " + i + " vx: " + vel_cx + " vy: " + vel_cy + " cx: " + center_x + " cy: " + center_y);
+									// System.out.println("dsfafa j " + j + " vx: " + vel_b2_x + " vy: " + vel_b2_y + " cx: " + center_x2 + " cy: " + center_y2);
+
+								}
+							if (((cc_dist - 20) < 0.001) && (lastBBCollision[i] != j) && (lastBBCollision[j] != i))
+							{
+								System.out.println("YO---collision" + i + j);
 								// ball 2 ball
+								lastBBCollision[i] = j;
+								lastBBCollision[j] = i;
+
 								any_colln = true;
-								// vel_b2b new_vel_b1_b2 = 
+								Double x1x2 = Math.abs(center_x2 - center_x);
+								Double y1y2 = Math.abs(center_y2 - center_y);
+								Double cc_angle = Math.atan(y1y2/x1x2);
+								System.out.println("Ball i " + i + " vx: " + vel_cx + " vy: " + vel_cy + " cx: " + center_x + " cy: " + center_y);
+								System.out.println("Ball j " + j + " vx: " + vel_b2_x + " vy: " + vel_b2_y + " cx: " + center_x2 + " cy: " + center_y2);
+								vel_b2b new_vel_b1_b2 = PEngine.Colision_b2b(vel_cx, vel_cy, vel_b2_x, vel_b2_y,cc_angle);
+								velocity finalb1 = new_vel_b1_b2.v1;
+								velocity finalb2 = new_vel_b1_b2.v2;
+
+								System.out.println("Ball i ka FINAL:" + finalb1.vx1 + " " + finalb1.vy1 + " ");
+								System.out.println("Ball j ka FINAL:" + finalb2.vx1 + " " + finalb2.vy1 + " ");
+
+
+								Board_backend.moveBall(i, finalb1.vx1, finalb1.vy1, center_x, center_y, radius);
+								Board_backend.moveBall(j, finalb2.vx1, finalb2.vy1, center_x2, center_y2, rad2);
 							}
 						}
 						if (!any_colln)
 						{
 							// NO COLLISION.
 							//System.out.println("No collision, ball moved fwd.");
+							// lastBBCollision[i] = -1;
 							Board_backend.moveBall(i,vel_cx , vel_cy, center_x + vel_cx,center_y + vel_cy,radius);
 						}
 					}
