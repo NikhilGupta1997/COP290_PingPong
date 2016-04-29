@@ -4,30 +4,31 @@ import java.io.File;
 
 public class ReceiverThread extends Thread
 {
-	private static DatagramSocket serverSocket;
-	private static byte[] receiveData = new byte[1024];
+	private  DatagramSocket serverSocket;
+	private  byte[] receiveData = new byte[1024];
 	private int Port_connect;
-	public static String Received_Str;
-	// public static int last_msg_time;
-	public static boolean isConnected;
+	public  String Received_Str;
+	// public  int last_msg_time;
+	public  boolean isConnected;
 
 /** All the data is received and then parsed here. 
 * The Player class can then access the parsed values as they are global fields.
 * ArrayList of boolean to handle multiple balls. **/
 
-	public static boolean [] rec_collision_occur;
-	public static double rec_paddleX;
-	public static double rec_paddleY;
-	public static double [] rec_ball_velX;
-	public static double [] rec_ball_velY;
-	public static double [] ballc_x;
-	public static double [] ballc_y;
-	public static boolean random_Add;
-	public static double random_x;
-	public static double random_y;
-	public static double random_velX;
-	public static double random_velY;
-	public static boolean random_effect;
+	public  boolean [] rec_collision_occur;
+	public  double rec_paddleX;
+	public  double rec_paddleY;
+	public  double [] rec_ball_velX;
+	public  double [] rec_ball_velY;
+	public  double [] balls_cx;
+	public  double [] balls_cy;
+	public  boolean random_Add;
+	public  double random_x;
+	public  double random_y;
+	public  double random_velX;
+	public  double random_velY;
+	public  boolean random_effect;
+	private  int lostlife;
 
 	public ReceiverThread(int port,int level)
 	{
@@ -69,7 +70,7 @@ public class ReceiverThread extends Thread
 
 					String colln_arr = tokens[0];
 					String [] colln_occur = colln_arr.split("#");
-					for (int i = 0; i < colln_occur.length() ; i ++)
+					for (int i = 0; i < colln_occur.length ; i ++)
 					{
 						rec_collision_occur[i] = (Integer.parseInt(colln_occur[i]) == 1);
 					}
@@ -78,40 +79,40 @@ public class ReceiverThread extends Thread
 					rec_paddleY=Double.parseDouble(tokens[2]);
 
 					String balls_vx=tokens[3];
-					String vx_Arr = balls_vx.split("#");
-					for (int i= 0; i < vx_Arr.length(); i ++)
+					String [] vx_Arr = balls_vx.split("#");
+					for (int i= 0; i < vx_Arr.length; i ++)
 					{
 						rec_ball_velX[i] = Double.parseDouble(vx_Arr[i]);
 					}
 					String balls_vy=tokens[4];
-					String vy_Arr = balls_vy.split("#");
-					for (int i= 0; i < vy_Arr.length(); i ++)
+					String [] vy_Arr = balls_vy.split("#");
+					for (int i= 0; i < vy_Arr.length; i ++)
 					{
 						rec_ball_velY[i] = Double.parseDouble(vy_Arr[i]);						
 					}
 
-					String balls_cx = tokens[5];
-					String cx_Arr = balls_cx.split("#");
-					for (int i= 0; i < cx_Arr.length(); i ++)
+					String balls_cx1 = tokens[5];
+					String [] cx_Arr = balls_cx1.split("#");
+					for (int i= 0; i < cx_Arr.length; i ++)
 					{
 						balls_cx[i] = Double.parseDouble(cx_Arr[i]);						
 					}
 
-					String balls_cy = tokens[6];
-					String cy_Arr = balls_cy.split("#");
-					for (int i= 0; i < cy_Arr.length(); i ++)
+					String balls_cy1 = tokens[6];
+					String [] cy_Arr = balls_cy1.split("#");
+					for (int i= 0; i < cy_Arr.length; i ++)
 					{
 						balls_cy[i] = Double.parseDouble(cy_Arr[i]);			
 					}
-
-					random_Add = (Integer.parseInt(tokens[7]) == 1);
+					lostlife=Integer.parseInt(tokens[7]);
+					random_Add = (Integer.parseInt(tokens[8]) == 1);
 					if (random_Add)
 					{
-						random_x = Double.parseDouble(tokens[8]);
-						random_y = Double.parseDouble(tokens[9]);
-						random_velX = Double.parseDouble(tokens[10]);
-						random_velY = Double.parseDouble(tokens[11]);
-						random_effect = (Integer.parseInt(tokens[12]) == 1);
+						random_x = Double.parseDouble(tokens[9]);
+						random_y = Double.parseDouble(tokens[10]);
+						random_velX = Double.parseDouble(tokens[11]);
+						random_velY = Double.parseDouble(tokens[12]);
+						random_effect = (Integer.parseInt(tokens[13]) == 1);
 					}
 					Thread.sleep(10); // must be less to prevent lag
 				}
