@@ -131,7 +131,7 @@ public class BackPanel extends JPanel
 		public static class CustomMouseMotionListener implements MouseMotionListener {
 		public void mouseDragged(MouseEvent e)
 		{
-System.out.println("Mouse Dragged BACK ***: ("+e.getX()+", "+e.getY() +")");
+		// System.out.println("Mouse Dragged BACK ***: ("+e.getX()+", "+e.getY() +")");
         PaddleX = e.getX();
         PaddleY = e.getY();
       }
@@ -143,7 +143,7 @@ System.out.println("Mouse Dragged BACK ***: ("+e.getX()+", "+e.getY() +")");
 
 	class CustomMouseListener implements MouseListener{
       public void mouseClicked(MouseEvent e) {
-        System.out.println("Mouse Clicked BACK ***: ("+e.getX()+", "+e.getY() +")");
+        // System.out.println("Mouse Clicked BACK ***: ("+e.getX()+", "+e.getY() +")");
          PClickX = e.getX();
          PClickY = e.getY();
          PaddleX = e.getX();
