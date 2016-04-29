@@ -91,15 +91,25 @@ public class ReceiverThread extends Thread
 						rec_ball_velY[i] = Double.parseDouble(vy_Arr[i]);						
 					}
 
+//<<<<<<< HEAD
 					String balls_cx1 = tokens[5];
 					String [] cx_Arr = balls_cx1.split("#");
+// =======
+// 					String balls_cx = tokens[5];
+// 					String [] cx_Arr = balls_cx.split("#");
+// >>>>>>> 91f0b38c7dc436414493be036c969d92cab95c4b
 					for (int i= 0; i < cx_Arr.length; i ++)
 					{
 						balls_cx[i] = Double.parseDouble(cx_Arr[i]);						
 					}
 
+//<<<<<<< HEAD
 					String balls_cy1 = tokens[6];
 					String [] cy_Arr = balls_cy1.split("#");
+// =======
+// 					String balls_cy = tokens[6];
+// 					String [] cy_Arr = balls_cy.split("#");
+// >>>>>>> 91f0b38c7dc436414493be036c969d92cab95c4b
 					for (int i= 0; i < cy_Arr.length; i ++)
 					{
 						balls_cy[i] = Double.parseDouble(cy_Arr[i]);			
