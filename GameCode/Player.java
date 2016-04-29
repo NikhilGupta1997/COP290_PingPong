@@ -45,6 +45,7 @@ public class Player
 	private static double vel_compu=4.5*3.5;
 	private static int no_players;
 	private static int gl_level;
+	private static double [] length_paddle=new double[4];
 
 	private static int LastClick = 0;
 	private static int LastClick_Y = 0;
@@ -82,30 +83,32 @@ public class Player
 		int [] closest={0,0,0,0};
 		double [] smallest_dis={zero.getCenterY(),zero.getCenterX(),zero.getCenterY(),zero.getCenterX()};
 		for (int i=1;i<array_balls.size();i++)
-		{Ball xball=array_balls.get(i);
-		double center_x1=xball.getCenterX();
-		double center_y1=xball.getCenterY();
-		double vel_cx1=xball.getVelX();
-		double vel_cy1=xball.getVelY();
-		if(center_y1<smallest_dis[0] && vel_cy1<0) 
 		{
-			smallest_dis[0]=center_y1;closest[0]=i;
+			Ball xball=array_balls.get(i);
+			double center_x1=xball.getCenterX();
+			double center_y1=xball.getCenterY();
+			double vel_cx1=xball.getVelX();
+			double vel_cy1=xball.getVelY();
+			if(center_y1<smallest_dis[0] && vel_cy1<0) 
+			{
+				smallest_dis[0]=center_y1;closest[0]=i;
+			}
+			if(center_x1<smallest_dis[1]&& vel_cx1<0)
+			{
+				smallest_dis[1]=center_x1;closest[1]=i;
+			}
+			if(center_y1>smallest_dis[2]&& vel_cy1>0)
+			{
+				smallest_dis[2]=center_y1;closest[2]=i;
+			}
+			if(center_x1>smallest_dis[3]&& vel_cx1>0)
+			{
+				smallest_dis[3]=center_x1;closest[3]=i;
+			}
 		}
-		if(center_x1<smallest_dis[1]&& vel_cx1<0)
-		{
-			smallest_dis[1]=center_x1;closest[1]=i;
-		}
-		if(center_y1>smallest_dis[2]&& vel_cy1>0)
-		{
-			smallest_dis[2]=center_y1;closest[2]=i;
-		}
-		if(center_x1>smallest_dis[3]&& vel_cx1>0)
-		{
-			smallest_dis[3]=center_x1;closest[3]=i;
-		}
-		}
+		
 		for(int i=0;i<4;i++)
-		Close_ball[i]=array_balls.get(closest[i]);
+			Close_ball[i]=array_balls.get(closest[i]);
 
 	}		   
 	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports, ArrayList<String> names, int p_no)
@@ -142,7 +145,7 @@ public class Player
 		}
 		Paddle p = new Paddle(100.0, 400.0, 0.0, 0,true);
 		Board_backend.addPaddle(p);
-		 p = new Paddle(100.0, 0.0, 400.0, 0,true);
+		 p = new Paddle(250.0, 0.0, 400.0, 0,true);
 		Board_backend.addPaddle(p);
 		 p = new Paddle(100.0, 400.0, 600.0, 0,true);
 		Board_backend.addPaddle(p);
@@ -160,7 +163,7 @@ public class Player
 	 	{
 	 		lastBwall[i]=0;lastpaddle[i]=0;lastBcorner[i]=0;
 	 	}
-		timerDelay = 150;
+		timerDelay = 250;
 		gameTimer = new Timer(timerDelay, timerAction);
 		gameTimer.start();
 		M =0;
@@ -216,6 +219,7 @@ public class Player
 			Paddle myPaddle3 = Board_backend.getPaddles().get(2);
 			Paddle myPaddle4 = Board_backend.getPaddles().get(3);
 			Paddle myPaddle1 = Board_backend.getPaddles().get(0);
+			double [] length_paddle={myPaddle1.getPaddleLength(),myPaddle2.getPaddleLength(),myPaddle3.getPaddleLength(),myPaddle4.getPaddleLength()};
 			Paddle myPaddle = Board_backend.getPaddles().get(player_no);
 			
 			// TODO: Important to change the paddle no 
@@ -356,19 +360,20 @@ public class Player
 			if(random==3)  next_vel_4*=-1;
 			
 			double next_pos_1=myPaddle1.getPaddleX()+ next_vel_1;
-			if(next_pos_1>490) next_pos_1=490;
-			else if(next_pos_1<110) next_pos_1=110; 
+			if(next_pos_1>(540-length_paddle[0]/2)) next_pos_1=(540-length_paddle[0]/2);
+			else if(next_pos_1<(60+length_paddle[0]/2)) next_pos_1=(60+length_paddle[0]/2); 
+
 			double next_pos_2=myPaddle2.getPaddleY()+ next_vel_2;
-			if(next_pos_2>490) next_pos_2=490;
-			else if(next_pos_2<110) next_pos_2=110; 
+			if(next_pos_2>(540-length_paddle[1]/2)) next_pos_2=(540-length_paddle[1]/2);
+			else if(next_pos_2<(60+length_paddle[1]/2)) next_pos_2=(60+length_paddle[1]/2); 
 			//System.out.println("Next Position "+next_pos_2+","+next_vel_2);
 			double next_pos_3=myPaddle3.getPaddleX()+ next_vel_3;
-			if(next_pos_3>490) next_pos_3=490;
-			else if(next_pos_3<110) next_pos_3=110; 
+			if(next_pos_3>(540-length_paddle[2])/2) next_pos_3=(540-length_paddle[2]/2);
+			else if(next_pos_3<(60+length_paddle[2]/2)) next_pos_3=(60+length_paddle[2]/2); 
 			
 			double next_pos_4=myPaddle4.getPaddleY()+ next_vel_4;
-			if(next_pos_4>490) next_pos_4=490;
-			else if(next_pos_4<110) next_pos_4=110; 
+			if(next_pos_4>(540-length_paddle[3]/2)) next_pos_4=(540-length_paddle[3]/2);
+			else if(next_pos_4<(60+length_paddle[3]/2)) next_pos_4=(60+length_paddle[3]/2); 
 			
 
 
@@ -377,71 +382,71 @@ public class Player
 			// if(false);
 			// else// TODO:We need to change depending on player no. we are
 			// {
-				if(new_paddlePos - ClickDiff > 490 && player_no==0 && player_d0==1)
-				Board_backend.movePaddle(0,490,0, 100.0, myPaddle.getBallMissed(), true);
-				else if(new_paddlePos - ClickDiff <110 && player_no==0 &&player_d0==1)
-				Board_backend.movePaddle(0,110,0, 100.0, myPaddle.getBallMissed(), true);
+				if(new_paddlePos - ClickDiff > (540-length_paddle[0]/2) && player_no==0 && player_d0==1)
+				Board_backend.movePaddle(0,(540-length_paddle[0]/2),0, length_paddle[0], myPaddle.getBallMissed(), true);
+				else if(new_paddlePos - ClickDiff <(60+length_paddle[0]/2) && player_no==0 &&player_d0==1)
+				Board_backend.movePaddle(0,(60+length_paddle[0]/2),0, length_paddle[0], myPaddle.getBallMissed(), true);
 				else if( player_no==0&&player_d0==1)
-				Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, myPaddle.getBallMissed(), true);
-				else if(player_d0==3&&myBall.getCenterX() < 110&&false)
+				Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0,length_paddle[0], myPaddle.getBallMissed(), true);
+				else if(player_d0==3&&myBall.getCenterX() < (60+length_paddle[0]/2)&&false)
 				{//Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, myPaddle.getBallMissed(), true);
 				// Here I will set my paddle accordingly depending on what i receive
-					Board_backend.movePaddle(0,110,0, 100.0, ball_missed[0], true);// when the other one is player 0;
+					Board_backend.movePaddle(0,(60+length_paddle[0]/2),0, length_paddle[0], ball_missed[0], true);// when the other one is player 0;
 				}
-				else if (player_d0==3&&myBall.getCenterX() > 490&&false) 
-				{Board_backend.movePaddle(0,490,0, 100.0, ball_missed[0], true);		
+				else if (player_d0==3&&myBall.getCenterX() > (540-length_paddle[0]/2)&&false) 
+				{Board_backend.movePaddle(0,(540-length_paddle[0]/2),0, length_paddle[0], ball_missed[0], true);		
 				}
 				else if(player_d0==3)
-				{Board_backend.movePaddle(0,next_pos_1,0, 100.0, myPaddle.getBallMissed(), true);
+				{Board_backend.movePaddle(0,next_pos_1,0, length_paddle[0], myPaddle.getBallMissed(), true);
 				}
 				else
 				{
-					Board_backend.movePaddle(0,yourpaddle_x[0],yourpaddle_y[0], 100.0, myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(0,yourpaddle_x[0],yourpaddle_y[0], length_paddle[0], myPaddle.getBallMissed(), true);
 					//TODO: It receives from other player and updates its own board
 				}
 
 
 				// For second player on left wall
-				if(new_paddlePos_Y - ClickDiff_Y > 490 && player_d1==1)
+				if(new_paddlePos_Y - ClickDiff_Y > (540-length_paddle[1]/2) && player_d1==1)
 				{
-					Board_backend.movePaddle(1,0,490, 100.0, myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(1,0,(540-length_paddle[1]/2), length_paddle[1], myPaddle.getBallMissed(), true);
 				}
-				else if(new_paddlePos_Y - ClickDiff_Y <110&& player_d1==1)
+				else if(new_paddlePos_Y - ClickDiff_Y <(60+length_paddle[1]/2)&& player_d1==1)
 				{
-					Board_backend.movePaddle(1,0,110, 100.0, myPaddle.getBallMissed(), true);		
+					Board_backend.movePaddle(1,0,(60+length_paddle[1]/2), length_paddle[1], myPaddle.getBallMissed(), true);		
 				}
 				else if(player_d1==1)
 				{
-					Board_backend.movePaddle(1,0,new_paddlePos_Y - ClickDiff_Y, 100.0, myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(1,0,new_paddlePos_Y - ClickDiff_Y, length_paddle[1], myPaddle.getBallMissed(), true);
 
 				}
-				else if(myBall.getCenterY() > 490 && player_d1==3&&false)
-					Board_backend.movePaddle(1,0,490, 100.0, myPaddle2.getBallMissed(), true);
-				else if(myBall.getCenterY() <110 && player_d1==3 &&false)
-					Board_backend.movePaddle(1,0,110, 100.0, myPaddle2.getBallMissed(), true);
+				else if(myBall.getCenterY() > (540-length_paddle[1]/2) && player_d1==3&&false)
+					Board_backend.movePaddle(1,0,(540-length_paddle[1]/2),length_paddle[1], myPaddle2.getBallMissed(), true);
+				else if(myBall.getCenterY() <(60+length_paddle[1]/2) && player_d1==3 &&false)
+					Board_backend.movePaddle(1,0,(60+length_paddle[1]/2),length_paddle[1], myPaddle2.getBallMissed(), true);
 				else if( player_d1==3)
-					Board_backend.movePaddle(1,0,next_pos_2, 100.0, myPaddle2.getBallMissed(), true);
+					Board_backend.movePaddle(1,0,next_pos_2, length_paddle[1], myPaddle2.getBallMissed(), true);
 				else
 				{
-					Board_backend.movePaddle(1,yourpaddle_x[1],yourpaddle_y[1], 100.0, myPaddle.getBallMissed(), true);
+					Board_backend.movePaddle(1,yourpaddle_x[1],yourpaddle_y[1], length_paddle[1], myPaddle.getBallMissed(), true);
 					// Depends on what it receives from other players
 				}
 
 				// For third player on the bottom part
-				if(new_paddlePos - ClickDiff > 490 &&  player_d2==1)
-					Board_backend.movePaddle(2,490,600, 100.0, myPaddle.getBallMissed(), true);
-				else if(new_paddlePos - ClickDiff <110 && player_d2==1)
-					Board_backend.movePaddle(2,110,600, 100.0, myPaddle.getBallMissed(), true);
+				if(new_paddlePos - ClickDiff > (540-length_paddle[2]/2) &&  player_d2==1)
+					Board_backend.movePaddle(2,(540-length_paddle[2]/2),600,length_paddle[2], myPaddle.getBallMissed(), true);
+				else if(new_paddlePos - ClickDiff <(60+length_paddle[2]/2) && player_d2==1)
+					Board_backend.movePaddle(2,(60+length_paddle[2]/2),600, length_paddle[2], myPaddle.getBallMissed(), true);
 				else if( player_d2==1)
-					Board_backend.movePaddle(2,new_paddlePos - ClickDiff,600, 100.0, myPaddle.getBallMissed(), true);
-				else if(player_d2==3&&myBall.getCenterX() < 110&&false)
+					Board_backend.movePaddle(2,new_paddlePos - ClickDiff,600, length_paddle[21], myPaddle.getBallMissed(), true);
+				else if(player_d2==3&&myBall.getCenterX() < (60+length_paddle[2]/2)&&false)
 				{//Board_backend.movePaddle(0,new_paddlePos - ClickDiff,0, 100.0, myPaddle.getBallMissed(), true);
 				// Here I will set my paddle accordingly depending on what i receive
-					Board_backend.movePaddle(2,110,600, 100.0, ball_missed[2], true);// when the other one is player 0;
+					Board_backend.movePaddle(2,110,600, (60+length_paddle[2]/2), ball_missed[2], true);// when the other one is player 0;
 				}
-				else if (player_d2==3&&myBall.getCenterX() > 490&&false) 
+				else if (player_d2==3&&myBall.getCenterX() > (540-length_paddle[2]/2)&&false) 
 				{
-					Board_backend.movePaddle(2,490,600, 100.0, ball_missed[2], true);		
+					Board_backend.movePaddle(2,(540-length_paddle[2]/2),600, 100.0, ball_missed[2], true);		
 				}
 				else if(player_d2==3)
 				{
@@ -572,7 +577,7 @@ public class Player
 			if (b2paddle!=0 && lastpaddle[i]!=b2paddle+4&& !check_wall_paddle&&(player_desc[b2paddle-1]==3||player_desc[b2paddle-1]==1))
 			{   lastpaddle[i]=b2paddle+ 4;
 				lastBwall[i]=0; lastBcorner[i]=0;
-		System.out.println("Print2 "+b2paddle);
+				System.out.println("Print2 "+b2paddle);
 				if(b2paddle-1==Paddle_No)
 				Collide_paddle=1;
 				// System.out.println("collision with myPaddle.");
@@ -713,7 +718,7 @@ public class Player
 					//TODO: Change the get missed ball parameter
 					if(b2wall == 1)
 					{Board_backend.moveBall(i,k*myBall.getVelX(), -k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
-					Board_backend.movePaddle(0,myPaddle1.getPaddleX(),myPaddle1.getPaddleY(), 100.0, myPaddle1.getBallMissed() + 1, true);
+					Board_backend.movePaddle(0,myPaddle1.getPaddleX(),myPaddle1.getPaddleY(),  length_paddle[0], myPaddle1.getBallMissed() + 1, true);
 					try
 			            {
 			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
@@ -744,7 +749,7 @@ public class Player
 					}
 					else if(b2wall == 2)
 					{Board_backend.moveBall(i,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
-					Board_backend.movePaddle(1,myPaddle2.getPaddleX(),myPaddle2.getPaddleY(), 100.0, myPaddle2.getBallMissed() + 1, true);
+					Board_backend.movePaddle(1,myPaddle2.getPaddleX(),myPaddle2.getPaddleY(),  length_paddle[1], myPaddle2.getBallMissed() + 1, true);
 					try
 			            {
 			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
@@ -775,7 +780,7 @@ public class Player
 					}
 					else if(b2wall == 3)
 					{Board_backend.moveBall(i,k*myBall.getVelX(), -k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
-					Board_backend.movePaddle(2,myPaddle3.getPaddleX(),myPaddle3.getPaddleY(), 100.0, myPaddle3.getBallMissed() + 1, true);
+					Board_backend.movePaddle(2,myPaddle3.getPaddleX(),myPaddle3.getPaddleY(),  length_paddle[2], myPaddle3.getBallMissed() + 1, true);
 					try
 			            {
 			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
@@ -806,7 +811,7 @@ public class Player
 					}
 					else if(b2wall == 4)
 					{Board_backend.moveBall(i,-k*myBall.getVelX(), k*myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
-					Board_backend.movePaddle(3,myPaddle4.getPaddleX(),myPaddle4.getPaddleY(), 100.0, myPaddle4.getBallMissed() + 1, true);
+					Board_backend.movePaddle(3,myPaddle4.getPaddleX(),myPaddle4.getPaddleY(), length_paddle[3], myPaddle4.getBallMissed() + 1, true);
 					try
 			            {
 			              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("baseball_hit.wav"));
