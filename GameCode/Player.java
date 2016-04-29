@@ -67,6 +67,7 @@ public class Player
 	private static InetAddress IPAddress;
 	private static DatagramPacket sendPacket;  
 	private static String destPort;
+	private static boolean[] ball_colln;
 			//clientSocket = new DatagramSocket();
 
 
@@ -163,11 +164,14 @@ public class Player
 			Board_backend.addBall(b[i]);
 			c++;		
 		}
-		lastBBCollision = new int[plevel];
-		for (int i = 0; i < plevel; i ++)
-		{
-			lastBBCollision[i] = -1;
-		}
+
+		// ball_colln = new int[plevel];
+
+		// lastBBCollision = new int[plevel];
+		// for (int i = 0; i < plevel; i ++)
+		// {
+		// 	lastBBCollision[i] = -1;
+		// }
 		Paddle p = new Paddle(100.0, 400.0, 0.0, 0,true);
 		Board_backend.addPaddle(p);
 		 p = new Paddle(150.0, 0.0, 400.0, 0,true);
@@ -625,16 +629,19 @@ public class Player
 // TODO:We need to change depending on player no. we are
 
 			///////////////////////////NOT GENERIC /////////////////////////////////////// Write for other balls as well
-			// for(int i=0;i<curr_Balls.size();i++)
-			// {
-			// 	if(collision_paddle[i]!=-1)
-			// Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX,ball_vel_cx[collision_paddle[i]-1][i] + lastY, 10);	
-			// else if(server==player_no)		
-			// Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
-			// else
-			// Board_backend.moveBall(i,ball_vel_cx[server][i], ball_vel_cy[server][i], myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
+			for(int i=0;i<curr_Balls.size();i++)
+			 {Ball myBall1=updatedBalls.get(i);
+			 	Double lastY1 = myBall1.getCenterY();
+			Double lastX1 = myBall1.getCenterX();
+			
+			 if(collision_paddle[i]!=-1)
+			 Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX1,ball_vel_cx[collision_paddle[i]-1][i] + lastY1, 10);	
+			 else if(server==player_no)		
+			 Board_backend.moveBall(i,myBall1.getVelX(), myBall1.getVelY(), myBall1.getVelX() + lastX1, myBall1.getVelY() + lastY1, 10);	
+			 else
+			 Board_backend.moveBall(i,ball_vel_cx[server][i], ball_vel_cy[server][i], myBall1.getVelX() + lastX1, myBall1.getVelY() + lastY1, 10);	
 			 
-			// }
+			 }
 			
 			//if(!collision_happened[i]) Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);
 			//else Board_backend.moveBall(0,ball_vel_cx, ball_vel_cy, -ball_vel_cx + lastX, -ball_vel_cy + lastY, 10);
@@ -704,6 +711,7 @@ public class Player
 			if (b2paddle!=0 && lastpaddle[i]!=b2paddle+4&& !check_wall_paddle&&(player_desc[b2paddle-1]==3||player_desc[b2paddle-1]==1))
 			{   
 				lastBBCollision[i] = -1;
+				ball_colln[i] = false;
 				lastpaddle[i]=b2paddle+ 4;
 				lastBwall[i]=0; lastBcorner[i]=0;
 				//System.out.println("Print2 "+b2paddle);
@@ -849,6 +857,7 @@ public class Player
 				if(b2wall > 0 && b2wall != lastBwall[i] && !check_paddle_wall)
 				{
 					lastBBCollision[i] = -1;
+					ball_colln[i] = false;
 					lastpaddle[i]=0;
 				    lastBcorner[i]=0;
 					 System.out.println("collision of this ball with wall " + b2wall + "\t" + i+" length is"+length_paddle[b2wall-1]);
@@ -1018,6 +1027,7 @@ public class Player
 					if (b2corner > 0 && b2corner!=lastBcorner[i] && check)
 					{ 
 						lastBBCollision[i] = -1;
+						ball_colln[i] = false;
 						lastBcorner[i]=b2corner;
 						lastBwall[i]=0;
 						lastpaddle[i]=0;	
@@ -1120,6 +1130,7 @@ public class Player
 								lastpaddle[j] = 0;
 
 								any_colln = true;
+								ball_colln[i] = false;
 								Double x1x2 = Math.abs(center_x2 - center_x);
 								Double y1y2 = Math.abs(center_y2 - center_y);
 								Double cc_angle = Math.atan(y1y2/x1x2);
@@ -1142,7 +1153,8 @@ public class Player
 							// NO COLLISION.
 							//System.out.println("No collision, ball moved fwd.");
 							// lastBBCollision[i] = -1;
-							Board_backend.moveBall(i,vel_cx , vel_cy, center_x + vel_cx,center_y + vel_cy,radius);
+							//Board_backend.moveBall(i,vel_cx , vel_cy, center_x + vel_cx,center_y + vel_cy,radius);
+							ball_colln[i] = true;
 						}
 					}
 				}
