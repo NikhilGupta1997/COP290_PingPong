@@ -344,6 +344,7 @@ public class Player
              	for(int i=0;i<no_players;i++)
              	{ 	if(i==player_no) {continue;}
              	ReceiverThread receive=RecieveThreads.get(k);
+
              	
              	yourpaddle_x[i] = receive.rec_paddleX;
              	yourpaddle_y[i] = receive.rec_paddleY;
