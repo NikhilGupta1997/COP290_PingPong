@@ -4,30 +4,31 @@ import java.io.File;
 
 public class ReceiverThread extends Thread
 {
-	private static DatagramSocket serverSocket;
-	private static byte[] receiveData = new byte[1024];
+	private  DatagramSocket serverSocket;
+	private  byte[] receiveData = new byte[1024];
 	private int Port_connect;
-	public static String Received_Str;
-	// public static int last_msg_time;
-	public static boolean isConnected;
+	public  String Received_Str;
+	// public  int last_msg_time;
+	public  boolean isConnected;
 
 /** All the data is received and then parsed here. 
 * The Player class can then access the parsed values as they are global fields.
 * ArrayList of boolean to handle multiple balls. **/
 
-	public static boolean [] rec_collision_occur;
-	public static double rec_paddleX;
-	public static double rec_paddleY;
-	public static double [] rec_ball_velX;
-	public static double [] rec_ball_velY;
-	public static double [] ballc_x;
-	public static double [] ballc_y;
-	public static boolean random_Add;
-	public static double random_x;
-	public static double random_y;
-	public static double random_velX;
-	public static double random_velY;
-	public static boolean random_effect;
+	public  boolean [] rec_collision_occur;
+	public  double rec_paddleX;
+	public  double rec_paddleY;
+	public  double [] rec_ball_velX;
+	public  double [] rec_ball_velY;
+	public  double [] balls_cx;
+	public  double [] balls_cy;
+	public  boolean random_Add;
+	public  double random_x;
+	public  double random_y;
+	public  double random_velX;
+	public  double random_velY;
+	public  boolean random_effect;
+	private  int lostlife;
 
 	public ReceiverThread(int port,int level)
 	{
@@ -35,8 +36,8 @@ public class ReceiverThread extends Thread
 		rec_collision_occur=new boolean[level];
 		rec_ball_velX = new double[level];
 		rec_ball_velY = new double[level];
-		ballc_x = new double[level];
-		ballc_y = new double[level];
+		balls_cx = new double[level];
+		balls_cy = new double[level];
 
 		try
 		{
@@ -90,28 +91,38 @@ public class ReceiverThread extends Thread
 						rec_ball_velY[i] = Double.parseDouble(vy_Arr[i]);						
 					}
 
-					String balls_cx = tokens[5];
-					String [] cx_Arr = balls_cx.split("#");
+//<<<<<<< HEAD
+					String balls_cx1 = tokens[5];
+					String [] cx_Arr = balls_cx1.split("#");
+// =======
+// 					String balls_cx = tokens[5];
+// 					String [] cx_Arr = balls_cx.split("#");
+// >>>>>>> 91f0b38c7dc436414493be036c969d92cab95c4b
 					for (int i= 0; i < cx_Arr.length; i ++)
 					{
-						ballc_x[i] = Double.parseDouble(cx_Arr[i]);						
+						balls_cx[i] = Double.parseDouble(cx_Arr[i]);						
 					}
 
-					String balls_cy = tokens[6];
-					String [] cy_Arr = balls_cy.split("#");
+//<<<<<<< HEAD
+					String balls_cy1 = tokens[6];
+					String [] cy_Arr = balls_cy1.split("#");
+// =======
+// 					String balls_cy = tokens[6];
+// 					String [] cy_Arr = balls_cy.split("#");
+// >>>>>>> 91f0b38c7dc436414493be036c969d92cab95c4b
 					for (int i= 0; i < cy_Arr.length; i ++)
 					{
-						ballc_y[i] = Double.parseDouble(cy_Arr[i]);			
+						balls_cy[i] = Double.parseDouble(cy_Arr[i]);			
 					}
-
-					random_Add = (Integer.parseInt(tokens[7]) == 1);
+					lostlife=Integer.parseInt(tokens[7]);
+					random_Add = (Integer.parseInt(tokens[8]) == 1);
 					if (random_Add)
 					{
-						random_x = Double.parseDouble(tokens[8]);
-						random_y = Double.parseDouble(tokens[9]);
-						random_velX = Double.parseDouble(tokens[10]);
-						random_velY = Double.parseDouble(tokens[11]);
-						random_effect = (Integer.parseInt(tokens[12]) == 1);
+						random_x = Double.parseDouble(tokens[9]);
+						random_y = Double.parseDouble(tokens[10]);
+						random_velX = Double.parseDouble(tokens[11]);
+						random_velY = Double.parseDouble(tokens[12]);
+						random_effect = (Integer.parseInt(tokens[13]) == 1);
 					}
 					Thread.sleep(10); // must be less to prevent lag
 				}
