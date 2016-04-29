@@ -213,19 +213,19 @@ public class MainPanel extends JPanel
 			if(i == 3)
 			{
 				if (first1 == 2 )
-	 			{winner = 1;
+	 			{winner = -1;
 	 				first1 = 0;
 	 			}
 	 			else if (first2 == 2 )
-	 			{winner = 2;
+	 			{winner = -1;
 	 				first2 = 0;
 	 			}
 	 			else if (first3 == 2 )
-	 			{winner = 3;
+	 			{winner = -1;
 	 				first3 = 0;
 	 			}
 	 			else if (first4 == 2 )
-	 			{winner = 4;
+	 			{winner = -1;
 	 				first4 = 0;
 	 			}
 	 			else{} 
