@@ -59,9 +59,13 @@ public class GameBoard extends JFrame
 	{
 		/** Calls the update function of MainPanel class to render the
 		* whole board with new arrays of balls and paddles **/
-		BackGamePanel.remove(GamePanel);
+		// BackGamePanel.remove(GamePanel);
+		// GamePanel = new MainPanel();
+		// GamePanel.setOpaque(false);
+		GamePanel.removeAll();
+		GamePanel.repaint();
 		GamePanel.updateBoard(balls, paddles, objects);
-		// BackGamePanel.add(GamePanel);
+		BackGamePanel.add(GamePanel);
 		// this.add(BackGamePanel);
 	}
 

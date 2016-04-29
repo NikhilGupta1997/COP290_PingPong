@@ -31,6 +31,7 @@ public class PingPong
 	private static JoinGameThread2 jg2;
 	private static StartGameThread start_final;
 	private static CreateGameThread cg1;
+	private static JLabel waiting;
 	public PingPong()
 	{
 
@@ -141,10 +142,10 @@ public class PingPong
 				}
 				System.out.println(IPs);
 				Wait_for_Join_Start = System.currentTimeMillis();
-				System.out.println(Wait_for_Join_Start + " Time");
+				System.out.println(Wait_for_Join_Start + " Time" + no_players);
 
 				ImageIcon image = new ImageIcon("loading.gif");
-				JLabel waiting = new JLabel(image, SwingConstants.CENTER); //TODO
+				waiting = new JLabel(image, SwingConstants.CENTER); //TODO
 				// waiting.setAlignmentX(Component.CENTER_ALIGNMENT);
 				// create.add(Box.createVerticalGlue());
 				cr_bttn_ring.add(waiting);
@@ -168,6 +169,8 @@ public class PingPong
 					{
 						bool3 = true;
 					}
+
+
 				}
 				else
 				{
@@ -176,9 +179,13 @@ public class PingPong
 					bool3 = true;
 				}
 
+				if(start_final != null)
+					start_final.stop();
+				
 				start_final = new StartGameThread();
 				start_final.start();
-				// this one sends final msg to all others.
+
+						// this one sends final msg to all others.
 			}
 		});
 
@@ -188,7 +195,7 @@ public class PingPong
 				join_final.setEnabled(false);
 				// SEND 1 PACKET TO IP, port, say 'Join'S Thread!
 				ImageIcon image = new ImageIcon("loading.gif");
-				JLabel waiting = new JLabel(image, SwingConstants.CENTER); //TODO
+				waiting = new JLabel(image, SwingConstants.CENTER); //TODO
 				jo_bttn_ring.add(waiting);
 				m.revalidate();
 				m.repaint();
@@ -208,7 +215,8 @@ public class PingPong
 			public void actionPerformed(ActionEvent ae)
 			{
 				m.getContentPane().remove(create);
-				m.getContentPane().remove(cr_bttn);
+				m.getContentPane().remove(cr_bttn_ring);
+				cr_bttn_ring.remove(waiting);
 
 				System.out.println("Components removed again");
 
@@ -233,7 +241,8 @@ public class PingPong
 			public void actionPerformed(ActionEvent ae)
 			{
 				m.getContentPane().remove(join);
-				m.getContentPane().remove(jo_bttn);
+				m.getContentPane().remove(jo_bttn_ring);
+				jo_bttn_ring.remove(waiting);
 				join_final.setEnabled(true);
 				if (jg1 != null)
 				jg1.stop();

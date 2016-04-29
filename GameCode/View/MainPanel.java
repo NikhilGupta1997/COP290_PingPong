@@ -20,6 +20,9 @@ public class MainPanel extends JPanel
 	* on a JPanel using paintComponent() method.
 	* This is thw maijn game panel
 	* It has a Timer object to render the UI according to backend data after a fixed amt of time **/
+	private static ArrayList<Ball> theBalls;
+	private static ArrayList<Paddle> thePaddles;
+	private static ArrayList<RandomObj> theObjects;
 	private static final int Default_Height = 800;
 	private static final int Default_Width = 600;
 	private static int PaddleX;
@@ -37,6 +40,7 @@ public class MainPanel extends JPanel
  	public static int first3 = 0;
  	public static int first4 = 0;
  	public static int winner = -1;
+ 	private static int M = 100;
 
 	public MainPanel()
 	{
@@ -86,8 +90,181 @@ public class MainPanel extends JPanel
 	{
 		/** Renders the basic view of Game Panel **/
 		super.paintComponent(g);
-		g.setColor(Color.BLUE);
-		g.fillRect(100,100,50,50);
+
+		int no_balls = theBalls.size();
+		int no_paddles = thePaddles.size();
+		for (int i = 0; i < no_balls; i++)
+		{
+			Ball ith = theBalls.get(i);
+			double radius = ith.getRadius();
+			double center_x = ith.getCenterX();
+			double center_y = ith.getCenterY();
+			g.setColor(Color.YELLOW);
+			g.fillOval((int)(center_x-radius), (int)(center_y + radius), (int)(2.0*radius), (int)(2.0*radius));
+		}
+		for (int i = 0; i < no_paddles; i++)
+		{
+			// ith at bottom. ROTATE karo
+			Paddle ith = thePaddles.get(i);
+			double P_length = ith.getPaddleLength();
+			double paddle_x = ith.getPaddleX();
+			double paddle_y = ith.getPaddleY();
+			int loves = 5 - ith.getBallMissed();
+
+			if(i == 0)
+				{ 
+				if(loves <= 0)
+				g.setColor(customColorBrown);
+				else
+				g.setColor(Color.BLUE);
+				g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y), (int) (P_length), 20);
+				Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {20,0,20},3);
+				g.fillPolygon(p1);
+				Polygon p2 = new Polygon(new int[] {(int)(paddle_x+20 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {20,0,20},3);
+				g.fillPolygon(p2);
+				g.setColor(Color.RED);
+			if(Paddles_out == 3 && first1 == 0)
+			{
+				g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 					g.drawString("WINNER", 700, 50);
+ 					first1 = 2;
+ 					
+			}
+				for (int j = 1; j<= loves; j++)
+				g.fillOval(50*j + 640,50,20,20);
+			if(loves == 0 && first1 == 0)
+				Paddles_out = Paddles_out + 1;
+			if(loves <= 0)
+ 				{
+ 					g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 					g.drawString("GAME OVER", 700, 50);
+ 					first1 = 1;
+ 				}
+			}
+			else if(i ==1)
+				{
+				if(loves <= 0)
+				g.setColor(customColorBrown);
+				else
+				g.setColor(Color.BLUE);	
+				g.fillRect((int)(paddle_x), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
+				Polygon p1 = new Polygon(new int[] {20,0,20}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
+				g.fillPolygon(p1);
+				Polygon p2 = new Polygon(new int[] {20,0,20}, new int[] {(int)(paddle_y+20 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0))},3);
+				g.fillPolygon(p2);
+				g.setColor(Color.RED);
+				if(Paddles_out == 3 && first2 == 0)
+			{
+				g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 					g.drawString("WINNER", 700, 200);
+ 					first2 = 2;
+			}
+				for (int j = 1; j<=loves; j++)
+				g.fillOval(50*j + 640,200,20,20);
+			if(loves == 0 && first2 == 0)
+				Paddles_out = Paddles_out + 1;
+			if(loves <= 0)
+ 				{
+ 					g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 					g.drawString("GAME OVER", 700, 200);
+ 					first2 = 1;
+ 				}
+				}
+			else if(i ==2)
+				{
+				if(loves <= 0)
+				g.setColor(customColorBrown);
+				else
+				g.setColor(Color.BLUE);
+				g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-20), (int) (P_length), 20);
+				Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {580,600,580},3);
+				g.fillPolygon(p1);
+				Polygon p2 = new Polygon(new int[] {(int)(paddle_x+20 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {580,600,580},3);
+				g.fillPolygon(p2);
+				g.setColor(Color.RED);
+				if(Paddles_out == 3 && first3 == 0)
+			{
+				g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 					g.drawString("WINNER", 700, 350);
+ 					first3 = 2;
+			}
+				for (int j = 1; j<= loves; j++)
+				g.fillOval(50*j + 640,350,20,20);
+			if(loves == 0 && first3 == 0)
+				Paddles_out = Paddles_out + 1;
+			if(loves <= 0) 
+ 				{
+ 					g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 					g.drawString("GAME OVER", 700, 350);
+ 					first3 = 1;
+ 				}
+				}
+			else if(i ==3)
+				{
+				if(loves <= 0)
+				g.setColor(customColorBrown);
+				else
+				g.setColor(Color.BLUE);
+				g.fillRect((int)(paddle_x - 20), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
+				Polygon p1 = new Polygon(new int[] {580,600,580}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
+				g.fillPolygon(p1);
+				Polygon p2 = new Polygon(new int[] {580,600,580}, new int[] {(int)(paddle_y+20 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0))},3);
+				g.fillPolygon(p2);
+				g.setColor(Color.RED);
+				if(Paddles_out == 3 && first4 == 0)
+			{
+				g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 					g.drawString("WINNER", 700, 500);
+ 					first4 = 2;
+			}
+				for (int j = 1; j<=loves; j++)
+				g.fillOval(50*j + 640,500,20,20);
+			if(loves == 0 && first4 == 0)
+				Paddles_out = Paddles_out + 1;
+			if(loves <= 0)
+ 				{
+ 					g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 					g.drawString("GAME OVER", 700, 500);
+ 					first4 = 1;
+ 				}
+				}
+		
+
+
+			if (first1 == 2 )
+ 			{winner = -1;
+ 				first1 = 0;
+ 			}
+ 			else if (first2 == 2 )
+ 			{winner = -1;
+ 				first2 = 0;
+ 			}
+ 			else if (first3 == 2 )
+ 			{winner = -1;
+ 				first3 = 0;
+ 			}
+ 			else if (first4 == 2 )
+ 			{winner = -1;
+ 				first4 = 0;
+ 			}
+ 			else{} 
+ 		}
+
+		// for (int j = 0; j < objs.size(); j ++)
+		// {
+		// 	RandomObj ith = objs.get(j);
+		// 	double center_x = ith.getCenterX();
+		// 	double center_y = ith.getCenterY();
+		// 	boolean effect = ith.getEffect();
+		// 	if (effect)
+		// 	{
+		// 		g.drawImage(Image.getProperty("expand.png",this), center_x - 10,center_y - 10,20,20,this);
+		// 	}
+		// 	else
+		// 	{
+		// 		g.drawImage(Image.getProperty("shrink.png",this), center_x - 10,center_y - 10,20,20,this);
+		// 	}
+		// }
 		// Color c= new Color(200, 50, 50, 1);
 		// Graphics2D g2 = (Graphics2D) g;
 		// //g.setColor(Color.argb(0.8, 200, 50, 50));
@@ -152,183 +329,187 @@ public class MainPanel extends JPanel
 /** Takes input the updated lists of Balls, Paddles, Random Objects. **/
 	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles, ArrayList<RandomObj> objs)
 	{System.out.println("winner is : " + winner);
-		if(winner == -1)
-		{
-		Graphics curr_g = this.getGraphics();
-		int no_balls = balls.size();
-		int no_paddles = paddles.size();
-		for (int i = 0; i < no_balls; i++)
-		{
-			Ball ith = balls.get(i);
-			double radius = ith.getRadius();
-			double center_x = ith.getCenterX();
-			double center_y = ith.getCenterY();
-			curr_g.setColor(Color.YELLOW);
-			curr_g.fillOval((int)(center_x-radius), (int)(center_y + radius), (int)(2.0*radius), (int)(2.0*radius));
-		}
-		for (int i = 0; i < no_paddles; i++)
-		{
-			// ith at bottom. ROTATE karo
-			Paddle ith = paddles.get(i);
-			double P_length = ith.getPaddleLength();
-			double paddle_x = ith.getPaddleX();
-			double paddle_y = ith.getPaddleY();
-			int loves = 5 - ith.getBallMissed();
+		
+		theBalls = balls;
+		thePaddles = paddles;
+		theObjects = objs;
+		// Graphics g = this.getGraphics();
+		// paintComponent(g);
 
-			if(i == 0)
-				{ 
-				if(loves <= 0)
-				curr_g.setColor(customColorBrown);
-				else
-				curr_g.setColor(Color.BLUE);
-				curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y), (int) (P_length), 20);
-				Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {20,0,20},3);
-				curr_g.fillPolygon(p1);
-				Polygon p2 = new Polygon(new int[] {(int)(paddle_x+20 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {20,0,20},3);
-				curr_g.fillPolygon(p2);
-				curr_g.setColor(Color.RED);
-			if(Paddles_out == 3 && first1 == 0)
-			{
-				curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
- 					curr_g.drawString("WINNER", 700, 50);
- 					first1 = 2;
- 					
-			}
-				for (int j = 1; j<= loves; j++)
-				curr_g.fillOval(50*j + 640,50,20,20);
-			if(loves == 0 && first1 == 0)
-				Paddles_out = Paddles_out + 1;
-			if(loves <= 0)
- 				{
- 					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
- 					curr_g.drawString("GAME OVER", 700, 50);
- 					first1 = 1;
- 				}
-			}
-			else if(i ==1)
-				{
-				if(loves <= 0)
-				curr_g.setColor(customColorBrown);
-				else
-				curr_g.setColor(Color.BLUE);	
-				curr_g.fillRect((int)(paddle_x), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
-				Polygon p1 = new Polygon(new int[] {20,0,20}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
-				curr_g.fillPolygon(p1);
-				Polygon p2 = new Polygon(new int[] {20,0,20}, new int[] {(int)(paddle_y+20 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0))},3);
-				curr_g.fillPolygon(p2);
-				curr_g.setColor(Color.RED);
-				if(Paddles_out == 3 && first2 == 0)
-			{
-				curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
- 					curr_g.drawString("WINNER", 700, 200);
- 					first2 = 2;
-			}
-				for (int j = 1; j<=loves; j++)
-				curr_g.fillOval(50*j + 640,200,20,20);
-			if(loves == 0 && first2 == 0)
-				Paddles_out = Paddles_out + 1;
-			if(loves <= 0)
- 				{
- 					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
- 					curr_g.drawString("GAME OVER", 700, 200);
- 					first2 = 1;
- 				}
-				}
-			else if(i ==2)
-				{
-				if(loves <= 0)
-				curr_g.setColor(customColorBrown);
-				else
-				curr_g.setColor(Color.BLUE);
-				curr_g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-20), (int) (P_length), 20);
-				Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {580,600,580},3);
-				curr_g.fillPolygon(p1);
-				Polygon p2 = new Polygon(new int[] {(int)(paddle_x+20 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {580,600,580},3);
-				curr_g.fillPolygon(p2);
-				curr_g.setColor(Color.RED);
-				if(Paddles_out == 3 && first3 == 0)
-			{
-				curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
- 					curr_g.drawString("WINNER", 700, 350);
- 					first3 = 2;
-			}
-				for (int j = 1; j<= loves; j++)
-				curr_g.fillOval(50*j + 640,350,20,20);
-			if(loves == 0 && first3 == 0)
-				Paddles_out = Paddles_out + 1;
-			if(loves <= 0) 
- 				{
- 					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
- 					curr_g.drawString("GAME OVER", 700, 350);
- 					first3 = 1;
- 				}
-				}
-			else if(i ==3)
-				{
-				if(loves <= 0)
-				curr_g.setColor(customColorBrown);
-				else
-				curr_g.setColor(Color.BLUE);
-				curr_g.fillRect((int)(paddle_x - 20), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
-				Polygon p1 = new Polygon(new int[] {580,600,580}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
-				curr_g.fillPolygon(p1);
-				Polygon p2 = new Polygon(new int[] {580,600,580}, new int[] {(int)(paddle_y+20 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0))},3);
-				curr_g.fillPolygon(p2);
-				curr_g.setColor(Color.RED);
-				if(Paddles_out == 3 && first4 == 0)
-			{
-				curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
- 					curr_g.drawString("WINNER", 700, 500);
- 					first4 = 2;
-			}
-				for (int j = 1; j<=loves; j++)
-				curr_g.fillOval(50*j + 640,500,20,20);
-			if(loves == 0 && first4 == 0)
-				Paddles_out = Paddles_out + 1;
-			if(loves <= 0)
- 				{
- 					curr_g.setFont(new Font("Verdana", Font.BOLD, 30)); 
- 					curr_g.drawString("GAME OVER", 700, 500);
- 					first4 = 1;
- 				}
-				}
-		}
-
-
-			if (first1 == 2 )
- 			{winner = 1;
- 				first1 = 0;
- 			}
- 			else if (first2 == 2 )
- 			{winner = 2;
- 				first2 = 0;
- 			}
- 			else if (first3 == 2 )
- 			{winner = 3;
- 				first3 = 0;
- 			}
- 			else if (first4 == 2 )
- 			{winner = 4;
- 				first4 = 0;
- 			}
- 			else{} 
- 		}
-
-		// for (int j = 0; j < objs.size(); j ++)
+		// int no_balls = balls.size();
+		// int no_paddles = paddles.size();
+		// for (int i = 0; i < no_balls; i++)
 		// {
-		// 	RandomObj ith = objs.get(j);
+		// 	Ball ith = balls.get(i);
+		// 	double radius = ith.getRadius();
 		// 	double center_x = ith.getCenterX();
 		// 	double center_y = ith.getCenterY();
-		// 	boolean effect = ith.getEffect();
-		// 	if (effect)
-		// 	{
-		// 		curr_g.drawImage(Image.getProperty("expand.png",this), center_x - 10,center_y - 10,20,20,this);
-		// 	}
-		// 	else
-		// 	{
-		// 		curr_g.drawImage(Image.getProperty("shrink.png",this), center_x - 10,center_y - 10,20,20,this);
-		// 	}
+		// 	g.setColor(Color.YELLOW);
+		// 	g.fillOval((int)(center_x-radius), (int)(center_y + radius), (int)(2.0*radius), (int)(2.0*radius));
 		// }
+		// for (int i = 0; i < no_paddles; i++)
+		// {
+		// 	// ith at bottom. ROTATE karo
+		// 	Paddle ith = paddles.get(i);
+		// 	double P_length = ith.getPaddleLength();
+		// 	double paddle_x = ith.getPaddleX();
+		// 	double paddle_y = ith.getPaddleY();
+		// 	int loves = 5 - ith.getBallMissed();
+
+		// 	if(i == 0)
+		// 		{ 
+		// 		if(loves <= 0)
+		// 		g.setColor(customColorBrown);
+		// 		else
+		// 		g.setColor(Color.BLUE);
+		// 		g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y), (int) (P_length), 20);
+		// 		Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {20,0,20},3);
+		// 		g.fillPolygon(p1);
+		// 		Polygon p2 = new Polygon(new int[] {(int)(paddle_x+20 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {20,0,20},3);
+		// 		g.fillPolygon(p2);
+		// 		g.setColor(Color.RED);
+		// 	if(Paddles_out == 3 && first1 == 0)
+		// 	{
+		// 		g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 	// 				g.drawString("WINNER", 700, 50);
+ 	// 				first1 = 2;
+ 					
+		// 	}
+		// 		for (int j = 1; j<= loves; j++)
+		// 		g.fillOval(50*j + 640,50,20,20);
+		// 	if(loves == 0 && first1 == 0)
+		// 		Paddles_out = Paddles_out + 1;
+		// 	if(loves <= 0)
+ 	// 			{
+ 	// 				g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 	// 				g.drawString("GAME OVER", 700, 50);
+ 	// 				first1 = 1;
+ 	// 			}
+		// 	}
+		// 	else if(i ==1)
+		// 		{
+		// 		if(loves <= 0)
+		// 		g.setColor(customColorBrown);
+		// 		else
+		// 		g.setColor(Color.BLUE);	
+		// 		g.fillRect((int)(paddle_x), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
+		// 		Polygon p1 = new Polygon(new int[] {20,0,20}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
+		// 		g.fillPolygon(p1);
+		// 		Polygon p2 = new Polygon(new int[] {20,0,20}, new int[] {(int)(paddle_y+20 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0))},3);
+		// 		g.fillPolygon(p2);
+		// 		g.setColor(Color.RED);
+		// 		if(Paddles_out == 3 && first2 == 0)
+		// 	{
+		// 		g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 	// 				g.drawString("WINNER", 700, 200);
+ 	// 				first2 = 2;
+		// 	}
+		// 		for (int j = 1; j<=loves; j++)
+		// 		g.fillOval(50*j + 640,200,20,20);
+		// 	if(loves == 0 && first2 == 0)
+		// 		Paddles_out = Paddles_out + 1;
+		// 	if(loves <= 0)
+ 	// 			{
+ 	// 				g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 	// 				g.drawString("GAME OVER", 700, 200);
+ 	// 				first2 = 1;
+ 	// 			}
+		// 		}
+		// 	else if(i ==2)
+		// 		{
+		// 		if(loves <= 0)
+		// 		g.setColor(customColorBrown);
+		// 		else
+		// 		g.setColor(Color.BLUE);
+		// 		g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-20), (int) (P_length), 20);
+		// 		Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {580,600,580},3);
+		// 		g.fillPolygon(p1);
+		// 		Polygon p2 = new Polygon(new int[] {(int)(paddle_x+20 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0)),(int)(paddle_x + 0 + (P_length/2.0))}, new int[] {580,600,580},3);
+		// 		g.fillPolygon(p2);
+		// 		g.setColor(Color.RED);
+		// 		if(Paddles_out == 3 && first3 == 0)
+		// 	{
+		// 		g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 	// 				g.drawString("WINNER", 700, 350);
+ 	// 				first3 = 2;
+		// 	}
+		// 		for (int j = 1; j<= loves; j++)
+		// 		g.fillOval(50*j + 640,350,20,20);
+		// 	if(loves == 0 && first3 == 0)
+		// 		Paddles_out = Paddles_out + 1;
+		// 	if(loves <= 0) 
+ 	// 			{
+ 	// 				g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 	// 				g.drawString("GAME OVER", 700, 350);
+ 	// 				first3 = 1;
+ 	// 			}
+		// 		}
+		// 	else if(i ==3)
+		// 		{
+		// 		if(loves <= 0)
+		// 		g.setColor(customColorBrown);
+		// 		else
+		// 		g.setColor(Color.BLUE);
+		// 		g.fillRect((int)(paddle_x - 20), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
+		// 		Polygon p1 = new Polygon(new int[] {580,600,580}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
+		// 		g.fillPolygon(p1);
+		// 		Polygon p2 = new Polygon(new int[] {580,600,580}, new int[] {(int)(paddle_y+20 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0)),(int)(paddle_y + 0 + (P_length/2.0))},3);
+		// 		g.fillPolygon(p2);
+		// 		g.setColor(Color.RED);
+		// 		if(Paddles_out == 3 && first4 == 0)
+		// 	{
+		// 		g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 	// 				g.drawString("WINNER", 700, 500);
+ 	// 				first4 = 2;
+		// 	}
+		// 		for (int j = 1; j<=loves; j++)
+		// 		g.fillOval(50*j + 640,500,20,20);
+		// 	if(loves == 0 && first4 == 0)
+		// 		Paddles_out = Paddles_out + 1;
+		// 	if(loves <= 0)
+ 	// 			{
+ 	// 				g.setFont(new Font("Verdana", Font.BOLD, 30)); 
+ 	// 				g.drawString("GAME OVER", 700, 500);
+ 	// 				first4 = 1;
+ 	// 			}
+		// 		}
+		
+
+
+		// 	if (first1 == 2 )
+ 	// 		{winner = 1;
+ 	// 			first1 = 0;
+ 	// 		}
+ 	// 		else if (first2 == 2 )
+ 	// 		{winner = 2;
+ 	// 			first2 = 0;
+ 	// 		}
+ 	// 		else if (first3 == 2 )
+ 	// 		{winner = 3;
+ 	// 			first3 = 0;
+ 	// 		}
+ 	// 		else if (first4 == 2 )
+ 	// 		{winner = 4;
+ 	// 			first4 = 0;
+ 	// 		}
+ 	// 		else{} 
+ 	// 	}
+
+		// // for (int j = 0; j < objs.size(); j ++)
+		// // {
+		// // 	RandomObj ith = objs.get(j);
+		// // 	double center_x = ith.getCenterX();
+		// // 	double center_y = ith.getCenterY();
+		// // 	boolean effect = ith.getEffect();
+		// // 	if (effect)
+		// // 	{
+		// // 		g.drawImage(Image.getProperty("expand.png",this), center_x - 10,center_y - 10,20,20,this);
+		// // 	}
+		// // 	else
+		// // 	{
+		// // 		g.drawImage(Image.getProperty("shrink.png",this), center_x - 10,center_y - 10,20,20,this);
+		// // 	}
+		// // }
 			
 	}
 

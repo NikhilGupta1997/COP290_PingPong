@@ -170,7 +170,7 @@ public class Player
 	 	{
 	 		lastBwall[i]=0;lastpaddle[i]=0;lastBcorner[i]=0;
 	 	}
-		timerDelay = 200;
+		timerDelay = 20;
 		gameTimer = new Timer(timerDelay, timerAction);
 		gameTimer.start();
 		M =0;
