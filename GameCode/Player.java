@@ -120,17 +120,26 @@ public class Player
 
 	}		   
 	public Player(String pname, int plevel, ArrayList<String> other_ips, int [] [] other_ports, ArrayList<String> names, int p_no)
-	{
+	{	
 		// a Board object
-		//System.out.println("IPS="+other_ips+",,,,"+"Ports="+other_ports+"....Names"+names) ;
+		System.out.println("IPS="+other_ips+",,,,"+"Ports="+other_ports+"....Names"+names) ;
 		//working
+		no_players=names.size();
+		//gl_other_ports=new int[no_players][no_players];
+		for(int i=0;i<no_players;i++)
+		{
+			for(int i1=0;i1<no_players;i1++)
+				System.out.print(other_ports[i][i1]);
+			System.out.println("");
+		}
+		
 		Collide_paddle =new int[plevel];
 		gl_other_ips=other_ips;
+		
 		gl_other_ports=other_ports;
 		gl_names=names;
 		gl_level=plevel;
 		System.out.println("Received level :" + plevel);
-		no_players=names.size();
 		for(int i=0;i<4;i++)
 		{if(i>=(no_players)) player_desc[i]=3;
 		else if(i==p_no) player_desc[i]=1;
@@ -201,7 +210,7 @@ public class Player
 		RecieveThreads = new ArrayList<ReceiverThread>();
 		int f1=0;
 		for(int i=0;i<no_players;i++)
-		{if(i!=p_no) continue;
+		{if(i==p_no) continue;
 
 		RecieveThreads.add(new ReceiverThread(other_ports[i][p_no],plevel));// listens on this port
 		//System.out.println("Port: "+other_ports.get(i));

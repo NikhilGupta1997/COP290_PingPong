@@ -10,6 +10,7 @@ public class ReceiverThread extends Thread
 	public  String Received_Str;
 	// public  int last_msg_time;
 	public  boolean isConnected;
+	///public int port1;
 
 /** All the data is received and then parsed here. 
 * The Player class can then access the parsed values as they are global fields.
@@ -59,7 +60,7 @@ public class ReceiverThread extends Thread
 			{
 				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				try
-				{ //System.out.println("Receiver thread is working");
+				{ 	//System.out.println("Receiver thread is working at "+ Port_connect);
 					serverSocket.receive(receivePacket);
 					System.out.println("fds");
 					isConnected = true;
