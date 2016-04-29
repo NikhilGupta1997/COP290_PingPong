@@ -26,7 +26,7 @@ public class Player
 	* No of receiver threads = no of other players playing with the current one. **/
 	private static ArrayList<ReceiverThread> RecieveThreads;
 	private static ArrayList<String> gl_other_ips=new ArrayList<String>();
-	private static ArrayList<Integer> gl_other_ports=new ArrayList<Integer>();
+	private static int [] [] gl_other_ports=new int[4][4];
 	private static ArrayList<String> gl_names=new ArrayList<String>(); 
 	private static Board Board_backend;
 	private static Game MyGame;
@@ -118,10 +118,11 @@ public class Player
 			Close_ball[i]=array_balls.get(closest[i]);
 
 	}		   
-	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports, ArrayList<String> names, int p_no)
+	public Player(String pname, int plevel, ArrayList<String> other_ips, int [] [] other_ports, ArrayList<String> names, int p_no)
 	{
 		// a Board object
-
+		//System.out.println("IPS="+other_ips+",,,,"+"Ports="+other_ports+"....Names"+names) ;
+		//working
 		Collide_paddle =new int[plevel];
 		gl_other_ips=other_ips;
 		gl_other_ports=other_ports;
@@ -139,9 +140,9 @@ public class Player
 		Ball [] b=new Ball[5];
 		 b[0] = new Ball(-4.5*1.4, 3.5*1.4, 250.0, 280.0, 10);
 		 b[1] = new Ball(4.5*1.4, 3.5*1.4, 150.0, 280.0, 10);
-		 b[2] = new Ball(2.5*1.4, 5.5*2.4, 350.0, 180.0, 10);
-		 b[3] = new Ball(4.5*1.4, 2.5*2.4, 150.0, 180.0, 10);
-		 b[4] = new Ball(4.0*1.4, 2.5*2.4, 50.0, 200.0, 10);
+		 b[2] = new Ball(2.5*1.4, 5.5*1.2, 350.0, 180.0, 10);
+		 b[3] = new Ball(4.5*1.2, 2.5*1.4, 150.0, 180.0, 10);
+		 b[4] = new Ball(4.0*1.1, 2.5*1.4, 50.0, 200.0, 10);
 		 
 		int c=0;
 		//if(player_no==0)
@@ -172,7 +173,7 @@ public class Player
 	 	{
 	 		lastBwall[i]=0;lastpaddle[i]=0;lastBcorner[i]=0;
 	 	}
-		timerDelay = 20;
+		timerDelay = 40;
 		gameTimer = new Timer(timerDelay, timerAction);
 		gameTimer.start();
 		M =0;
@@ -192,12 +193,18 @@ public class Player
 		}
 		//System.out.println("safd");
 		RecieveThreads = new ArrayList<ReceiverThread>();
+		int f1=0;
 		for(int i=0;i<no_players;i++)
-		{if(i==p_no) continue;
-		RecieveThreads.add(new ReceiverThread(other_ports.get(i),plevel));// listens on this port
-		(RecieveThreads.get(i)).start();
+		{if(i!=p_no) continue;
+
+		RecieveThreads.add(new ReceiverThread(other_ports[i][p_no],plevel));// listens on this port
+		//System.out.println("Port: "+other_ports.get(i));
+		(RecieveThreads.get(f1)).start();
+		f1++;
 		}
 		player_no=p_no;
+		//System.out.println("End Received "+no_players);
+		//working
 	}
 	
 
@@ -220,6 +227,8 @@ public class Player
 		{
 			if(player_desc[i]==1|| player_desc[i]==2) server=i; // Server decides which one controls the game
 		}
+			//System.out.println("see this--"+no_balls+","+player_desc[0]+","+player_desc[2]+","+player_desc[2]+","+player_desc[3]+","+server) ;
+			//working
 			// System.out.println("MY WINNER IS " + Board_UI.getWinner());
 			if(Board_UI.getWinner() == 1)
 			{
@@ -265,7 +274,7 @@ public class Player
 			ArrayList<RandomObj> updatedObjects = Board_backend.getObjects();
 			//System.out.println("lost=="+lostl+"\n\n\n\n\n");
 			Board_UI.reDraw(updatedBalls, updatedPaddles, updatedObjects);
-
+			updatedPaddles = Board_backend.getPaddles();//Might Have to Remove it
 			Paddle myPaddle2 = updatedPaddles.get(1);
 			Paddle myPaddle3 = updatedPaddles.get(2);
 			Paddle myPaddle4 = updatedPaddles.get(3);
@@ -293,7 +302,7 @@ public class Player
 				resendPLZ=resendPLZ+Collide_paddle[i]+"#";
 			}
 			resendPLZ+=Collide_paddle[gl_level-1]+",";
-			resendPLZ=resendPLZ+","+myPaddle.getPaddleX()+","+myPaddle.getPaddleY()+",";
+			resendPLZ=resendPLZ+myPaddle.getPaddleX()+","+myPaddle.getPaddleY()+",";
 			// vel of ball
 			for(int i=0;i<gl_level-1;i++)
 			{ 
@@ -322,21 +331,24 @@ public class Player
 			resendPLZ=resendPLZ+lostl+",";
 			///Random Object
 			resendPLZ=resendPLZ+"0"+" ";
-			
+			//Note: For multiple balls something is wrong
+			//System.out.println("Working "+ resendPLZ);
 			//String resendPLZ = Collide_paddle+","+myPaddle.getPaddleX()+","+myPaddle.getPaddleY()+","+myBall.getVelX()+","+myBall.getVelY()+","+myPaddle.getBallMissed()+" ";
 			// We nedd to set it according to our variables 
 			// send consist of collide paddle array,followed by its paddle,then pos+x_ball array,ball_y ball array,ball_velx,ball_vely,lost life ya not,random objects
 			sendData=new byte[1024];
 			sendData = resendPLZ.getBytes();
-
+			//int f2=0;
 			for(int k=0;k<no_players;k++)// Sending to other ports in sequential manner
 			{
 			if(k==player_no) continue;
 			IPAddress = InetAddress.getByName(gl_other_ips.get(k));
 
-			int port=gl_other_ports.get(k);// handle it
+			int port=gl_other_ports[player_no][k];// handle it
+			System.out.println("Sending to "+IPAddress+";;"+port);
 			sendPacket = new DatagramPacket(sendData, resendPLZ.length(), IPAddress, port);
 			clientSocket.send(sendPacket);
+			//f2++;
 			}
 				double [] yourpaddle_x=new double[4];
               	double [] yourpaddle_y=new double[4];
@@ -344,6 +356,7 @@ public class Player
               	double [] [] ball_vel_cy=new double[4][no_balls];
               	double [] [] ball_pos_cx=new double[4][no_balls];
               	double [] [] ball_pos_cy=new double[4][no_balls];
+
               	
              	boolean [][] collision_happened=new boolean[4][no_balls];
              	int k=0;
@@ -600,17 +613,19 @@ public class Player
 // TODO:We need to change depending on player no. we are
 
 			///////////////////////////NOT GENERIC /////////////////////////////////////// Write for other balls as well
-			for(int i=0;i<curr_Balls.size();i++)
-			{
-				if(collision_paddle[i]!=-1)
-			Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX,ball_vel_cx[collision_paddle[i]-1][i] + lastY, 10);	
-			else if(server==player_no)		
-			Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
-			else
-			Board_backend.moveBall(i,ball_vel_cx[server][i], ball_vel_cy[server][i], myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
+			// for(int i=0;i<curr_Balls.size();i++)
+			// {
+			// 	if(collision_paddle[i]!=-1)
+			// Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX,ball_vel_cx[collision_paddle[i]-1][i] + lastY, 10);	
+			// else if(server==player_no)		
+			// Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
+			// else
+			// Board_backend.moveBall(i,ball_vel_cx[server][i], ball_vel_cy[server][i], myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
 			 
-			}
-
+			// }
+//			int i=0;
+//Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);	
+			
 			//if(!collision_happened[i]) Board_backend.moveBall(i,myBall.getVelX(), myBall.getVelY(), myBall.getVelX() + lastX, myBall.getVelY() + lastY, 10);
 			//else Board_backend.moveBall(0,ball_vel_cx, ball_vel_cy, -ball_vel_cx + lastX, -ball_vel_cy + lastY, 10);
 			///Send changes
