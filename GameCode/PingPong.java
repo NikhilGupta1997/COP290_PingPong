@@ -514,6 +514,7 @@ public class PingPong
         			System.out.println("PINGPONG:" +"Final : " + result);
 
 					String [] tokens=result.split(",");
+					if(tokens[1] != null)
 					System.out.println(tokens[1] + " " + receivePacket.getAddress());
 					String getAdd = (receivePacket.getAddress()).toString();
 					System.out.println(getAdd + " : Converted string");
@@ -581,7 +582,7 @@ public class PingPong
 			{
 				// System.out.println("Game not started");
 				// update wait_for_join.
-				// System.out.println(System.currentTimeMillis());
+				System.out.println(System.currentTimeMillis());
 				if ((System.currentTimeMillis() - Wait_for_Join_Start) > 120000)
 				{
 					System.out.println("PINGPONG:" +"Time exceeded. Starting game.");

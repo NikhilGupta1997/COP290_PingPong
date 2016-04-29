@@ -220,7 +220,7 @@ public class Player
 		{
 			if(player_desc[i]==1) server=i; // Server decides which one controls the game
 		}
-			System.out.println("MY WINNER IS " + Board_UI.getWinner());
+			// System.out.println("MY WINNER IS " + Board_UI.getWinner());
 			if(Board_UI.getWinner() == 1)
 			{
 				JOptionPane.showMessageDialog(null,"Click ok to start the server 1" );
