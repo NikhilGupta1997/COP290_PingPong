@@ -27,11 +27,15 @@ public class PingPong
 	private static ArrayList<String> IPs;
 	private static ArrayList<Integer> Ports;
 	private static long Wait_for_Join_Start;
+	private static long Wait_for_JoinGameThread;
 	private static JoinGameThread jg1;
 	private static JoinGameThread2 jg2;
 	private static StartGameThread start_final;
 	private static CreateGameThread cg1;
 	private static JLabel waiting;
+	private static JoinGameScreen join;
+	private static JPanel jo_bttn_ring;
+	private static JPanel main_bttn;
 	public PingPong()
 	{
 
@@ -46,7 +50,7 @@ public class PingPong
 
    		JButton createGame = new JButton("Create New Game");
    		JButton joinGame = new JButton("Join Another Game");
-		final JPanel main_bttn = new JPanel();
+		main_bttn = new JPanel();
 		main_bttn.setLayout(new FlowLayout());
 		main_bttn.add(createGame);
 		main_bttn.add(joinGame);
@@ -73,11 +77,11 @@ public class PingPong
 		cr_bttn_ring.add(cr_bttn);
 
 // JPanel:
-		final JoinGameScreen join = new JoinGameScreen();
+		join = new JoinGameScreen();
 		final JButton join_final = new JButton("Request to join!");
 		JButton backfromJo = new JButton("Back to Main Menu");
 		final JPanel jo_bttn = new JPanel();
-		final JPanel jo_bttn_ring = new JPanel();
+		jo_bttn_ring = new JPanel();
 		jo_bttn_ring.setLayout(new BoxLayout(jo_bttn_ring, BoxLayout.Y_AXIS));
 		jo_bttn.setLayout(new FlowLayout());
 		jo_bttn.add(join_final);
@@ -205,13 +209,14 @@ public class PingPong
 
 				jg2 = new JoinGameThread2((int) join.spinner.getValue(),join.userIP.getText());
 				jg2.start();
+				Wait_for_JoinGameThread = System.currentTimeMillis();
 
 				// check if player can join the given IP's address.
 				// Receiver thread TODO : gif
 			}
 		});
 
-		backfromCr.addActionListener(new ActionListener() {
+		backfromCr.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae)
 			{
 				m.getContentPane().remove(create);
@@ -346,6 +351,7 @@ public class PingPong
 			try
 			{
 				serverSocket = new DatagramSocket(1901);
+				serverSocket.setSoTimeout(6000);
 			}
 			catch(Exception e)
 			{
@@ -399,6 +405,32 @@ public class PingPong
 						m.setVisible(false);
 						Player p_join = new Player(PName, Integer.parseInt((tokens[tokens.length - 1]).trim()),joinIPs, joinPorts, joinNames,Integer.parseInt((tokens[tokens.length - 2]).trim()));
 					}
+
+				}
+				catch(SocketTimeoutException e)
+				{
+					// Time out!
+					JOptionPane.showMessageDialog(null,"Could not connect to the IP provided! \n Press OK to go back to Main Menu");
+					m.getContentPane().remove(join);
+					m.getContentPane().remove(jo_bttn_ring);
+					jo_bttn_ring.remove(waiting);
+
+					System.out.println("Components removed again");
+
+					addMainScreen();
+					if (cg1 != null)
+						cg1.stop();
+
+					if (start_final != null)
+						start_final.stop();
+
+					if (jg1 != null)
+						jg1.stop();
+					m.getContentPane().add(main_bttn);
+					m.revalidate();
+					m.repaint();
+					this.stop();
+
 
 				}
 				catch(Exception e)
@@ -650,11 +682,11 @@ public class PingPong
 						{
 							e.printStackTrace();
 						}	
-					m.setVisible(false);				
-
+					m.setVisible(false);
+					cg1.stop();
 					Player p = new Player(PName, Plevel, finalIPs, finalPorts, PNames,0);
-
 					Game_Started = true;
+					this.stop();
 				}
 				else
 				{
@@ -724,7 +756,11 @@ public class PingPong
 						}
 	// IPs has all IPs, including my own.
 						m.setVisible(false);
+						if (cg1 != null)
+							cg1.stop();
+
 						Player p1 = new Player(PName, Plevel, IPs, Ports, Names,0);
+						this.stop();
 					}
 				}
 			}

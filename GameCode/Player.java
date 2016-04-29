@@ -265,13 +265,13 @@ public class Player
 			//System.out.println("lost=="+lostl+"\n\n\n\n\n");
 			Board_UI.reDraw(updatedBalls, updatedPaddles, updatedObjects);
 
-			Paddle myPaddle2 = Board_backend.getPaddles().get(1);
-			Paddle myPaddle3 = Board_backend.getPaddles().get(2);
-			Paddle myPaddle4 = Board_backend.getPaddles().get(3);
-			Paddle myPaddle1 = Board_backend.getPaddles().get(0);
+			Paddle myPaddle2 = updatedPaddles.get(1);
+			Paddle myPaddle3 = updatedPaddles.get(2);
+			Paddle myPaddle4 = updatedPaddles.get(3);
+			Paddle myPaddle1 = updatedPaddles.get(0);
 			double [] length_paddle1={myPaddle1.getPaddleLength(),myPaddle2.getPaddleLength(),myPaddle3.getPaddleLength(),myPaddle4.getPaddleLength()};
 			length_paddle=length_paddle1;
-			Paddle myPaddle = Board_backend.getPaddles().get(player_no);
+			Paddle myPaddle = updatedPaddles.get(player_no);
 			//System.out.println(length_paddle[0]+","+length_paddle[1]+","+length_paddle[2]+","+length_paddle[3]);
 			// TODO: Important to change the paddle no 
 			// TODO : Handle collisions of Random Objs.
@@ -987,7 +987,8 @@ public class Player
 				            }
 				        }
 					else	
-						{Board_backend.moveBall(i,vel_cy , vel_cx, center_x ,center_y ,radius);
+						{
+							Board_backend.moveBall(i,vel_cy , vel_cx, center_x ,center_y ,radius);
 							try
 				            {
 				              AudioInputStream audio1 = AudioSystem.getAudioInputStream(new File("blip.wav"));
@@ -1031,7 +1032,7 @@ public class Player
 							double center_y2 = jth.getCenterY();
 							double cc_dist = Math.sqrt( (center_x - center_x2)*(center_x - center_x2) + (center_y - center_y2)*(center_y - center_y2) );
 							if(cc_dist<35)System.out.println("dsfafa=="+cc_dist);
-							if (Math.abs(cc_dist - 20) < 0.001)
+							if (Math.abs(cc_dist) < 20)
 							{System.out.println("YO---collision");
 								// ball 2 ball
 								any_colln = true;
