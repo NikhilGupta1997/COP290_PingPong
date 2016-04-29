@@ -27,6 +27,7 @@ public class PingPong
 	private static ArrayList<String> IPs;
 	private static ArrayList<Integer> Ports;
 	private static long Wait_for_Join_Start;
+	private static CreateGameThread cg1;
 	public PingPong()
 	{
 
@@ -150,36 +151,18 @@ public class PingPong
 
 				if (no_players > 0)
 				{
+					cg1 = new CreateGameThread(IPs);
+					cg1.start();
 					if (no_players == 1)
 					{
-						System.out.println(IPs.get(0));
-						CreateGameThread cg1 = new CreateGameThread(1,IPs.get(0), Ports.get(0));
-						cg1.start();
-
 						bool2 = true;
 						name2 = "";
 						bool3 = true;
+						name3 = "";
 					}
 					else if (no_players == 2)
 					{
-						CreateGameThread cg1 = new CreateGameThread(1, IPs.get(0), Ports.get(0));
-						cg1.start();
-						
-						CreateGameThread cg2 = new CreateGameThread(2, IPs.get(1), Ports.get(1));
-						cg2.start();
-
 						bool3 = true;
-					}
-					else
-					{
-						CreateGameThread cg1 = new CreateGameThread(1, IPs.get(0), Ports.get(0));
-						cg1.start();
-						
-						CreateGameThread cg2 = new CreateGameThread(2, IPs.get(1), Ports.get(1));
-						cg2.start();
-
-						CreateGameThread cg3 = new CreateGameThread(3, IPs.get(2), Ports.get(2));
-						cg3.start();
 					}
 				}
 				else
@@ -225,6 +208,8 @@ public class PingPong
 				System.out.println("Components removed again");
 
 				addMainScreen();
+				if (cg1 != null)
+					cg1.stop();
 				m.getContentPane().add(main_bttn);
 				m.revalidate();
 				m.repaint();
@@ -405,25 +390,26 @@ public class PingPong
 	{
 		// 1 serverSocket for receiving.
 		// list of clientSocket to send.
-		public boolean ith_Joined;
-		public boolean Game_Started;
-		private static String entered_IP;
-		private static int otherPort;
-		private static int i;
+		public static boolean[] ith_Joined;
+		public static boolean Game_Started;
+		private static String[] entered_IP;
 
 		private static DatagramSocket serverSocket; // receiving.
 		private static byte[] receiveData = new byte[1024];
 		public static String Received_Str;
 
 
-		public CreateGameThread(int ith, String otherIP, int otherPort)
+		public CreateGameThread(ArrayList<String> otherIP)
 		{
 			// sets bool I, name I.
-			ith_Joined = false;
-			entered_IP = otherIP;
+			int x = otherIP.size();
+			ith_Joined = new boolean[x];
+			for (int i = 0; i < x; i ++)
+				ith_Joined[i] = false;
+			entered_IP = new String[x];
+			for (int i = 0; i < x; i ++)
+				entered_IP[i] = "/" + otherIP.get(i);
 			System.out.println(entered_IP);
-			otherPort = otherPort;
-			i = ith;
 			try
 			{
 				serverSocket = new DatagramSocket(1800); // receive
@@ -435,9 +421,29 @@ public class PingPong
 			}
 		}
 
+		public static int matchAny(String ip)
+		{
+			boolean rthis = false;
+			for (int i = 0; i < entered_IP.length && !rthis ; i ++)
+			{
+				if (entered_IP[i].equals(ip))
+				{
+					rthis = true;
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		public static void updateGameStart()
+		{
+			for (int i = 0; i < ith_Joined.length; i ++)
+				Game_Started = Game_Started && ith_Joined[i];
+		}
+
 		public void run()
 		{
-			while (!ith_Joined)
+			while (!(this.Game_Started))
 			{
 				try
 				{
@@ -474,12 +480,12 @@ public class PingPong
 					System.out.println(tokens[1] + " " + receivePacket.getAddress());
 					String getAdd = (receivePacket.getAddress()).toString();
 					System.out.println(getAdd + " : Converted string");
-					String s = "/" + entered_IP;
-					System.out.println(s);
-					if (tokens[0].equals("Join") && getAdd.equals(s))
+					int i = matchAny(getAdd);
+
+					if (tokens[0].equals("Join") && i > -1)
 					{
 						System.out.println("Kewl " + i);
-						if (i == 1)
+						if (i == 0)
 						{
 							System.out.println("Received player 1 details");
 							bool1 = true;
@@ -487,17 +493,19 @@ public class PingPong
 							if (bool1 && bool2 && bool3)
 								System.out.println("All true now, in create game THREAD");
 						}
-						else if (i == 2)
+						else if (i == 1)
 						{
 							bool2 = true;
 							name2 = tokens[1];
 						}
-						else if (i == 3)
+						else if (i == 2)
 						{
 							bool3 = true;
 							name3 = tokens[1];
 						}
-						ith_Joined = true;
+						ith_Joined[i] = true;
+						updateGameStart();
+						// this.sleep(120000);
 					}
 				}
 				catch(Exception e)
@@ -626,6 +634,7 @@ public class PingPong
 				}
 				else
 				{
+					// System.out.println("bool1 :" + Boolean.toString(bool1) + " bool2 :" + Boolean.toString(bool2) + "bool3 :" + Boolean.toString(bool3));
 
 					if (bool1 && bool2 && bool3)
 					{
