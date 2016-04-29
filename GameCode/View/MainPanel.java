@@ -82,7 +82,7 @@ public class MainPanel extends JPanel
 	public void setWinner(int newwinner)
 	{
 		winner = newwinner;
-		System.out.println("The new value of winner is  :  " + winner); 
+		//System.out.println("The new value of winner is  :  " + winner); 
 	}
 
 // upper left x, y, width, height
@@ -328,7 +328,7 @@ public class MainPanel extends JPanel
 
 /** Takes input the updated lists of Balls, Paddles, Random Objects. **/
 	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles, ArrayList<RandomObj> objs)
-	{System.out.println("winner is : " + winner);
+	{//System.out.println("winner is : " + winner);
 		
 		theBalls = balls;
 		thePaddles = paddles;
@@ -516,7 +516,7 @@ public class MainPanel extends JPanel
 	public static class CustomMouseMotionListener implements MouseMotionListener {
 		public void mouseDragged(MouseEvent e)
 		{
-//System.out.println("Mouse Dragged: ("+e.getX()+", "+e.getY() +")");
+System.out.println("Mouse Dragged: ("+e.getX()+", "+e.getY() +")");
         PaddleX = e.getX();
         PaddleY = e.getY();
       }
@@ -528,7 +528,7 @@ public class MainPanel extends JPanel
 
 	class CustomMouseListener implements MouseListener{
       public void mouseClicked(MouseEvent e) {
-  //       System.out.println("Mouse Clicked: ("+e.getX()+", "+e.getY() +")");
+        System.out.println("Mouse Clicked: ("+e.getX()+", "+e.getY() +")");
          PClickX = e.getX();
          PClickY = e.getY();
          PaddleX = e.getX();

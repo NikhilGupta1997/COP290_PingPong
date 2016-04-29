@@ -47,6 +47,7 @@ public class Player
 	private static int gl_level;
 	private static double [] length_paddle=new double[4];
 	private static int lostl;
+	private static int server;
 
 	private static int LastClick = 0;
 	private static int LastClick_Y = 0;
@@ -120,6 +121,7 @@ public class Player
 	public Player(String pname, int plevel, ArrayList<String> other_ips, ArrayList<Integer> other_ports, ArrayList<String> names, int p_no)
 	{
 		// a Board object
+
 		Collide_paddle =new int[plevel];
 		gl_other_ips=other_ips;
 		gl_other_ports=other_ports;
@@ -135,8 +137,8 @@ public class Player
 		// Player Description done
 		Board_backend = new Board();
 		Ball [] b=new Ball[5];
-		 b[0] = new Ball(-4.5*2.4, 3.5*2.4, 250.0, 280.0, 10);
-		 b[1] = new Ball(4.5*2.4, 3.5*3.4, 150.0, 280.0, 10);
+		 b[0] = new Ball(-4.5*1.4, 3.5*1.4, 250.0, 280.0, 10);
+		 b[1] = new Ball(4.5*1.4, 3.5*1.4, 150.0, 280.0, 10);
 		 b[2] = new Ball(2.5*1.4, 5.5*2.4, 350.0, 180.0, 10);
 		 b[3] = new Ball(4.5*1.4, 2.5*2.4, 150.0, 180.0, 10);
 		 b[4] = new Ball(4.0*1.4, 2.5*2.4, 50.0, 200.0, 10);
@@ -214,7 +216,10 @@ public class Player
 			int player_d0=player_desc[0],player_d1=player_desc[1],player_d2=player_desc[2],player_d3=player_desc[3];
 			//System.out.println(player_d0+","+player_d1+","+player_d2+","+player_d3);
 			// player_desc is 1 for current player,2 for other and 3 for computer
-
+		for (int i=0;i<4;i++)
+		{
+			if(player_desc[i]==1) server=i; // Server decides which one controls the game
+		}
 			if(Board_UI.getWinner() == 1)
 			{
 				JOptionPane.showMessageDialog(null,"Click ok to start the server 1" );
@@ -267,7 +272,7 @@ public class Player
 			double [] length_paddle1={myPaddle1.getPaddleLength(),myPaddle2.getPaddleLength(),myPaddle3.getPaddleLength(),myPaddle4.getPaddleLength()};
 			length_paddle=length_paddle1;
 			Paddle myPaddle = Board_backend.getPaddles().get(player_no);
-			System.out.println(length_paddle[0]+","+length_paddle[1]+","+length_paddle[2]+","+length_paddle[3]);
+			//System.out.println(length_paddle[0]+","+length_paddle[1]+","+length_paddle[2]+","+length_paddle[3]);
 			// TODO: Important to change the paddle no 
 			// TODO : Handle collisions of Random Objs.
 
