@@ -4,20 +4,23 @@ import java.util.*;
 
 public class RandomObj
 {
-	private boolean inc_length;
+	/** 0 : increase length or
+	* 	1 : decrease length
+	* 	2 : give extra life **/
+	private int r_effect;
 	private double center_x;
 	private double center_y;
 	private double vel_x;
 	private double vel_y;
 
-	public RandomObj(double vx, double vy, double cx, double cy, boolean effect)
+	public RandomObj(double vx, double vy, double cx, double cy, int effect)
 	{
 		vel_x = vx;
 		vel_y = vy;
 		// bcolor = color;
 		center_x = cx;
 		center_y = cy;
-		inc_length = effect;
+		r_effect = effect;
 	}
 
 	public double getVelX()
@@ -40,9 +43,9 @@ public class RandomObj
 		return center_y;
 	}
 
-	public boolean getEffect()
+	public int getEffect()
 	{
-		return inc_length;
+		return r_effect;
 	}
 
 
@@ -66,9 +69,9 @@ public class RandomObj
 		center_y = cy;
 	}
 
-	public void setEffect(boolean e)
+	public void setEffect(int e)
 	{
-		inc_length = e;
+		r_effect = e;
 	}
 
 }

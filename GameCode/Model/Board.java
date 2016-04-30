@@ -9,7 +9,7 @@ public class Board
 	private float dim_y;
 	private int no_balls;
 	private ArrayList<Ball> vector_balls;
-	private ArrayList<RandomObj> objects;
+	private RandomObj obj;
 	private int no_paddles;
 	private ArrayList<Paddle> vector_paddles;
 	private ArrayList<Boolean> dead_Alive;
@@ -23,7 +23,7 @@ public class Board
 		no_paddles = 0;
 		vector_paddles = new ArrayList<Paddle>();
 		dead_Alive = new ArrayList<Boolean>();
-		objects = new ArrayList<RandomObj>();
+		obj = new RandomObj(5.0, 6.0, 220.0, 250.0, 0);
 	}
 
 	public 	ArrayList<Ball> getBalls()
@@ -36,9 +36,9 @@ public class Board
 		return vector_paddles;
 	}
 
-	public ArrayList<RandomObj> getObjects()
+	public RandomObj getObjects()
 	{
-		return objects;
+		return obj;
 	}
 
 	public void addBall(Ball b)
@@ -65,12 +65,12 @@ public class Board
 
 	public void addObject(RandomObj r)
 	{
-		objects.add(r);
+		obj = r;
 	}
 
 	public void removeObj(int i)
 	{
-		objects.remove(i);
+		obj = null;
 	}
 
 	public void movePaddle(int i, double new_px,double new_py,double new_len,int times_missed, boolean life)
@@ -85,10 +85,10 @@ public class Board
 		vector_balls.set(i, b);
 	}
 
-	public void moveObj(int i,double vx, double vy, double cx, double cy, boolean inc_len)
+	public void moveObj(int i,double vx, double vy, double cx, double cy, int inc_len)
 	{
 		RandomObj r = new RandomObj(vx, vy, cx, cy, inc_len);
-		objects.set(i,r);
+		obj = r;
 	}
 
 	public Paddle getIthpaddle(int i)
