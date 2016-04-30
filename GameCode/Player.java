@@ -68,6 +68,7 @@ public class Player
 	private static DatagramPacket sendPacket;  
 	private static String destPort;
 	private static boolean[] ball_colln;
+	private static boolean[] Connection;
 			//clientSocket = new DatagramSocket();
 
 
@@ -140,6 +141,7 @@ public class Player
 		gl_other_ports=other_ports;
 		gl_names=names;
 		gl_level=plevel;
+		Connection = new boolean[(no_players - 1)];
 		System.out.println("Received level :" + plevel);
 		for(int i=0;i<4;i++)
 		{if(i>=(no_players)) player_desc[i]=3;
@@ -251,7 +253,7 @@ public class Player
 				break;
 			}
 		}
-		System.out.println("Player and server are="+player_no+","+server);
+		// System.out.println("Player and server are="+player_no+","+server);
 			if(Board_UI.getWinner() == 1)
 			{
 				JOptionPane.showMessageDialog(null,"Click ok to start the server 1" );
@@ -367,7 +369,7 @@ public class Player
 			IPAddress = InetAddress.getByName(gl_other_ips.get(k));
 
 			int port=gl_other_ports[player_no][k];// handle it
-			System.out.println("Sending to "+IPAddress+";;"+port);
+			// System.out.println("Sending to "+IPAddress+";;"+port);
 			sendPacket = new DatagramPacket(sendData, resendPLZ.length(), IPAddress, port);
 			clientSocket.send(sendPacket);
 			//f2++;
@@ -648,7 +650,7 @@ public class Player
 			 Board_backend.moveBall(i,myBall1.getVelX(), myBall1.getVelY(), myBall1.getVelX() + lastX1, myBall1.getVelY() + lastY1, 10);	
 			 else
 			 {
-			 System.out.println("sdasa "+ "Aayan is,worst i can , nikhil");
+			 // System.out.println("sdasa "+ "Aayan is,worst i can , nikhil");
 			 Board_backend.moveBall(i,ball_vel_cx[server][i], ball_vel_cy[server][i], lastX2, lastY2, 10);	
 			 }
 			 }

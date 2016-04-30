@@ -43,7 +43,7 @@ public class ReceiverThread extends Thread
 		try
 		{
 			serverSocket = new DatagramSocket(port);
-			serverSocket.setSoTimeout(20000);
+			serverSocket.setSoTimeout(2000);
 		}
 		catch(Exception e)
 		{
@@ -62,10 +62,10 @@ public class ReceiverThread extends Thread
 				try
 				{ 	//System.out.println("Receiver thread is working at "+ Port_connect);
 					serverSocket.receive(receivePacket);
-					System.out.println("fds");
+					// System.out.println("fds");
 					isConnected = true;
 					Received_Str =  new String(receivePacket.getData());
-					System.out.println("Received : " + Received_Str);
+					// System.out.println("Received : " + Received_Str);
 					String [] temp2 = Received_Str.split(" ");
 
 					String [] tokens=temp2[0].split(",");
@@ -131,6 +131,7 @@ public class ReceiverThread extends Thread
 				catch(SocketTimeoutException e)
 				{
 					isConnected = false;
+					System.out.println("Player disconnected");
 				}
 
 			}
