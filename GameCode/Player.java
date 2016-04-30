@@ -220,8 +220,9 @@ public class Player
 
 		RecieveThreads.add(new ReceiverThread(other_ports[i][p_no],plevel));// listens on this port
 		//System.out.println("Port: "+other_ports.get(i));
-		(RecieveThreads.get(f1)).start();
 		Connection[f1]=true;
+		(RecieveThreads.get(f1)).start();
+		
 		f1++;
 		}
 		player_no=p_no;

@@ -9,7 +9,7 @@ public class ReceiverThread extends Thread
 	private int Port_connect;
 	public  String Received_Str;
 	// public  int last_msg_time;
-	public  boolean isConnected;
+	public  boolean isConnected=true;
 	///public int port1;
 
 /** All the data is received and then parsed here. 
@@ -54,7 +54,7 @@ public class ReceiverThread extends Thread
 	public void run()
 	{
 		/**  This is called when thread.start is called. **/
-		while (isConnected)
+		while (true)
 		{
 			try
 			{

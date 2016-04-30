@@ -26,10 +26,10 @@ public class MainPanel extends JPanel
 	private static final int Default_Height = 800;
 	private static final int Default_Width = 600;
 	
-	private static String Name1;
- 	private static String Name2;
- 	private static String Name3;
- 	private static String Name4;
+	private static String Name1="";
+ 	private static String Name2="";
+ 	private static String Name3="";
+ 	private static String Name4="";
  	private static Color customColorBrown = new Color(100,50,0);
  	public static int Paddles_out = 0;
  	public static int first1 = 0;
@@ -234,6 +234,11 @@ public class MainPanel extends JPanel
 	 			else{} 
  			}
  		}
+ 		g.drawString(Name1, 750, 100);
+ 		g.drawString(Name2, 750, 250);
+ 		g.drawString(Name3, 750, 400);
+ 		g.drawString(Name4, 750, 550);
+
 
  	// 	for (int j = 0; j < theObjects.size(); j ++)
 		// {
