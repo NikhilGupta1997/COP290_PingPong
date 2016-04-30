@@ -88,7 +88,7 @@ public class BackPanel extends JPanel
 		g2.drawLine(10, 0, 10, 580);
 		g2.drawLine(0, 590, 580, 590);
 		g2.drawLine(590, 0, 590, 590);
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
+		// g.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
  		// g2.drawString(Name1, 750, 100);
  		// g2.drawString(Name2, 750, 250);
  		// g2.drawString(Name3, 750, 400);

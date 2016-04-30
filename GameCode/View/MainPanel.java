@@ -26,12 +26,13 @@ public class MainPanel extends JPanel
 	private static RandomObj theObjects;
 	private static final int Default_Height = 800;
 	private static final int Default_Width = 600;
-	
+	private static int PlayerNumber;
 	private static String Name1="";
  	private static String Name2="";
  	private static String Name3="";
  	private static String Name4="";
  	private static Color customColorBrown = new Color(100,50,0);
+ 	private static Color customColorGreen = new Color(140,250,0);
  	public static int Paddles_out = 0;
  	public static int first1 = 0;
  	public static int first2 = 0;
@@ -40,11 +41,11 @@ public class MainPanel extends JPanel
  	public static int winner = -1;
  	private static int M = 100;
 
-	public MainPanel()
+	public MainPanel(int playerNo)
 	{
 		/** Constructor **/
 		super();
-		
+		PlayerNumber = playerNo;
 		// setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setPreferredSize(new Dimension(Default_Width, Default_Height));
 		this.setVisible(true);
@@ -72,6 +73,12 @@ public class MainPanel extends JPanel
 	{
 		/** Renders the basic view of Game Panel **/
 		super.paintComponent(g);
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
+		g.drawString(Name1, 700, 100);
+ 		g.drawString(Name2, 700, 250);
+ 		g.drawString(Name3, 700, 400);
+ 		g.drawString(Name4, 700, 550);
 
 		int no_balls = theBalls.size();
 		int no_paddles = thePaddles.size();
@@ -99,6 +106,8 @@ public class MainPanel extends JPanel
 					{ 
 					if(loves <= 0)
 					g.setColor(Color.RED);
+					else if (i == PlayerNumber)
+					g.setColor(customColorGreen);
 					else
 					g.setColor(Color.BLUE);
 					g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y), (int) (P_length), 20);
@@ -129,6 +138,8 @@ public class MainPanel extends JPanel
 					{
 					if(loves <= 0)
 					g.setColor(Color.RED);
+					else if (i == PlayerNumber)
+					g.setColor(customColorGreen);
 					else
 					g.setColor(Color.BLUE);	
 					g.fillRect((int)(paddle_x), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
@@ -158,6 +169,8 @@ public class MainPanel extends JPanel
 					{
 					if(loves <= 0)
 					g.setColor(Color.RED);
+					else if (i == PlayerNumber)
+					g.setColor(customColorGreen);
 					else
 					g.setColor(Color.BLUE);
 					g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-20), (int) (P_length), 20);
@@ -187,6 +200,8 @@ public class MainPanel extends JPanel
 					{
 					if(loves <= 0)
 					g.setColor(Color.RED);
+					else if (i == PlayerNumber)
+					g.setColor(customColorGreen);
 					else
 					g.setColor(Color.BLUE);
 					g.fillRect((int)(paddle_x - 20), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
@@ -235,10 +250,7 @@ public class MainPanel extends JPanel
 	 			else{} 
  			}
  		}
- 		g.drawString(Name1, 750, 100);
- 		g.drawString(Name2, 750, 250);
- 		g.drawString(Name3, 750, 400);
- 		g.drawString(Name4, 750, 550);
+ 		
 
  		if (theObjects != null)
  		{
@@ -306,22 +318,22 @@ public class MainPanel extends JPanel
 			Name2 = names.get(1);
 		else
 		{
-			Name2 = "AI";
-			Name3 = "AI";
-			Name4 = "AI";
+			Name2 = "COMPUTER 2";
+			Name3 = "COMPUTER 3";
+			Name4 = "COMPUTER 4";
 		}
 		if (no_pl >= 3)
 			Name3 = names.get(2);
 		else
 		{
-			Name3 = "AI";
-			Name4 = "AI";
+			Name3 = "COMPUTER 3";
+			Name4 = "COMPUTER 4";
 		}
 		if (no_pl >= 4)
 			Name4 = names.get(3);
 		else
 		{
-			Name4 = "AI";
+			Name4 = "COMPUTER 4";
 		}
 
 	}
