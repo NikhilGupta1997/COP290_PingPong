@@ -32,7 +32,10 @@ public class MainPanel extends JPanel
  	private static String Name3="";
  	private static String Name4="";
  	private static Color customColorBrown = new Color(100,50,0);
- 	private static Color customColorGreen = new Color(140,250,0);
+ 	private static Color customColorDarkBrown = new Color(50,25,0);
+ 	private static Color customColorGreen = new Color(0,180,0);
+ 	private static Color customColorBlue = new Color(0,0,200);
+ 	private static Color customColorBall = new Color(255,255,0);
  	public static int Paddles_out = 0;
  	public static int first1 = 0;
  	public static int first2 = 0;
@@ -88,7 +91,7 @@ public class MainPanel extends JPanel
 				double radius = ith.getRadius();
 				double center_x = ith.getCenterX();
 				double center_y = ith.getCenterY();
-				g.setColor(Color.YELLOW);
+				g.setColor(customColorBall);
 				g.fillOval((int)(center_x-radius), (int)(center_y + radius), (int)(2.0*radius), (int)(2.0*radius));
 			}
 		for (int i = 0; i < no_paddles; i++)
@@ -109,7 +112,7 @@ public class MainPanel extends JPanel
 					else if (i == PlayerNumber)
 					g.setColor(customColorGreen);
 					else
-					g.setColor(Color.BLUE);
+					g.setColor(customColorBlue);
 					g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y), (int) (P_length), 20);
 					Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {20,0,20},3);
 					g.fillPolygon(p1);
@@ -141,7 +144,7 @@ public class MainPanel extends JPanel
 					else if (i == PlayerNumber)
 					g.setColor(customColorGreen);
 					else
-					g.setColor(Color.BLUE);	
+					g.setColor(customColorBlue);	
 					g.fillRect((int)(paddle_x), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
 					Polygon p1 = new Polygon(new int[] {20,0,20}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
 					g.fillPolygon(p1);
@@ -172,7 +175,7 @@ public class MainPanel extends JPanel
 					else if (i == PlayerNumber)
 					g.setColor(customColorGreen);
 					else
-					g.setColor(Color.BLUE);
+					g.setColor(customColorBlue);
 					g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-20), (int) (P_length), 20);
 					Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {580,600,580},3);
 					g.fillPolygon(p1);
@@ -203,7 +206,7 @@ public class MainPanel extends JPanel
 					else if (i == PlayerNumber)
 					g.setColor(customColorGreen);
 					else
-					g.setColor(Color.BLUE);
+					g.setColor(customColorBlue);
 					g.fillRect((int)(paddle_x - 20), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
 					Polygon p1 = new Polygon(new int[] {580,600,580}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
 					g.fillPolygon(p1);
@@ -265,18 +268,22 @@ public class MainPanel extends JPanel
 	// INC LENGTH
 	 				// BufferedImage i = ImageIO.read(getClass().getResource("/expand.png"));
 	 				// g.drawImage(i, (int)cx - 10, (int)cy - 10, null);
+	 				g.fillOval((int)cx - 10, (int)cy - 10,20,20);
 	 			}
 	 			else if (eff == 1)
 	 			{
 	// DEC LENGTH
 	 				// BufferedImage i = ImageIO.read(new File("shrink.png"));
 	 				// g.drawImage(i, (int)cx - 10, (int)cy - 10, null);
+	 				g.fillOval((int)cx - 10, (int)cy - 10,20,20);
+
 	 			}
 	 			else
 	 			{
 	// EXTRA LIFE
 	 				// BufferedImage i = ImageIO.read(new File("extraLife.png"));
 	 				// g.drawImage(i, (int)cx - 10, (int)cy - 10, null);
+	 				g.fillOval((int)cx - 10, (int)cy - 10,20,20);
 	 			}
  			}
 

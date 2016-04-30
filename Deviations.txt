@@ -1,2 +1,7 @@
 1. The user cannot have his paddle at the bottom. But, instead, we display the user's paddle in a different color for recognition.
-2. 
+
+2. The user can control his paddle only by dragging his mouse pointer rather than keyboard controls.
+
+3. The colors of the paddles and the balls are not stored in their classes, but rather fixed in the UI.
+
+4. 

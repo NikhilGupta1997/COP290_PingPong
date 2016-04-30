@@ -42,7 +42,7 @@ public class Player
 	private static int ClickDiff_Y;
 	private static double new_paddlePos;
 	private static double new_paddlePos_Y;
-	private static double vel_compu=4.5*3.5;
+	private static double vel_compu=3.0;
 	private static int no_players;
 	private static int gl_level;
 	private static double [] length_paddle=new double[4];
@@ -53,8 +53,14 @@ public class Player
 	private static int LastClick_Y = 0;
 	private static physics PEngine;
 	private static int [] lastBwall ; // array for multiple balls
+	private static int lastRWall;
+
 	private static int [] lastpaddle;
+	private static int lastRpaddle;
+
 	private static int [] lastBcorner;
+	private static int lastRcorner;
+
 	private static int [] ball_missed = new int[5];
 	private static int [] player_desc= new int[4];//Player_desc for all players 
 
@@ -82,6 +88,9 @@ public class Player
    private static String servPort;
    private static boolean packetStatus;
    private static int[] lastBBCollision;
+   private static boolean colln_random;
+   private static int random_paddle_no;
+   private static int random_type;
 
 	public static double average(double a,double b,double c,double d)
 	{
@@ -91,29 +100,29 @@ public class Player
 	public static void  closest_ball(ArrayList<Ball> array_balls,Ball [] Close_ball)
 	{	Ball zero=array_balls.get(0);
 		int [] closest={0,0,0,0};
-		double [] smallest_dis={zero.getCenterY(),zero.getCenterX(),zero.getCenterY(),zero.getCenterX()};
-		for (int i=1;i<array_balls.size();i++)
+		double [] smallest_dis={Double.MAX_VALUE,Double.MAX_VALUE,Double.MAX_VALUE,Double.MAX_VALUE};
+		for (int i=0;i<array_balls.size();i++)
 		{
 			Ball xball=array_balls.get(i);
 			double center_x1=xball.getCenterX();
 			double center_y1=xball.getCenterY();
 			double vel_cx1=xball.getVelX();
 			double vel_cy1=xball.getVelY();
-			if(center_y1<smallest_dis[0] && vel_cy1<0) 
+			if(Math.abs((center_y1 - 10)/vel_cy1)<smallest_dis[0] && vel_cy1<0) 
 			{
-				smallest_dis[0]=center_y1;closest[0]=i;
+				smallest_dis[0]=Math.abs((center_y1 - 10)/vel_cy1);closest[0]=i;
 			}
-			if(center_x1<smallest_dis[1]&& vel_cx1<0)
+			if(Math.abs((center_x1 - 10)/(vel_cx1))<smallest_dis[1]&& vel_cx1<0)
 			{
-				smallest_dis[1]=center_x1;closest[1]=i;
+				smallest_dis[1]=Math.abs((center_x1 - 10)/(vel_cx1));closest[1]=i;
 			}
-			if(center_y1>smallest_dis[2]&& vel_cy1>0)
+			if(Math.abs((570 - center_y1)/(vel_cy1))<smallest_dis[2]&& vel_cy1>0)
 			{
-				smallest_dis[2]=center_y1;closest[2]=i;
+				smallest_dis[2]=Math.abs((570 - center_y1)/(vel_cy1));closest[2]=i;
 			}
-			if(center_x1>smallest_dis[3]&& vel_cx1>0)
+			if(Math.abs((570 - center_x1)/(vel_cx1))<smallest_dis[3]&& vel_cx1>0)
 			{
-				smallest_dis[3]=center_x1;closest[3]=i;
+				smallest_dis[3]=Math.abs((570 - center_x1)/(vel_cx1));closest[3]=i;
 			}
 		}
 		
@@ -141,6 +150,10 @@ public class Player
 		gl_other_ports=other_ports;
 		gl_names=names;
 		gl_level=plevel;
+
+		// This function controls the AI paddle speed for each level
+		vel_compu = 3.5 + (plevel - 0.9)*4.3;
+
 		Connection = new boolean[(no_players - 1)];
 		System.out.println("Received level :" + plevel);
 		for(int i=0;i<4;i++)
@@ -184,12 +197,17 @@ public class Player
 		Board_backend.addPaddle(p);
 
 		// Board_backend.addObject(r1);
-		Board_UI = new GameBoard();
+		// Board_UI = new GameBoard();
+		RandomObj r1 = new RandomObj(5.5, 4.5, 250, 150, 0);
 		Board_backend.addObject(r1);
 		Board_UI = new GameBoard(p_no);
 		 lastBwall =new int[c]; // array for multiple balls
 		 lastpaddle=new int[c];
 	 	 lastBcorner=new int[c];
+
+	 	 lastRWall = 0;
+	 	 lastRpaddle = 0;
+	 	 lastRcorner = 0;
 	 	//ball_missed=new int[c];
 	 	for (int i=0;i<c;i++)
 	 	{
@@ -308,6 +326,7 @@ public class Player
 			{}
 
 			update_Phy();// parameters: Collision with paddle ,we need to ignore other collisions of the same wall
+			update_Random();
 			ArrayList<Ball> updatedBalls = Board_backend.getBalls();
 			ArrayList<Paddle> updatedPaddles = Board_backend.getPaddles();
 			RandomObj updatedObjects = Board_backend.getObjects();
@@ -483,37 +502,55 @@ public class Player
 			
 			Ball [] myBall_array = new Ball[4];// sets which ball is closest
 			closest_ball(curr_Balls,myBall_array);
-			int random=randomo.nextInt(2500);
+			// int random=randomo.nextInt(2500);
 			double next_vel_1=Math.abs(myBall_array[0].getCenterX()-myPaddle1.getPaddleX())/(myBall_array[0].getCenterX()-myPaddle1.getPaddleX()) * vel_compu;
-			if(random==3)  next_vel_1*=-1;
+			//if(random==3)  next_vel_1*=-1;
 
-			random=randomo.nextInt(2500);
+			//random=randomo.nextInt(2500);
 			double next_vel_3=Math.abs(myBall_array[2].getCenterX()-myPaddle3.getPaddleX())/(myBall_array[2].getCenterX()-myPaddle3.getPaddleX()) * vel_compu;
-			if(random==3)  next_vel_3*=-1;
+			//if(random==3)  next_vel_3*=-1;
 
-			random=randomo.nextInt(2500);
+			//random=randomo.nextInt(2500);
 			double next_vel_2=Math.abs(myBall_array[1].getCenterY()-myPaddle2.getPaddleY())/(myBall_array[1].getCenterY()-myPaddle2.getPaddleY()) * vel_compu;
-			if(random==3)  next_vel_2*=-1;
+			//if(random==3)  next_vel_2*=-1;
 
-			random=randomo.nextInt(2500);
+			//random=randomo.nextInt(2500);
 			double next_vel_4=Math.abs(myBall_array[3].getCenterY()-myPaddle4.getPaddleY())/(myBall_array[3].getCenterY()-myPaddle4.getPaddleY()) * vel_compu;
-			if(random==3)  next_vel_4*=-1;
+			//if(random==3)  next_vel_4*=-1;
 			
-			double next_pos_1=myPaddle1.getPaddleX()+ next_vel_1;
+			double next_pos_1;
+			if(Math.abs(myBall_array[0].getCenterX()-myPaddle1.getPaddleX()) > length_paddle[0]/3)
+				next_pos_1=myPaddle1.getPaddleX()+ next_vel_1;
+			else
+				next_pos_1=myPaddle1.getPaddleX();
 			if(next_pos_1>(540-length_paddle[0]/2)) next_pos_1=(540-length_paddle[0]/2);
 			else if(next_pos_1<(60+length_paddle[0]/2)) next_pos_1=(60+length_paddle[0]/2); 
 
-			double next_pos_2=myPaddle2.getPaddleY()+ next_vel_2;
+			double next_pos_2;
+			if(Math.abs(myBall_array[1].getCenterY()-myPaddle2.getPaddleY()) > length_paddle[1]/3)
+				next_pos_2=myPaddle2.getPaddleY()+ next_vel_2;
+			else
+				next_pos_2=myPaddle2.getPaddleY();
 			if(next_pos_2>(540-length_paddle[1]/2)) next_pos_2=(540-length_paddle[1]/2);
 			else if(next_pos_2<(60+length_paddle[1]/2)) next_pos_2=(60+length_paddle[1]/2); 
+
 			//System.out.println("Next Position "+next_pos_2+","+next_vel_2);
-			double next_pos_3=myPaddle3.getPaddleX()+ next_vel_3;
+			double next_pos_3;
+			if(Math.abs(myBall_array[2].getCenterX()-myPaddle3.getPaddleX()) > length_paddle[2]/3)
+				next_pos_3=myPaddle3.getPaddleX()+ next_vel_3;
+			else
+				next_pos_3=myPaddle3.getPaddleX();
 			if(next_pos_3>(540-length_paddle[2]/2)) next_pos_3=(540-length_paddle[2]/2);
 			else if(next_pos_3<(60+length_paddle[2]/2)) next_pos_3=(60+length_paddle[2]/2); 
 			
-			double next_pos_4=myPaddle4.getPaddleY()+ next_vel_4;
+			double next_pos_4;
+			if(Math.abs(myBall_array[3].getCenterY()-myPaddle4.getPaddleY()) > length_paddle[3]/3)
+				next_pos_4=myPaddle4.getPaddleY()+ next_vel_4;
+			else
+				next_pos_4=myPaddle4.getPaddleY();
 			if(next_pos_4>(540-length_paddle[3]/2)) next_pos_4=(540-length_paddle[3]/2);
 			else if(next_pos_4<(60+length_paddle[3]/2)) next_pos_4=(60+length_paddle[3]/2); 
+			
 			
 
 
@@ -682,8 +719,165 @@ public class Player
 		};
 	};
 
+	public static void update_Random()
+	{
+		if (Board_backend.getObjects() != null)
+		{
+			colln_random = false;
+			random_paddle_no = -1;
+
+			double radius = 10.0;
+			RandomObj r = Board_backend.getObjects();
+
+			random_type = r.getEffect();
+
+			ArrayList<Paddle> curr_Paddles = Board_backend.getPaddles();
+			Paddle myPaddle = Board_backend.getPaddles().get(Paddle_No);
+			double myX = myPaddle.getPaddleX();
+			//Ball myBall = Board_backend.getBalls().get(0);
+			double myY = myPaddle.getPaddleY();
+			double myLen = myPaddle.getPaddleLength();
+
+			double rX = r.getCenterX();
+			double rY = r.getCenterY();
+
+			double r_vx = r.getVelX();
+			double r_vy = r.getVelY();
+
+			int r_eff = r.getEffect();
+
+			Paddle myPaddle1 = curr_Paddles.get(0);
+			Paddle myPaddle2 = curr_Paddles.get(1);
+			Paddle myPaddle3 = curr_Paddles.get(2);
+			Paddle myPaddle4 = curr_Paddles.get(3);
+
+			boolean [] r2paddlea=new boolean[4];
+			int r2paddle=0;
+			r2paddlea[0] = PEngine.collision_paddle(rX, rY, length_paddle[0]+40, 600, radius, myPaddle1.getPaddleX(),  myPaddle1.getPaddleY(),20,1);
+			r2paddlea[1] = PEngine.collision_paddle(rX, rY, length_paddle[1]+40, 600, radius, myPaddle2.getPaddleX(),  myPaddle2.getPaddleY(),20,2);
+			r2paddlea[2] = PEngine.collision_paddle(rX, rY, length_paddle[2]+40, 600, radius, myPaddle3.getPaddleX(),  myPaddle3.getPaddleY(),20,3);
+			r2paddlea[3] = PEngine.collision_paddle(rX, rY, length_paddle[3]+40, 600, radius, myPaddle4.getPaddleX(),  myPaddle4.getPaddleY(),20,4);
+
+			for(int it=0;it<4;it++)
+			{
+				if(r2paddlea[it])  r2paddle=it+1;
+			}
+			boolean check_wall_paddle=(lastRWall+4 == r2paddle + 4);
+
+			if (r2paddle!=0 && lastRpaddle!=r2paddle+4 && !check_wall_paddle&&curr_Paddles.get(r2paddle-1).getBallMissed()<5)
+			{
+				System.out.println("With paddle " + r2paddle);
+				lastRpaddle=r2paddle+ 4;
+				// if(r2paddle==3) 
+				lastRWall=0; lastRcorner=0;
+				// if(r2paddle==3) System.out.println("Print2 "+b2paddle);
+				Board_backend.removeObj();
+				colln_random = true;
+				random_paddle_no = r2paddle - 1;
+				// if((r2paddle-1)==0)
+				// {
+				// 	Board_backend.moveObj(r_vx, -r_vy, rX, rY, r_eff);
+				// }
+				// else if ((r2paddle-1)==1)
+				// {
+				// 	Board_backend.moveObj(-r_vx, r_vy, rX, rY, r_eff);
+				// }
+				// else if ((r2paddle-1)==2)
+				// {
+				// 	Board_backend.moveObj(r_vx, -r_vy, rX, rY, r_eff);
+				// }
+				// else if ((r2paddle-1)==3)
+				// {
+				// 	Board_backend.moveObj(-r_vx, r_vy, rX, rY, r_eff);
+				// }
+
+				int pdl_no = r2paddle - 1;
+
+				if (r_eff == 0)
+				{
+					Board_backend.movePaddle(pdl_no, curr_Paddles.get(pdl_no).getPaddleX() , curr_Paddles.get(pdl_no).getPaddleY(), length_paddle[pdl_no] + 30, curr_Paddles.get(pdl_no).getBallMissed(), true);
+				}
+				else if (r_eff == 1)
+				{
+					Board_backend.movePaddle(pdl_no, curr_Paddles.get(pdl_no).getPaddleX() , curr_Paddles.get(pdl_no).getPaddleY(), length_paddle[pdl_no] - 20, curr_Paddles.get(pdl_no).getBallMissed(), true);
+				}
+				else if (r_eff == 2)
+				{
+					Board_backend.movePaddle(pdl_no, curr_Paddles.get(pdl_no).getPaddleX() , curr_Paddles.get(pdl_no).getPaddleY(), length_paddle[pdl_no], curr_Paddles.get(pdl_no).getBallMissed() - 1, true);
+				}
+			}
+			else
+			{
+				int r2wall = PEngine.collision_wall(rX, rY, radius,600.0);
+				boolean check_paddle_wall=(r2wall+4== lastRpaddle);
+				double k = 1.00001;
+				if(r2wall > 0 && r2wall != lastRWall && !check_paddle_wall)
+				{
+					System.out.println("Wall " + r2wall);
+					lastRpaddle = 0;
+					lastRcorner = 0;
+					lastRWall = r2wall;
+					if (r2wall == 1)
+					{
+						Board_backend.moveObj(k*r_vx, -k*r_vy, rX, rY,  r_eff);
+					}
+					else if (r2wall == 2)
+					{
+						Board_backend.moveObj(-k*r_vx, k*r_vy, rX, rY,  r_eff);
+					}
+					else if (r2wall == 3)
+					{
+						Board_backend.moveObj(k*r_vx, -k*r_vy, rX, rY,  r_eff);
+					}
+					else if (r2wall == 4)
+					{
+						Board_backend.moveObj(-k*r_vx, k*r_vy, rX, rY, r_eff);
+					}
+				}
+
+				else
+				{
+					int r2corner = PEngine.collision_corner(rX, rY, radius, 600.0, 60.0);
+
+					boolean c1=true,c2=true,c3=true,c4=true,check=true;
+					if(r2corner==1&&(lastRWall==1||lastRWall==2||lastRpaddle==5||lastRpaddle==6)) c1=false;
+					if(r2corner==2&&(lastRWall==1||lastRWall==4||lastRpaddle==5||lastRpaddle==8)) c2=false;
+					if(r2corner==3&&(lastRWall==3||lastRWall==4||lastRpaddle==7||lastRpaddle==8)) c3=false;
+					if(r2corner==4&&(lastRWall==2||lastRWall==3||lastRpaddle==6||lastRpaddle==7)) c4=false;
+					check=c1&&c2&&c3&&c4; 
+					if (r2corner > 0 && r2corner!=lastRcorner && check)
+					{
+						lastRcorner=r2corner;
+						lastRWall=0;
+						lastRpaddle=0;
+
+						if (r2corner%2 == 1)
+						{
+							Board_backend.moveObj(-r_vy, -r_vx,rX, rY, r_eff);
+						}
+						else
+						{
+							Board_backend.moveObj(r_vy, r_vx, rX, rY, r_eff);
+						}
+					}
+					else
+					{
+						// nothing happened.
+						Board_backend.moveObj(r_vy, r_vx,rX + r_vx, rY + r_vy, r_eff);
+					}
+
+
+				}
+
+			}
+
+
+		}
+	}
+
 	public static void update_Phy()  
-	{   lostl=0;
+	{   
+		lostl=0;
 		Paddle_No=player_no;
 		Paddle_No=3;
 

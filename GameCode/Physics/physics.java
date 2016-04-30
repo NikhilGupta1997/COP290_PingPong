@@ -48,9 +48,9 @@ public class physics
 	public int collision_wall(double posx,double posy,double radius,double x)     //x is the dimension of the square
 	{int wall_no=0;
 
-	if((posx+radius)>=x-20&&(posy<540&&posy>40)) wall_no=4;
+	if((posx+radius)>=x-20&&(posy<530&&posy>50)) wall_no=4;
 	else if((posy+radius+24.0)>=x-20&&(posx<530&&posx>50)) wall_no=3;
-	else if((posx-radius)<=20.0&&(posy<540&&posy>40)) wall_no=2;
+	else if((posx-radius)<=20.0&&(posy<530&&posy>50)) wall_no=2;
 	else if((posy-radius+12.5-20)<=0.0&&(posx<530&&posx>50)) wall_no=1;
 	//if(wall_no!=0)
 	//	System.out.print(posx+","+posy+","+x+"\n");

@@ -20,6 +20,8 @@ public class BackPanel extends JPanel
 	private static final int Default_Height = 800;
 	private static final int Default_Width = 1000;
 	private static Color customColorBrown = new Color(100,50,0);
+	private static Color customColorDarkBrown = new Color(50,25,0);
+	private static Color customColorOrange = new Color(200,100,0);	
 	private static String Name1;
  	private static String Name2;
  	private static String Name3;
@@ -71,36 +73,53 @@ public class BackPanel extends JPanel
 		Graphics2D g2 = (Graphics2D) g;
 		//g.setColor(Color.argb(0.8, 200, 50, 50));
 		//g.fillRect(0,0,590,590);
+		float thickness = 20;
+		float thickness2 = 5;
+		float thickness3 = 8;
+		Stroke oldStroke = g2.getStroke();
+
 		Color customColor = new Color(222,184,135);
  		
 		g.setColor(customColor);
   		g.fillRect(0,0,590,590);
-		g.setColor(Color.ORANGE);
+  // 		g2.setStroke(new BasicStroke((float)(thickness2)));
+  // 		g2.setColor(customColorDarkBrown);
+		// g2.drawLine(0,0,600,600);
+		// g2.drawLine(0,600,600,0);
+		g.setColor(customColorOrange);
 		g.fillOval(240,240,120,120);
-		g.setColor(Color.RED);
+		g.setColor(Color.ORANGE);
 		g.fillOval(260,260,80,80);
-		float thickness = 20;
-		float thickness2 = 10;
-		Stroke oldStroke = g2.getStroke();
+		
 		g2.setStroke(new BasicStroke((float)(thickness)));
 		g2.setColor(customColorBrown);
 		g2.drawLine(0, 10, 580, 10);
 		g2.drawLine(10, 0, 10, 580);
 		g2.drawLine(0, 590, 580, 590);
 		g2.drawLine(590, 0, 590, 590);
+		g2.setStroke(new BasicStroke((float)(thickness3)));
+		g2.setColor(customColorDarkBrown);
+		g2.drawLine(0, 4, 580, 4);
+		g2.drawLine(4, 0, 4, 580);
+		g2.drawLine(0, 596, 580, 596);
+		g2.drawLine(596, 0, 596, 590);
 		// g.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
  		// g2.drawString(Name1, 750, 100);
  		// g2.drawString(Name2, 750, 250);
  		// g2.drawString(Name3, 750, 400);
  		// g2.drawString(Name4, 750, 550);
-		g2.setStroke(new BasicStroke((float)(thickness2)));
-		g2.setColor(Color.BLUE);
-		g2.drawLine(265,300,335,300);
-		g2.drawLine(300,265,300,335);
+		// g2.setStroke(new BasicStroke((float)(thickness2)));
+		// g2.setColor(customColorDarkBrown);
+		// g2.drawLine(60,60,60,540);
+		// g2.drawLine(60,60,540,60);
+		// g2.drawLine(540,540,60,540);
+		// g2.drawLine(540,540,540,60);
+	
+
 		
 		g2.setStroke(oldStroke);
 		
-		g.setColor(Color.ORANGE);
+		g.setColor(customColorOrange);
 		Polygon p = new Polygon(new int[] {0,60,0}, new int[] {0,0,60},3);
 		g.fillPolygon(p);
 
@@ -114,17 +133,17 @@ public class BackPanel extends JPanel
 		g.fillPolygon(p3);
 
 		Color newColor= new Color(200, 105, 0, 1);
-		g.setColor(Color.BLACK);
-		Polygon ps = new Polygon(new int[] {10,50,10}, new int[] {10,10,50},3);
+		g.setColor(Color.ORANGE);
+		Polygon ps = new Polygon(new int[] {8,40,8}, new int[] {8,8,40},3);
 		g.fillPolygon(ps);
 
-		Polygon ps1 = new Polygon(new int[] {590,550,590}, new int []{10,10,50},3);
+		Polygon ps1 = new Polygon(new int[] {592,560,592}, new int []{8,8,40},3);
 		g.fillPolygon(ps1);
 
-		Polygon ps2 = new Polygon(new int[] {10,50,10}, new int [] {590,590,550},3);
+		Polygon ps2 = new Polygon(new int[] {8,40,8}, new int [] {592,592,560},3);
 		g.fillPolygon(ps2);
 
-		Polygon ps3 = new Polygon(new int[] {590,550,590}, new int [] {590,590,550},3);
+		Polygon ps3 = new Polygon(new int[] {592,560,592}, new int [] {592,592,560},3);
 		g.fillPolygon(ps3);
 	}	
 

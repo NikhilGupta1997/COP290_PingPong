@@ -68,7 +68,7 @@ public class Board
 		obj = r;
 	}
 
-	public void removeObj(int i)
+	public void removeObj()
 	{
 		obj = null;
 	}
@@ -85,7 +85,7 @@ public class Board
 		vector_balls.set(i, b);
 	}
 
-	public void moveObj(int i,double vx, double vy, double cx, double cy, int inc_len)
+	public void moveObj(double vx, double vy, double cx, double cy, int inc_len)
 	{
 		RandomObj r = new RandomObj(vx, vy, cx, cy, inc_len);
 		obj = r;
