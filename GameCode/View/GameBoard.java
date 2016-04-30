@@ -16,11 +16,11 @@ public class GameBoard extends JFrame
 	private MainPanel GamePanel;
 	private BackPanel BackGamePanel;
 
-	public GameBoard()
+	public GameBoard(int playerNo)
 	{
 		/** Constructor. Sets visibility true. **/
 		super("PingPong");
-		GamePanel = new MainPanel();
+		GamePanel = new MainPanel(playerNo);
 		BackGamePanel = new BackPanel();
 		GamePanel.setBorder(BorderFactory.createEmptyBorder(100,0,40,0));
 		GamePanel.setBackground(Color.BLACK);

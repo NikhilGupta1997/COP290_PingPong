@@ -185,7 +185,7 @@ public class Player
 
 		RandomObj r1 = new RandomObj(4.5,4.5,100,200,true);
 		Board_backend.addObject(r1);
-		Board_UI = new GameBoard();
+		Board_UI = new GameBoard(p_no);
 		 lastBwall =new int[c]; // array for multiple balls
 		 lastpaddle=new int[c];
 	 	 lastBcorner=new int[c];
