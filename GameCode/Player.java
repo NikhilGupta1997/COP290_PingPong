@@ -221,6 +221,7 @@ public class Player
 		RecieveThreads.add(new ReceiverThread(other_ports[i][p_no],plevel));// listens on this port
 		//System.out.println("Port: "+other_ports.get(i));
 		(RecieveThreads.get(f1)).start();
+		Connection[f1]=true;
 		f1++;
 		}
 		player_no=p_no;
@@ -241,8 +242,19 @@ public class Player
 			// call Board_UI ka update function.
 			ArrayList<Ball> curr_Balls = Board_backend.getBalls();
 			int no_balls=curr_Balls.size();
+			int f1=0;
+		for(int i=0;i<no_players;i++)
+		{if(i==player_no) continue;
+		Connection[f1]=(RecieveThreads.get(f1)).isConnected;
+		if(!Connection[f1])
+			{	System.out.println("dsadsa");	
+				gl_names.set(i,"DISCONNECTED");
+				player_desc[i]=3;
+			}
+		f1++;
+		}
 			int player_d0=player_desc[0],player_d1=player_desc[1],player_d2=player_desc[2],player_d3=player_desc[3];
-			System.out.println(player_d0+","+player_d1+","+player_d2+","+player_d3);
+			// System.out.println(player_d0+","+player_d1+","+player_d2+","+player_d3);
 			// player_desc is 1 for current player,2 for other and 3 for computer
 			server=-1;// change 1
 		for (int i=0;i<4;i++)
@@ -645,7 +657,7 @@ public class Player
 			 Double lastX2 = ball_pos_cx[server][i];
 			
 			 if(collision_paddle[i]!=-1)
-			 Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX1,ball_vel_cx[collision_paddle[i]-1][i] + lastY1, 10);	
+			 Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX1,ball_vel_cy[collision_paddle[i]][i] + lastY1, 10);	
 			 else if(server==player_no)		
 			 Board_backend.moveBall(i,myBall1.getVelX(), myBall1.getVelY(), myBall1.getVelX() + lastX1, myBall1.getVelY() + lastY1, 10);	
 			 else
@@ -708,7 +720,7 @@ public class Player
 			
 			boolean [] b2paddlea=new boolean[4];
 			int b2paddle=0;
-			b2paddlea[0] = PEngine.collision_paddle(center_x, center_y, length_paddle[0]+40, 600, radius, myPaddle1.getPaddleX(), myPaddle1.getPaddleY(),20,1);
+			b2paddlea[0] = PEngine.collision_paddle(center_x, center_y, length_paddle[0]+40, 600, radius, myPaddle1.getPaddleX(),  myPaddle1.getPaddleY(),20,1);
 			b2paddlea[1] = PEngine.collision_paddle(center_x, center_y, length_paddle[1]+40, 600, radius, myPaddle2.getPaddleX(),  myPaddle2.getPaddleY(),20,2);
 			b2paddlea[2] = PEngine.collision_paddle(center_x, center_y, length_paddle[2]+40, 600, radius, myPaddle3.getPaddleX(),  myPaddle3.getPaddleY(),20,3);
 			b2paddlea[3] = PEngine.collision_paddle(center_x, center_y, length_paddle[3]+40, 600, radius, myPaddle4.getPaddleX(),  myPaddle4.getPaddleY(),20,4);

@@ -43,7 +43,7 @@ public class ReceiverThread extends Thread
 		try
 		{
 			serverSocket = new DatagramSocket(port);
-			serverSocket.setSoTimeout(2000);
+			serverSocket.setSoTimeout(4000);
 		}
 		catch(Exception e)
 		{
@@ -54,7 +54,7 @@ public class ReceiverThread extends Thread
 	public void run()
 	{
 		/**  This is called when thread.start is called. **/
-		while (true)
+		while (isConnected)
 		{
 			try
 			{
