@@ -247,8 +247,8 @@ public class Player
 		{
 			if(player_desc[i]==1|| player_desc[i]==2) 
 			{
-			server=i; // Server decides which one controls the game
-			break;
+				server=i; // Server decides which one controls the game
+				break;
 			}
 		}
 		System.out.println("Player and server are="+player_no+","+server);
@@ -1154,8 +1154,8 @@ public class Player
 								System.out.println("Ball j ka FINAL:" + finalb2.vx1 + " " + finalb2.vy1 + " ");
 
 
-								Board_backend.moveBall(i, finalb1.vx1, finalb1.vy1, center_x, center_y, radius);
-								Board_backend.moveBall(j, finalb2.vx1, finalb2.vy1, center_x2, center_y2, rad2);
+								Board_backend.moveBall(i, finalb1.vx1, finalb1.vy1, center_x + finalb1.vx1, center_y + finalb1.vy1, radius);
+								Board_backend.moveBall(j, finalb2.vx1, finalb2.vy1, center_x2 + finalb2.vx1, center_y2 + finalb2.vy1, rad2);
 							}
 						}
 						if (!any_colln)

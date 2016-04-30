@@ -7,7 +7,7 @@ public class physics
 	{
 		velocity vel1=new velocity();
 		velocity vel2=new velocity();
-		double e = 1.0;
+		double e = 1.2;
 		double sin = Math.sin(angle);
 		double cos = Math.cos(angle);
 		vel1.vx1= ux1*(e+1)/2 *cos*sin+ uy1*(e+1)/2 *sin*sin+ux2*(((1-e)/2)*cos*sin-sin*cos)+uy2*(((1-e)/2)*sin*sin +cos*cos);
