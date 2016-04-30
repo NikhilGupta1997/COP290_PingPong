@@ -3,18 +3,28 @@ package Physics;
 //import package Physics;
 public class physics 
 {
-	public vel_b2b Colision_b2b(double ux1,double uy1,double ux2,double uy2,double angle)
+	public vel_b2b Colision_b2b(double ux1,double uyy1,double ux2,double uyy2,double angle)
 	{
 		velocity vel1=new velocity();
 		velocity vel2=new velocity();
+		double uy1 = -1*uyy1;
+		double uy2 = -1*uyy2;
 		double e = 1.2;
 		double sin = Math.sin(angle);
 		double cos = Math.cos(angle);
-		vel1.vx1= ux1*(e+1)/2 *cos*sin+ uy1*(e+1)/2 *sin*sin+ux2*(((1-e)/2)*cos*sin-sin*cos)+uy2*(((1-e)/2)*sin*sin +cos*cos);
-		vel1.vy1= ux1*(e+1)/2*cos*cos+uy1*(e+1)/2*sin*cos+ux2*((1-e)/2*cos*cos+ sin*sin)+ uy2*((1-e)/2*sin*cos-cos*sin);
-		vel2.vx1= ux1*(((1-e)/2)*cos*sin-sin*cos)+uy1*(((1-e)/2)*sin*sin +cos*cos)+ux2*(e+1)/2 *cos*sin+uy2*(1-e)/2*sin*sin;
-		vel2.vy1= ux1*((1-e)/2*cos*cos-sin*sin)+ uy1*(((1-e)/2)*cos*sin-cos*sin)+ux2*(e+1)/2*cos*cos+uy2*(1-e)/2*cos*sin;
+		vel2.vy1= ux1*(e+1)/2 *cos*sin+ uy1*(e+1)/2 *sin*sin+ux2*(((1-e)/2)*cos*sin-sin*cos)+uy2*(((1-e)/2)*sin*sin +cos*cos);
+
+		vel2.vx1= ux1*(e+1)/2*cos*cos+uy1*(e+1)/2*sin*cos+ux2*((1-e)/2*cos*cos+ sin*sin)+ uy2*((1-e)/2*sin*cos-cos*sin);
+
+		vel1.vy1= ux1*(((1-e)/2)*cos*sin-sin*cos)+uy1*(((1-e)/2)*sin*sin +cos*cos)+ux2*(e+1)/2 *cos*sin+uy2*(1-e)/2*sin*sin;
+
+		vel1.vx1= ux1*((1-e)/2*cos*cos-sin*sin)+ uy1*(((1-e)/2)*cos*sin-cos*sin)+ux2*(e+1)/2*cos*cos+uy2*(1-e)/2*cos*sin;
+
 		vel_b2b vel=new vel_b2b();
+
+		vel1.vy1 = -1*(vel1.vy1);
+		vel2.vy1 = -1*(vel2.vy1);
+
 		vel.v1=vel1;vel.v2=vel2;
 		return vel;
 	}
