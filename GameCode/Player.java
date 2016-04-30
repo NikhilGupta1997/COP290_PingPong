@@ -27,7 +27,7 @@ public class Player
 	private static ArrayList<ReceiverThread> RecieveThreads;
 	private static ArrayList<String> gl_other_ips=new ArrayList<String>();
 	private static int [] [] gl_other_ports;
-	private static ArrayList<String> gl_names; 
+	private static ArrayList<String> gl_names;
 	private static Board Board_backend;
 	private static Game MyGame;
 	private static GameBoard Board_UI;
@@ -309,7 +309,7 @@ public class Player
 			ArrayList<Paddle> updatedPaddles = Board_backend.getPaddles();
 			ArrayList<RandomObj> updatedObjects = Board_backend.getObjects();
 			//System.out.println("lost=="+lostl+"\n\n\n\n\n");
-			Board_UI.reDraw(updatedBalls, updatedPaddles, updatedObjects);
+			Board_UI.reDraw(updatedBalls, updatedPaddles, updatedObjects, gl_names);
 			updatedPaddles = Board_backend.getPaddles();//Might Have to Remove it
 			Paddle myPaddle2 = updatedPaddles.get(1);
 			Paddle myPaddle3 = updatedPaddles.get(2);
@@ -1155,8 +1155,8 @@ public class Player
 
 								any_colln = true;
 								ball_colln[i] = false;
-								Double x1x2 = Math.abs(center_x2 - center_x);
-								Double y1y2 = Math.abs(center_y2 - center_y);
+								Double x1x2 = (center_x2 - center_x);
+								Double y1y2 = (center_y2 - center_y);
 								Double cc_angle = Math.atan(y1y2/x1x2);
 								System.out.println("Ball i " + i + " vx: " + vel_cx + " vy: " + vel_cy + " cx: " + center_x + " cy: " + center_y);
 								System.out.println("Ball j " + j + " vx: " + vel_b2_x + " vy: " + vel_b2_y + " cx: " + center_x2 + " cy: " + center_y2);

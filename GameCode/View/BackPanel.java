@@ -20,10 +20,10 @@ public class BackPanel extends JPanel
 	private static final int Default_Height = 800;
 	private static final int Default_Width = 1000;
 	private static Color customColorBrown = new Color(100,50,0);
-	private static String Name1 = "Player1";
- 	private static String Name2 = "Player2";
- 	private static String Name3 = "Player3";
- 	private static String Name4 = "Player4";
+	private static String Name1;
+ 	private static String Name2;
+ 	private static String Name3;
+ 	private static String Name4;
  	private static int PaddleX;
 	private static int PaddleY;
 	private static int PClickX;

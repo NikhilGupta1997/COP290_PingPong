@@ -26,10 +26,10 @@ public class MainPanel extends JPanel
 	private static final int Default_Height = 800;
 	private static final int Default_Width = 600;
 	
-	private static String Name1 = "Player1";
- 	private static String Name2 = "Player2";
- 	private static String Name3 = "Player3";
- 	private static String Name4 = "Player4";
+	private static String Name1;
+ 	private static String Name2;
+ 	private static String Name3;
+ 	private static String Name4;
  	private static Color customColorBrown = new Color(100,50,0);
  	public static int Paddles_out = 0;
  	public static int first1 = 0;
@@ -254,16 +254,36 @@ public class MainPanel extends JPanel
 	}
 
 /** Takes input the updated lists of Balls, Paddles, Random Objects. **/
-	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles, ArrayList<RandomObj> objs)
+	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles, ArrayList<RandomObj> objs, ArrayList<String> names)
 	{//System.out.println("winner is : " + winner);
 		
 		theBalls = balls;
 		thePaddles = paddles;
 		theObjects = objs;
-		
+		int no_pl = names.size();
+		Name1 = names.get(0);
+		if (no_pl >= 2)
+			Name2 = names.get(1);
+		else
+		{
+			Name2 = "AI";
+			Name3 = "AI";
+			Name4 = "AI";
+		}
+		if (no_pl >= 3)
+			Name3 = names.get(2);
+		else
+		{
+			Name3 = "AI";
+			Name4 = "AI";
+		}
+		if (no_pl >= 4)
+			Name4 = names.get(3);
+		else
+		{
+			Name4 = "AI";
+		}
 
-		
-			
 	}
 
 
