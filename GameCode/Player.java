@@ -42,7 +42,7 @@ public class Player
 	private static int ClickDiff_Y;
 	private static double new_paddlePos;
 	private static double new_paddlePos_Y;
-	private static double vel_compu=4.5*3.5;
+	private static double vel_compu=3.0;
 	private static int no_players;
 	private static int gl_level;
 	private static double [] length_paddle=new double[4];
@@ -91,27 +91,27 @@ public class Player
 	public static void  closest_ball(ArrayList<Ball> array_balls,Ball [] Close_ball)
 	{	Ball zero=array_balls.get(0);
 		int [] closest={0,0,0,0};
-		double [] smallest_dis={zero.getCenterY(),zero.getCenterX(),zero.getCenterY(),zero.getCenterX()};
-		for (int i=1;i<array_balls.size();i++)
+		double [] smallest_dis={Double.MAX_VALUE,Double.MAX_VALUE,Double.MAX_VALUE,Double.MAX_VALUE};
+		for (int i=0;i<array_balls.size();i++)
 		{
 			Ball xball=array_balls.get(i);
 			double center_x1=xball.getCenterX();
 			double center_y1=xball.getCenterY();
 			double vel_cx1=xball.getVelX();
 			double vel_cy1=xball.getVelY();
-			if(center_y1<smallest_dis[0] && vel_cy1<0) 
+			if(Math.abs((center_y1)/vel_cy1)<smallest_dis[0] && vel_cy1<0) 
 			{
 				smallest_dis[0]=center_y1;closest[0]=i;
 			}
-			if(center_x1<smallest_dis[1]&& vel_cx1<0)
+			if(Math.abs((center_x1)/(vel_cx1))<smallest_dis[1]&& vel_cx1<0)
 			{
 				smallest_dis[1]=center_x1;closest[1]=i;
 			}
-			if(center_y1>smallest_dis[2]&& vel_cy1>0)
+			if(Math.abs((600 - center_y1)/(vel_cy1))<smallest_dis[2]&& vel_cy1>0)
 			{
 				smallest_dis[2]=center_y1;closest[2]=i;
 			}
-			if(center_x1>smallest_dis[3]&& vel_cx1>0)
+			if(Math.abs((600 - center_x1)/(vel_cx1))<smallest_dis[3]&& vel_cx1>0)
 			{
 				smallest_dis[3]=center_x1;closest[3]=i;
 			}
@@ -141,6 +141,10 @@ public class Player
 		gl_other_ports=other_ports;
 		gl_names=names;
 		gl_level=plevel;
+
+		// This function controls the AI paddle speed for each level
+		vel_compu = 3.5 + (plevel - 0.9)*4.3;
+
 		Connection = new boolean[(no_players - 1)];
 		System.out.println("Received level :" + plevel);
 		for(int i=0;i<4;i++)
@@ -482,35 +486,52 @@ public class Player
 			
 			Ball [] myBall_array = new Ball[4];// sets which ball is closest
 			closest_ball(curr_Balls,myBall_array);
-			int random=randomo.nextInt(2500);
+			//int random=randomo.nextInt(2500);
 			double next_vel_1=Math.abs(myBall_array[0].getCenterX()-myPaddle1.getPaddleX())/(myBall_array[0].getCenterX()-myPaddle1.getPaddleX()) * vel_compu;
-			if(random==3)  next_vel_1*=-1;
+			//if(random==3)  next_vel_1*=-1;
 
-			random=randomo.nextInt(2500);
+			//random=randomo.nextInt(2500);
 			double next_vel_3=Math.abs(myBall_array[2].getCenterX()-myPaddle3.getPaddleX())/(myBall_array[2].getCenterX()-myPaddle3.getPaddleX()) * vel_compu;
-			if(random==3)  next_vel_3*=-1;
+			//if(random==3)  next_vel_3*=-1;
 
-			random=randomo.nextInt(2500);
+			//random=randomo.nextInt(2500);
 			double next_vel_2=Math.abs(myBall_array[1].getCenterY()-myPaddle2.getPaddleY())/(myBall_array[1].getCenterY()-myPaddle2.getPaddleY()) * vel_compu;
-			if(random==3)  next_vel_2*=-1;
+			//if(random==3)  next_vel_2*=-1;
 
-			random=randomo.nextInt(2500);
+			//random=randomo.nextInt(2500);
 			double next_vel_4=Math.abs(myBall_array[3].getCenterY()-myPaddle4.getPaddleY())/(myBall_array[3].getCenterY()-myPaddle4.getPaddleY()) * vel_compu;
-			if(random==3)  next_vel_4*=-1;
+			//if(random==3)  next_vel_4*=-1;
 			
-			double next_pos_1=myPaddle1.getPaddleX()+ next_vel_1;
+			double next_pos_1;
+			if(Math.abs(myBall_array[0].getCenterX()-myPaddle1.getPaddleX()) > length_paddle[0]/3)
+				next_pos_1=myPaddle1.getPaddleX()+ next_vel_1;
+			else
+				next_pos_1=myPaddle1.getPaddleX();
 			if(next_pos_1>(540-length_paddle[0]/2)) next_pos_1=(540-length_paddle[0]/2);
 			else if(next_pos_1<(60+length_paddle[0]/2)) next_pos_1=(60+length_paddle[0]/2); 
 
-			double next_pos_2=myPaddle2.getPaddleY()+ next_vel_2;
+			double next_pos_2;
+			if(Math.abs(myBall_array[1].getCenterY()-myPaddle2.getPaddleY()) > length_paddle[1]/3)
+				next_pos_2=myPaddle2.getPaddleY()+ next_vel_2;
+			else
+				next_pos_2=myPaddle2.getPaddleY();
 			if(next_pos_2>(540-length_paddle[1]/2)) next_pos_2=(540-length_paddle[1]/2);
 			else if(next_pos_2<(60+length_paddle[1]/2)) next_pos_2=(60+length_paddle[1]/2); 
+
 			//System.out.println("Next Position "+next_pos_2+","+next_vel_2);
-			double next_pos_3=myPaddle3.getPaddleX()+ next_vel_3;
+			double next_pos_3;
+			if(Math.abs(myBall_array[2].getCenterX()-myPaddle3.getPaddleX()) > length_paddle[2]/3)
+				next_pos_3=myPaddle3.getPaddleX()+ next_vel_3;
+			else
+				next_pos_3=myPaddle3.getPaddleX();
 			if(next_pos_3>(540-length_paddle[2]/2)) next_pos_3=(540-length_paddle[2]/2);
 			else if(next_pos_3<(60+length_paddle[2]/2)) next_pos_3=(60+length_paddle[2]/2); 
 			
-			double next_pos_4=myPaddle4.getPaddleY()+ next_vel_4;
+			double next_pos_4;
+			if(Math.abs(myBall_array[3].getCenterY()-myPaddle4.getPaddleY()) > length_paddle[3]/3)
+				next_pos_4=myPaddle4.getPaddleY()+ next_vel_4;
+			else
+				next_pos_4=myPaddle4.getPaddleY();
 			if(next_pos_4>(540-length_paddle[3]/2)) next_pos_4=(540-length_paddle[3]/2);
 			else if(next_pos_4<(60+length_paddle[3]/2)) next_pos_4=(60+length_paddle[3]/2); 
 			
@@ -752,7 +773,7 @@ public class Player
 				lastBBCollision[i] = -1;
 				ball_colln[i] = false;
 				lastpaddle[i]=b2paddle+ 4;
-				if(b2paddle==3) lastBwall[i]=0; lastBcorner[i]=0;
+				 lastBwall[i]=0; lastBcorner[i]=0;
 				if(b2paddle==3) System.out.println("Print2 "+b2paddle);
 				if(b2paddle-1==Paddle_No)
 				{
@@ -823,10 +844,10 @@ public class Player
 			            }
 				}
 				else if((b2paddle-1)==2)
-				{	System.out.println("Machaya wall was"+lastBwall[i]);
+				{	//System.out.println("Machaya wall was"+lastBwall[i]);
 					Board_backend.moveBall(i,myBall.getVelX(), -myBall.getVelY(), myBall.getCenterX(), myBall.getCenterY(), 10);
 					
-					lastBwall[i]=0;
+					//lastBwall[i]=0;
 
 					try
 			            {
@@ -890,7 +911,7 @@ public class Player
 							
 			}
 			else
-			{   double k=1.000001;
+			{   double k=1.005;
 				// detect B2Wall or b2Corner?
 				
 				int b2wall = PEngine.collision_wall(center_x, center_y, radius,600.0);

@@ -117,7 +117,7 @@ public class CreateGameScreen extends JPanel
          MyPort.setForeground(Color.decode("#05b8cc")); 
          MyPort.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
          labels.add(MyIP); 
-         labels.add(MyPort);
+         // labels.add(MyPort);
             SpinnerModel spinnerModel =
          new SpinnerNumberModel(0, //initial value
             0, //min

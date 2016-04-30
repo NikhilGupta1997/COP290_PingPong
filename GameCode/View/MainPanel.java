@@ -31,7 +31,10 @@ public class MainPanel extends JPanel
  	private static String Name3="";
  	private static String Name4="";
  	private static Color customColorBrown = new Color(100,50,0);
- 	private static Color customColorGreen = new Color(140,250,0);
+ 	private static Color customColorDarkBrown = new Color(50,25,0);
+ 	private static Color customColorGreen = new Color(0,180,0);
+ 	private static Color customColorBlue = new Color(0,0,200);
+ 	private static Color customColorBall = new Color(255,255,0);
  	public static int Paddles_out = 0;
  	public static int first1 = 0;
  	public static int first2 = 0;
@@ -87,8 +90,10 @@ public class MainPanel extends JPanel
 				double radius = ith.getRadius();
 				double center_x = ith.getCenterX();
 				double center_y = ith.getCenterY();
-				g.setColor(Color.YELLOW);
+				g.setColor(customColorBall);
 				g.fillOval((int)(center_x-radius), (int)(center_y + radius), (int)(2.0*radius), (int)(2.0*radius));
+				// g.setColor(customColorBall);
+				// g.fillOval((int)(center_x-radius - 2), (int)(center_y + radius - 2), (int)(2.0*radius - 2), (int)(2.0*radius - 2));
 			}
 		for (int i = 0; i < no_paddles; i++)
 		{
@@ -108,7 +113,7 @@ public class MainPanel extends JPanel
 					else if (i == PlayerNumber)
 					g.setColor(customColorGreen);
 					else
-					g.setColor(Color.BLUE);
+					g.setColor(customColorBlue);
 					g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y), (int) (P_length), 20);
 					Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {20,0,20},3);
 					g.fillPolygon(p1);
@@ -118,7 +123,7 @@ public class MainPanel extends JPanel
 					if(Paddles_out == 3 && first1 == 0)
 						{
 							g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-			 					g.drawString("WINNER", 700, 50);
+			 					g.drawString("WINNER", 700, 40);
 			 					first1 = 2;
 			 					
 						}
@@ -129,7 +134,7 @@ public class MainPanel extends JPanel
 					if(loves <= 0)
 		 				{
 		 					g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-		 					g.drawString("GAME OVER", 700, 50);
+		 					g.drawString("GAME OVER", 700, 40);
 		 					first1 = 1;
 		 				}
 					}
@@ -140,7 +145,7 @@ public class MainPanel extends JPanel
 					else if (i == PlayerNumber)
 					g.setColor(customColorGreen);
 					else
-					g.setColor(Color.BLUE);	
+					g.setColor(customColorBlue);	
 					g.fillRect((int)(paddle_x), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
 					Polygon p1 = new Polygon(new int[] {20,0,20}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
 					g.fillPolygon(p1);
@@ -150,7 +155,7 @@ public class MainPanel extends JPanel
 					if(Paddles_out == 3 && first2 == 0)
 						{
 							g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-			 					g.drawString("WINNER", 700, 200);
+			 					g.drawString("WINNER", 700, 190);
 			 					first2 = 2;
 						}
 					for (int j = 1; j<=loves; j++)
@@ -160,7 +165,7 @@ public class MainPanel extends JPanel
 					if(loves <= 0)
 		 				{
 		 					g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-		 					g.drawString("GAME OVER", 700, 200);
+		 					g.drawString("GAME OVER", 700, 190);
 		 					first2 = 1;
 		 				}
 					}
@@ -171,7 +176,7 @@ public class MainPanel extends JPanel
 					else if (i == PlayerNumber)
 					g.setColor(customColorGreen);
 					else
-					g.setColor(Color.BLUE);
+					g.setColor(customColorBlue);
 					g.fillRect((int)(paddle_x - (P_length/2.0)), (int)( paddle_y-20), (int) (P_length), 20);
 					Polygon p1 = new Polygon(new int[] {(int)(paddle_x-20 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0)),(int)(paddle_x + 0 - (P_length/2.0))}, new int[] {580,600,580},3);
 					g.fillPolygon(p1);
@@ -181,7 +186,7 @@ public class MainPanel extends JPanel
 					if(Paddles_out == 3 && first3 == 0)
 						{
 							g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-			 					g.drawString("WINNER", 700, 350);
+			 					g.drawString("WINNER", 700, 340);
 			 					first3 = 2;
 						}
 					for (int j = 1; j<= loves; j++)
@@ -191,7 +196,7 @@ public class MainPanel extends JPanel
 					if(loves <= 0) 
 		 				{
 		 					g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-		 					g.drawString("GAME OVER", 700, 350);
+		 					g.drawString("GAME OVER", 700, 340);
 		 					first3 = 1;
 		 				}
 					}
@@ -202,7 +207,7 @@ public class MainPanel extends JPanel
 					else if (i == PlayerNumber)
 					g.setColor(customColorGreen);
 					else
-					g.setColor(Color.BLUE);
+					g.setColor(customColorBlue);
 					g.fillRect((int)(paddle_x - 20), (int)( paddle_y -(P_length/2.0)), 20, (int) (P_length));
 					Polygon p1 = new Polygon(new int[] {580,600,580}, new int[] {(int)(paddle_y-20 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0)),(int)(paddle_y + 0 - (P_length/2.0))},3);
 					g.fillPolygon(p1);
@@ -212,7 +217,7 @@ public class MainPanel extends JPanel
 					if(Paddles_out == 3 && first4 == 0)
 						{
 							g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-			 					g.drawString("WINNER", 700, 500);
+			 					g.drawString("WINNER", 700, 490);
 			 					first4 = 2;
 						}
 					for (int j = 1; j<=loves; j++)
@@ -222,7 +227,7 @@ public class MainPanel extends JPanel
 					if(loves <= 0)
 		 				{
 		 					g.setFont(new Font("Verdana", Font.BOLD, 30)); 
-		 					g.drawString("GAME OVER", 700, 500);
+		 					g.drawString("GAME OVER", 700, 490);
 		 					first4 = 1;
 		 				}
 					}
