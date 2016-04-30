@@ -1,0 +1,2 @@
+1. The user cannot have his paddle at the bottom. But, instead, we display the user's paddle in a different color for recognition.
+2. 

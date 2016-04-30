@@ -183,8 +183,7 @@ public class Player
 		 p = new Paddle(100.0, 600.0, 400.0, 0,true);
 		Board_backend.addPaddle(p);
 
-		RandomObj r1 = new RandomObj(4.5,4.5,100,200,true);
-		Board_backend.addObject(r1);
+		// Board_backend.addObject(r1);
 		Board_UI = new GameBoard();
 		 lastBwall =new int[c]; // array for multiple balls
 		 lastpaddle=new int[c];
@@ -308,7 +307,7 @@ public class Player
 			update_Phy();// parameters: Collision with paddle ,we need to ignore other collisions of the same wall
 			ArrayList<Ball> updatedBalls = Board_backend.getBalls();
 			ArrayList<Paddle> updatedPaddles = Board_backend.getPaddles();
-			ArrayList<RandomObj> updatedObjects = Board_backend.getObjects();
+			RandomObj updatedObjects = Board_backend.getObjects();
 			//System.out.println("lost=="+lostl+"\n\n\n\n\n");
 			Board_UI.reDraw(updatedBalls, updatedPaddles, updatedObjects, gl_names);
 			updatedPaddles = Board_backend.getPaddles();//Might Have to Remove it
@@ -1147,6 +1146,7 @@ public class Player
 								// ball 2 ball
 								lastBBCollision[i] = j;
 								lastBBCollision[j] = i;
+
 								lastBcorner[i] = 0;
 								lastBcorner[j] = 0;
 								lastBwall[i] = 0;

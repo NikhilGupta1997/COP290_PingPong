@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.JOptionPane;
+import javax.imageio.ImageIO;
 
 
 public class MainPanel extends JPanel
@@ -22,7 +23,7 @@ public class MainPanel extends JPanel
 	* It has a Timer object to render the UI according to backend data after a fixed amt of time **/
 	private static ArrayList<Ball> theBalls;
 	private static ArrayList<Paddle> thePaddles;
-	private static ArrayList<RandomObj> theObjects;
+	private static RandomObj theObjects;
 	private static final int Default_Height = 800;
 	private static final int Default_Width = 600;
 	
@@ -49,7 +50,7 @@ public class MainPanel extends JPanel
 		this.setVisible(true);
 		theBalls = new ArrayList<Ball>();
 		thePaddles = new ArrayList<Paddle>();
-		theObjects = new ArrayList<RandomObj>();
+		// theObjects = new ArrayList<RandomObj>();
 		
 	}
 
@@ -239,6 +240,40 @@ public class MainPanel extends JPanel
  		g.drawString(Name3, 750, 400);
  		g.drawString(Name4, 750, 550);
 
+ 		if (theObjects != null)
+ 		{
+ 			try
+ 			{
+	 			int eff = theObjects.getEffect();
+	 			double cx = theObjects.getCenterX();
+	 			double cy = theObjects.getCenterY();
+
+	 			if (eff == 0)
+	 			{
+	// INC LENGTH
+	 				// BufferedImage i = ImageIO.read(getClass().getResource("/expand.png"));
+	 				// g.drawImage(i, (int)cx - 10, (int)cy - 10, null);
+	 			}
+	 			else if (eff == 1)
+	 			{
+	// DEC LENGTH
+	 				// BufferedImage i = ImageIO.read(new File("shrink.png"));
+	 				// g.drawImage(i, (int)cx - 10, (int)cy - 10, null);
+	 			}
+	 			else
+	 			{
+	// EXTRA LIFE
+	 				// BufferedImage i = ImageIO.read(new File("extraLife.png"));
+	 				// g.drawImage(i, (int)cx - 10, (int)cy - 10, null);
+	 			}
+ 			}
+
+ 			catch(Exception e)
+ 			{
+ 				e.printStackTrace();
+ 			}
+ 		}
+
 
  	// 	for (int j = 0; j < theObjects.size(); j ++)
 		// {
@@ -259,7 +294,7 @@ public class MainPanel extends JPanel
 	}
 
 /** Takes input the updated lists of Balls, Paddles, Random Objects. **/
-	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles, ArrayList<RandomObj> objs, ArrayList<String> names)
+	public void updateBoard(ArrayList<Ball> balls, ArrayList<Paddle> paddles, RandomObj objs, ArrayList<String> names)
 	{//System.out.println("winner is : " + winner);
 		
 		theBalls = balls;
