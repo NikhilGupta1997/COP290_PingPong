@@ -242,7 +242,7 @@ public class Player
 			ArrayList<Ball> curr_Balls = Board_backend.getBalls();
 			int no_balls=curr_Balls.size();
 			int player_d0=player_desc[0],player_d1=player_desc[1],player_d2=player_desc[2],player_d3=player_desc[3];
-			System.out.println(player_d0+","+player_d1+","+player_d2+","+player_d3);
+			// System.out.println(player_d0+","+player_d1+","+player_d2+","+player_d3);
 			// player_desc is 1 for current player,2 for other and 3 for computer
 			server=-1;// change 1
 		for (int i=0;i<4;i++)
@@ -645,7 +645,7 @@ public class Player
 			 Double lastX2 = ball_pos_cx[server][i];
 			
 			 if(collision_paddle[i]!=-1)
-			 Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX1,ball_vel_cx[collision_paddle[i]-1][i] + lastY1, 10);	
+			 Board_backend.moveBall(i,ball_vel_cx[(collision_paddle[i])][i], ball_vel_cy[collision_paddle[i]][i], ball_vel_cx[collision_paddle[i]][i] + lastX1,ball_vel_cy[collision_paddle[i]][i] + lastY1, 10);	
 			 else if(server==player_no)		
 			 Board_backend.moveBall(i,myBall1.getVelX(), myBall1.getVelY(), myBall1.getVelX() + lastX1, myBall1.getVelY() + lastY1, 10);	
 			 else
