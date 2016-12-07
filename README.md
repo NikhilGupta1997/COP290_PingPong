@@ -23,3 +23,13 @@ Information between the players is sent through UDP which proves to be a quick a
 7) Once everyone has joined, the creator must click on *'Start Game!'* to begin.  
 8) All the paddles are controlled using the mouse and each player starts off with 5 lives. A player's paddle will freeze once they loose all 5 of their lives indicating **Game Over**.  
 9) Game Continues until only one player is left.  
+
+## Design Doc
+All the relavent details to the individual classes and the physics engine used in the game code are explained in the attached [Design Doc](https://github.com/NikhilGupta1997/Ping-Pong-Peer-to-Peer-Game/blob/master/Designdoc/DesignDoc.pdf).
+
+## Authors
+* [Nikhil Gupta](https://github.com/NikhilGupta1997)
+* [Ayush Bhardwaj](https://github.com/Ayushbh)
+* [Aditi](https://github.com/aditi741997)
+
+Course Project under [**Prof. Vinay Ribeiro**](http://www.cse.iitd.ac.in/~vinay/)
