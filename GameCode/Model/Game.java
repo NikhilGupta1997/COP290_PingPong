@@ -2,37 +2,30 @@ package Model;
 
 import java.util.*;
 
-
-public class Game
-{
+public class Game {
 	private ArrayList<String> Ips;
 	private ArrayList<Integer> Ports;
 	private ArrayList<String> PNames;
-	public Game()
-	{
+	public Game() {
 		Ips = new ArrayList<String>();
 		Ports = new ArrayList<Integer>();
 		PNames = new ArrayList<String>();
 	}
 
-	public Game(ArrayList<String> ip, ArrayList<Integer> port)
-	{
+	public Game(ArrayList<String> ip, ArrayList<Integer> port) {
 		Ips = ip;
 		Ports = port;
 	}
 
-	public String GetIthIP(int i)
-	{
+	public String GetIthIP(int i) {
 		return Ips.get(i);
 	}
 
-	public int GetIthPort(int i)
-	{
+	public int GetIthPort(int i) {
 		return Ports.get(i);
 	}
 
-	public String GetIthName(int i)
-	{
+	public String GetIthName(int i) {
 		return PNames.get(i);
 	}
 }

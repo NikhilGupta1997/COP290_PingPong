@@ -2,8 +2,7 @@ package Model;
 
 import java.util.*;
 
-public class RandomObj
-{
+public class RandomObj {
 	/** 0 : increase length or
 	* 	1 : decrease length
 	* 	2 : give extra life **/
@@ -13,65 +12,51 @@ public class RandomObj
 	private double vel_x;
 	private double vel_y;
 
-	public RandomObj(double vx, double vy, double cx, double cy, int effect)
-	{
+	public RandomObj(double vx, double vy, double cx, double cy, int effect) {
 		vel_x = vx;
 		vel_y = vy;
-		// bcolor = color;
 		center_x = cx;
 		center_y = cy;
 		r_effect = effect;
 	}
 
-	public double getVelX()
-	{
+	public double getVelX() {
 		return vel_x;
 	}
 
-	public double getVelY()
-	{
+	public double getVelY() {
 		return vel_y;
 	}
 
-	public double getCenterX()
-	{
+	public double getCenterX() {
 		return center_x;
 	}
 
-	public double getCenterY()
-	{
+	public double getCenterY() {
 		return center_y;
 	}
 
-	public int getEffect()
-	{
+	public int getEffect() {
 		return r_effect;
 	}
 
-
-	public void setVelX(double vx)
-	{
+	public void setVelX(double vx) {
 		vel_x = vx;
 	}
 
-	public void setVelY(double vy)
-	{
+	public void setVelY(double vy) {
 		vel_y = vy;
 	}
 
-	public void setCenterX(double cx)
-	{
+	public void setCenterX(double cx) {
 		center_x = cx;
 	}
 
-	public void setCenterY(double cy)
-	{
+	public void setCenterY(double cy) {
 		center_y = cy;
 	}
 
-	public void setEffect(int e)
-	{
+	public void setEffect(int e) {
 		r_effect = e;
 	}
-
 }
